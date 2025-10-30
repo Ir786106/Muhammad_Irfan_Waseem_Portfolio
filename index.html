@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Muhammad Irfan Waseem · Portfolio</title>
+  <meta name="description" content="Front-End Developer, Mobile App Developer, and Graphic Designer from Arifwala, Pakistan." />
+  <meta name="author" content="Muhammad Irfan Waseem" />
+  <meta property="og:title" content="Muhammad Irfan Waseem · Portfolio" />
+  <meta property="og:description" content="Front-End Developer, Mobile App Developer, and Graphic Designer." />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="https://images.unsplash.com/photo-1498050108023-c5249f4df085?q=80&w=1200&auto=format&fit=crop" />
+  <meta name="theme-color" content="#2563eb" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+  <script defer src="script.js"></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="nav">
+    <div class="nav__inner container">
+      <button class="brand" onclick="scrollToId('hero')" aria-label="Go to home">Irfan <span>Waseem</span></button>
+      <nav class="nav__links" id="navLinks" aria-label="Primary">
+        <a href="#hero">Home</a>
+        <a href="#about">About</a>
+        <a href="#skills">Skills</a>
+        <a href="#projects">Projects</a>
+        <a href="#contact">Contact</a>
+        <button id="themeToggle" class="theme-toggle" aria-label="Toggle theme">🌓</button>
+      </nav>
+      <button id="hamburger" class="hamburger" aria-label="Toggle menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <main id="main">
+
+    <section id="hero" class="hero">
+      <div class="container hero__inner">
+        <h1 class="hero__title">Muhammad Irfan Waseem</h1>
+        <p class="hero__subtitle">Front-End Developer · Mobile App Developer · Graphic Designer</p>
+        <p class="hero__blurb">
+          I build modern, responsive web and mobile applications with clean UX and strong visual design. 
+          Passionate about performance, simplicity, and learning new technologies.
+        </p>
+       <div class="hero__cta">
+  <!-- Email Button (opens Gmail compose) -->
+  <a
+    class="btn btn--solid"
+    href="https://mail.google.com/mail/?view=cm&fs=1&to=irfanwaseem5628@gmail.com&su=Project%20Inquiry&body=Hi%20Irfan,%0D%0AI%20saw%20your%20portfolio%20and%20would%20like%20to%20discuss%20a%20project."
+    target="_blank"
+    rel="noopener noreferrer"
+    aria-label="Email Muhammad Irfan Waseem via Gmail"
+  >
+    📧 Email Me
+  </a>
+
+  <!-- Scroll to Projects -->
+  <button class="btn btn--ghost" onclick="scrollToId('projects')" aria-label="View my work">
+    💼 View Work
+  </button>
+
+  <!-- GitHub Profile -->
+  <a
+    class="btn btn--ghost"
+    href="https://github.com/Ir786106"
+    target="_blank"
+    rel="noopener noreferrer"
+    aria-label="Visit my GitHub profile"
+  >
+    🐙 GitHub
+  </a>
+
+  <!-- LinkedIn Profile -->
+  <a
+    class="btn btn--ghost"
+    href="https://linkedin.com/in/muhammad-irfan-waseem-48226b297"
+    target="_blank"
+    rel="noopener noreferrer"
+    aria-label="Visit my LinkedIn profile"
+  >
+    🔗 LinkedIn
+  </a>
+</div>
+
+      </div>
+      <div class="hero__bg" aria-hidden="true"></div>
+    </section>
+
+    <section id="about" class="section">
+      <div class="container grid-2">
+        <div>
+          <h2 class="section__title">About Me</h2>
+          <p>
+            Hello! I’m Muhammad Irfan Waseem, a developer and designer based in <strong>Arifwala, Pakistan</strong>.
+            I have experience creating desktop applications, mobile apps, and web projects using modern tools.
+            I value accessibility, performance, and thoughtful details. Currently, I am also learning <strong>Cyber Security</strong>.
+          </p>
+          <ul class="about__list">
+            <li><strong>Email:</strong> <a href="mailto:irfanwaseem5628@gmail.com">irfanwaseem5628@gmail.com</a></li>
+            <li><strong>Phone:</strong> <a href="tel:+923277121147">+92 327 7121147</a></li>
+            <li><strong>Location:</strong> Arifwala, Pakistan</li>
+          </ul>
+        </div>
+        <div class="cards">
+          <article class="card"><h3>Web UI Development</h3><p>Responsive, accessible front-ends optimized for speed and SEO.</p></article>
+          <article class="card"><h3>Desktop Applications</h3><p>Reliable Windows desktop apps with clean UX and maintainable code.</p></article>
+          <article class="card"><h3>Mobile App Development</h3><p>Building Flutter-based mobile applications for Android and iOS.</p></article>
+          <article class="card"><h3>Graphic Design</h3><p>Branding, posters, and marketing designs for businesses.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section id="skills" class="section section--tint">
+      <div class="container">
+        <h2 class="section__title">Skills</h2>
+        <div class="skills">
+          <div class="skill"><span>HTML</span><div class="bar"><i style="--w:85%"></i></div></div>
+          <div class="skill"><span>CSS</span><div class="bar"><i style="--w:80%"></i></div></div>
+          <div class="skill"><span>Flutter</span><div class="bar"><i style="--w:60%"></i></div></div>
+          <div class="skill"><span>C / C++</span><div class="bar"><i style="--w:85%"></i></div></div>
+          <div class="skill"><span>Java</span><div class="bar"><i style="--w:80%"></i></div></div>
+          <div class="skill"><span>Photoshop</span><div class="bar"><i style="--w:90%"></i></div></div>
+          <div class="skill"><span>Illustrator</span><div class="bar"><i style="--w:80%"></i></div></div>
+          <div class="skill"><span>Canva</span><div class="bar"><i style="--w:95%"></i></div></div>
+          <div class="skill"><span>Cyber Security (Learning)</span><div class="bar"><i style="--w:40%"></i></div></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="projects" class="section">
+      <div class="container">
+        <h2 class="section__title">Selected Projects</h2>
+        <div class="grid-3 projects">
+          <article class="project" data-type="desktop">
+            <img src="https://i.pinimg.com/736x/ac/1b/32/ac1b32f72296d862fd20406d90a22a87.jpg" alt="Hotel Management System">
+            <div class="project__body"><h3>Hotel Management System</h3><p>Desktop application to manage hotel operations efficiently.</p></div>
+          </article>
+          <article class="project" data-type="web">
+            <img src="https://i.pinimg.com/736x/35/b6/67/35b667a4082809c4af5fe38a7e035b52.jpg" alt="Itthat Food Industries Portal">
+            <div class="project__body"><h3>Itthat Food Industries Pvt Ltd</h3><p>Web and mobile app project to streamline operations and enhance usability.</p></div>
+          </article>
+          <article class="project" data-type="desktop">
+            <img src="https://i.pinimg.com/736x/21/de/6a/21de6aa253ae7842546c9258b5f9495d.jpg" alt="Quiz Game">
+            <div class="project__body"><h3>Quiz Game Project</h3><p>Interactive quiz game for learning and entertainment.</p></div>
+          </article>
+          <article class="project" data-type="web">
+            <img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?q=80&w=1200&auto=format&fit=crop" alt="Portfolio Website">
+            <div class="project__body"><h3>Portfolio Website</h3><p>A fast, responsive personal site with dark mode and animations.</p></div>
+          </article>
+          <article class="project" data-type="design">
+            <img src="/Images/4.jpg" alt="Brand Identity">
+            <div class="project__body"><h3>Brand Identity Pack</h3><p>Logo, posters, and social media designs for clients — featured on Instagram.</p></div>
+          </article>
+        </div>
+
+        <div class="poster-gallery">
+          <h3>Poster Gallery</h3>
+          <div class="grid-3">
+            <img src="/Images/1.jpg" alt="Poster 1">
+            <img src="/Images/2.jpg" alt="Poster 2">
+            <img src="/Images/3.jpg" alt="Poster 3">
+            <img src="/Images/4.jpg" alt="Poster 4">
+            <img src="/Images/5.jpg" alt="Poster 5">
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact" class="section section--tint">
+      <div class="container grid-2">
+        <div>
+          <h2 class="section__title">Let’s Build Something</h2>
+          <p>Have a project in mind or want to say hello? Send me a message and I’ll reply soon.</p>
+        </div>
+        <form class="form" onsubmit="return contactSubmit(event)">
+          <label>Name<input type="text" name="name" required></label>
+          <label>Email<input type="email" name="email" required></label>
+          <label>Topic<input type="text" name="topic" placeholder="e.g., Website redesign"></label>
+          <label>Message<textarea name="message" rows="4" required></textarea></label>
+          <button type="submit" class="btn btn--solid" id="sendBtn">Send Message</button>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer__inner">
+      <p>© <span id="year"></span> Muhammad Irfan Waseem. All rights reserved.</p>
+      <div class="footer__links">
+        <a href="https://github.com/Ir786106" target="_blank">GitHub</a>
+        <a href="https://linkedin.com/in/muhammad-irfan-waseem-48226b297" target="_blank">LinkedIn</a>
+        <a href="#hero">Top</a>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>
