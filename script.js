@@ -1,48 +1,125 @@
-import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
-import { getFirestore, collection, addDoc, getDocs, query, orderBy, limit } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js";
+// --- Import Firebase (Standard Modular SDK) ---
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-app.js";
+import { getFirestore, collection, addDoc, getDocs, query, orderBy, limit } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-firestore.js";
+import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-analytics.js";
 
+/* =========================================================
+   FIREBASE CONFIGURATION (Verified)
+   ========================================================= */
 const firebaseConfig = {
-    apiKey: "YOUR_REAL_API_KEY",
-    authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
-    projectId: "YOUR_PROJECT_ID",
-    storageBucket: "YOUR_PROJECT_ID.appspot.com",
-    messagingSenderId: "YOUR_SENDER_ID",
-    appId: "YOUR_APP_ID"
+    apiKey: "AIzaSyAJsGuQRpzpfWHszomeg0q_dtUZkeBh0Go",
+    authDomain: "irfan-portfolio-ae62a.firebaseapp.com",
+    projectId: "irfan-portfolio-ae62a",
+    storageBucket: "irfan-portfolio-ae62a.firebasestorage.app",
+    messagingSenderId: "220875740206",
+    appId: "1:220875740206:web:4dc00c10fa86784b063bbf",
+    measurementId: "G-FX3Q38PZT6"
 };
 
+// Initialize Firebase
 let db;
+let analytics;
+
 try {
     const app = initializeApp(firebaseConfig);
     db = getFirestore(app);
+    analytics = getAnalytics(app);
     console.log("System Status: Firebase Connected.");
 } catch (e) {
-    console.warn("System Status: Demo Mode (Firebase config missing).");
+    console.warn("System Status: Demo Mode (Connection Failed).", e);
 }
 
+// --- UI UTILITIES ---
+
+// 1. Professional Toast Notification (Replaces Alerts)
+function showToast(message, type = 'success') {
+    // Create element
+    const toast = document.createElement('div');
+    toast.className = `toast-notification ${type}`;
+    toast.innerText = message;
+    
+    // Style dynamically (so you don't need to edit CSS)
+    Object.assign(toast.style, {
+        position: 'fixed',
+        bottom: '30px',
+        right: '30px',
+        background: type === 'success' ? '#10b981' : '#ef4444',
+        color: '#fff',
+        padding: '12px 24px',
+        borderRadius: '8px',
+        boxShadow: '0 10px 30px rgba(0,0,0,0.2)',
+        zIndex: '10002',
+        fontFamily: "'Outfit', sans-serif",
+        fontWeight: '500',
+        transform: 'translateY(100px)',
+        opacity: '0',
+        transition: 'all 0.4s cubic-bezier(0.16, 1, 0.3, 1)'
+    });
+
+    document.body.appendChild(toast);
+
+    // Animate In
+    requestAnimationFrame(() => {
+        toast.style.transform = 'translateY(0)';
+        toast.style.opacity = '1';
+    });
+
+    // Remove after 3 seconds
+    setTimeout(() => {
+        toast.style.transform = 'translateY(20px)';
+        toast.style.opacity = '0';
+        setTimeout(() => toast.remove(), 400);
+    }, 3000);
+}
+
+// 2. Preloader with Smooth Fade
 window.addEventListener('load', () => {
     const preloader = document.querySelector('.preloader');
-    setTimeout(() => {
-        preloader.style.opacity = '0';
-        preloader.style.visibility = 'hidden';
-        initAnimations(); 
-        fetchTestimonials(); 
-    }, 1500);
+    gsap.to(preloader, {
+        opacity: 0,
+        duration: 0.8,
+        ease: "power2.inOut",
+        onComplete: () => {
+            preloader.style.visibility = 'hidden';
+            initAnimations(); 
+            fetchTestimonials(); 
+        }
+    });
 });
 
-const dot = document.querySelector('.cursor-dot');
-const outline = document.querySelector('.cursor-outline');
+// 3. High-Performance Cursor (Using GSAP quickTo)
+const cursorDot = document.querySelector('.cursor-dot');
+const cursorOutline = document.querySelector('.cursor-outline');
+
+// Optimize movement
+let xTo = gsap.quickTo(cursorOutline, "left", { duration: 0.2, ease: "power3" }),
+    yTo = gsap.quickTo(cursorOutline, "top", { duration: 0.2, ease: "power3" });
 
 window.addEventListener('mousemove', (e) => {
-    const x = e.clientX;
-    const y = e.clientY;
-    
-    dot.style.left = `${x}px`;
-    dot.style.top = `${y}px`;
-    
-    outline.style.left = `${x}px`;
-    outline.style.top = `${y}px`;
+    // Dot follows instantly
+    gsap.set(cursorDot, { left: e.clientX, top: e.clientY });
+    // Outline follows smoothly
+    xTo(e.clientX);
+    yTo(e.clientY);
 });
 
+// Hover Magnet Effect for Buttons
+const magnets = document.querySelectorAll('.btn-primary, .social-icon, .nav-link');
+magnets.forEach((magnet) => {
+    magnet.addEventListener('mousemove', (e) => {
+        const rect = magnet.getBoundingClientRect();
+        const x = e.clientX - rect.left - rect.width / 2;
+        const y = e.clientY - rect.top - rect.height / 2;
+        gsap.to(magnet, { x: x * 0.3, y: y * 0.3, duration: 0.3, ease: "power2.out" });
+        gsap.to(cursorOutline, { scale: 1.5, borderColor: 'transparent', backgroundColor: 'rgba(59, 130, 246, 0.1)', duration: 0.3 });
+    });
+    magnet.addEventListener('mouseleave', () => {
+        gsap.to(magnet, { x: 0, y: 0, duration: 0.3, ease: "elastic.out(1, 0.3)" });
+        gsap.to(cursorOutline, { scale: 1, borderColor: 'var(--text-muted)', backgroundColor: 'transparent', duration: 0.3 });
+    });
+});
+
+// 4. Theme Toggle
 const themeBtn = document.getElementById('theme-toggle');
 const html = document.documentElement;
 const savedTheme = localStorage.getItem('theme') || 'dark';
@@ -54,8 +131,12 @@ themeBtn.addEventListener('click', () => {
     const next = current === 'dark' ? 'light' : 'dark';
     html.setAttribute('data-theme', next);
     localStorage.setItem('theme', next);
+    
+    // Rotate Icon Animation
+    gsap.fromTo(themeBtn.querySelector('i'), { rotate: -90, scale: 0 }, { rotate: 0, scale: 1, duration: 0.4 });
 });
 
+// 5. Mobile Menu
 const hamburger = document.querySelector('.hamburger');
 const mobileMenu = document.querySelector('.mobile-menu');
 
@@ -64,20 +145,27 @@ hamburger.addEventListener('click', () => {
     mobileMenu.classList.toggle('active');
     
     if(mobileMenu.classList.contains('active')) {
-        gsap.to(".bar:nth-child(1)", { rotate: 45, y: 8 });
-        gsap.to(".bar:nth-child(2)", { rotate: -45, y: -8 });
+        gsap.to(".bar:nth-child(1)", { rotate: 45, y: 8, duration: 0.3 });
+        gsap.to(".bar:nth-child(2)", { rotate: -45, y: -8, duration: 0.3 });
+        // Stagger links entrance
+        gsap.fromTo(".mobile-links li", 
+            { y: 20, opacity: 0 }, 
+            { y: 0, opacity: 1, duration: 0.4, stagger: 0.1, delay: 0.2 }
+        );
     } else {
-        gsap.to(".bar", { rotate: 0, y: 0 });
+        gsap.to(".bar", { rotate: 0, y: 0, duration: 0.3 });
     }
 });
 
 document.querySelectorAll('.mobile-links a').forEach(link => {
     link.addEventListener('click', () => {
         mobileMenu.classList.remove('active');
+        hamburger.classList.remove('active');
         gsap.to(".bar", { rotate: 0, y: 0 });
     });
 });
 
+// 6. Project Filter
 const filterBtns = document.querySelectorAll('.filter-btn');
 const projectCards = document.querySelectorAll('.project-card');
 
@@ -89,9 +177,10 @@ filterBtns.forEach(btn => {
         const filter = btn.dataset.filter;
         
         projectCards.forEach(card => {
-            if (filter === 'all' || card.dataset.category === filter) {
+            const category = card.dataset.category;
+            if (filter === 'all' || category === filter) {
                 card.style.display = 'flex';
-                gsap.fromTo(card, { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.4 });
+                gsap.fromTo(card, { opacity: 0, scale: 0.95 }, { opacity: 1, scale: 1, duration: 0.4, ease: "power2.out" });
             } else {
                 card.style.display = 'none';
             }
@@ -99,29 +188,40 @@ filterBtns.forEach(btn => {
     });
 });
 
+// --- ANIMATIONS (GSAP) ---
 gsap.registerPlugin(ScrollTrigger);
 
 function initAnimations() {
-    gsap.from(".hero-title", { opacity: 0, y: 50, duration: 1, ease: "power4.out" });
-    gsap.from(".hero-subtitle", { opacity: 0, y: 30, delay: 0.2, duration: 1 });
-    gsap.from(".hero-btns", { opacity: 0, y: 20, delay: 0.4, duration: 1 });
-    
-    gsap.fromTo(".profile-card", 
-        { opacity: 0, scale: 0.9, rotation: -10 },
-        { opacity: 1, scale: 1, rotation: 0, delay: 0.5, duration: 1.2, ease: "elastic.out(1, 0.5)" }
-    );
+    // Hero Elements Stagger
+    const tl = gsap.timeline();
+    tl.from(".hero-title", { opacity: 0, y: 50, duration: 1, ease: "power3.out" })
+      .from(".hero-subtitle", { opacity: 0, y: 20, duration: 0.8 }, "-=0.6")
+      .from(".hero-btns", { opacity: 0, y: 20, duration: 0.8 }, "-=0.6")
+      .from(".profile-card", { opacity: 0, scale: 0.9, rotation: -5, duration: 1, ease: "back.out(1.7)" }, "-=0.8");
 
+    // Sections Headers
     gsap.utils.toArray('.section-title').forEach(title => {
         gsap.from(title, {
             scrollTrigger: { trigger: title, start: "top 85%" },
-            opacity: 0, y: 30, duration: 0.8
+            opacity: 0, y: 40, duration: 0.8, ease: "power3.out"
+        });
+    });
+
+    // Stagger Cards (Projects, Skills)
+    gsap.utils.toArray('.projects-grid, .skills-showcase, .gallery-grid').forEach(grid => {
+        gsap.from(grid.children, {
+            scrollTrigger: { trigger: grid, start: "top 85%" },
+            opacity: 0, y: 30, duration: 0.8, stagger: 0.1, ease: "power3.out"
         });
     });
 }
 
+// --- MODALS & LIGHTBOX ---
 window.openModal = (id) => {
-    document.getElementById(id).style.display = 'flex';
-    setTimeout(() => document.getElementById(id).classList.add('active'), 10);
+    const modal = document.getElementById(id);
+    modal.style.display = 'flex';
+    // Small delay to allow display:flex to apply before adding class for transition
+    requestAnimationFrame(() => modal.classList.add('active'));
 };
 
 document.querySelectorAll('.close-modal').forEach(btn => {
@@ -139,6 +239,9 @@ window.openLightbox = (el) => {
 };
 window.closeLightbox = () => document.getElementById('lightbox').style.display = 'none';
 
+// --- FIREBASE INTERACTIONS ---
+
+// Fetch Reviews
 async function fetchTestimonials() {
     if (!db) return;
     const container = document.getElementById('testimonial-container');
@@ -161,14 +264,18 @@ async function fetchTestimonials() {
             });
         }
     } catch (err) {
-        console.error("Error:", err);
+        console.error("Reviews Error:", err);
     }
 }
 
+// Submit Feedback
 document.getElementById('feedbackForm').addEventListener('submit', async (e) => {
     e.preventDefault();
     const btn = e.target.querySelector('button');
-    btn.innerText = "Sending...";
+    const originalText = btn.innerText;
+    
+    btn.innerText = "Processing...";
+    btn.disabled = true;
     
     const name = document.getElementById('feedback-name').value;
     const msg = document.getElementById('feedback-message').value;
@@ -180,22 +287,33 @@ document.getElementById('feedbackForm').addEventListener('submit', async (e) => 
                 message: msg,
                 date: new Date()
             });
-            alert("Thanks!");
+            
+            showToast("Review submitted successfully!", "success");
+            
             e.target.reset();
             document.getElementById('feedback-modal').classList.remove('active');
             setTimeout(() => document.getElementById('feedback-modal').style.display = 'none', 300);
             fetchTestimonials();
         } catch (err) {
-            alert("Error: " + err.message);
+            showToast("Error submitting review.", "error");
+            console.error(err);
         }
+    } else {
+        showToast("Demo Mode: Firebase not connected.", "error");
     }
-    btn.innerText = "Submit";
+    
+    btn.innerText = originalText;
+    btn.disabled = false;
 });
 
+// Contact Form
 document.getElementById('contactForm').addEventListener('submit', async (e) => {
     e.preventDefault();
     const btn = e.target.querySelector('button');
+    const originalText = btn.innerText;
+    
     btn.innerText = "Sending...";
+    btn.disabled = true;
     
     const data = {
         name: document.getElementById('name').value,
@@ -207,11 +325,43 @@ document.getElementById('contactForm').addEventListener('submit', async (e) => {
     if (db) {
         try {
             await addDoc(collection(db, "contacts"), data);
-            alert("Message Sent!");
+            showToast("Message Sent! I'll contact you soon.", "success");
             e.target.reset();
         } catch (err) {
-            alert("Error sending message.");
+            showToast("Failed to send message.", "error");
+            console.error(err);
         }
+    } else {
+        showToast("Demo Mode: Message logged to console.", "success");
+        console.log(data);
     }
-    btn.innerText = "Send Message";
+    
+    btn.innerText = originalText;
+    btn.disabled = false;
 });
+
+
+// // --- END OF SCRIPT.JS ---
+// //<script type="module">
+//   // Import the functions you need from the SDKs you need
+//  // import { initializeApp } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-app.js";
+//   import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-analytics.js";
+//   // TODO: Add SDKs for Firebase products that you want to use
+//   // https://firebase.google.com/docs/web/setup#available-libraries
+
+//   // Your web app's Firebase configuration
+//   // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+//   const firebaseConfig = {
+//     apiKey: "AIzaSyAJsGuQRpzpfWHszomeg0q_dtUZkeBh0Go",
+//     authDomain: "irfan-portfolio-ae62a.firebaseapp.com",
+//     projectId: "irfan-portfolio-ae62a",
+//     storageBucket: "irfan-portfolio-ae62a.firebasestorage.app",
+//     messagingSenderId: "220875740206",
+//     appId: "1:220875740206:web:4dc00c10fa86784b063bbf",
+//     measurementId: "G-FX3Q38PZT6"
+//   };
+
+//   // Initialize Firebase
+//   const app = initializeApp(firebaseConfig);
+//   const analytics = getAnalytics(app);
+// </script>
