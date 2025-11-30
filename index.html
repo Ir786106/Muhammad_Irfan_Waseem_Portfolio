@@ -1,202 +1,477 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Muhammad Irfan Waseem · Portfolio</title>
-  <meta name="description" content="Front-End Developer, Mobile App Developer, and Graphic Designer from Arifwala, Pakistan." />
-  <meta name="author" content="Muhammad Irfan Waseem" />
-  <meta property="og:title" content="Muhammad Irfan Waseem · Portfolio" />
-  <meta property="og:description" content="Front-End Developer, Mobile App Developer, and Graphic Designer." />
-  <meta property="og:type" content="website" />
-  <meta property="og:image" content="https://images.unsplash.com/photo-1498050108023-c5249f4df085?q=80&w=1200&auto=format&fit=crop" />
-  <meta name="theme-color" content="#2563eb" />
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css" />
-  <script defer src="script.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Muhammad Irfan Waseem | Software Engineer</title>
+    <meta name="description" content="Portfolio of Muhammad Irfan Waseem - Flutter, Java, & Web Developer.">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600&family=Space+Grotesk:wght@400;600;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <a class="skip-link" href="#main">Skip to content</a>
 
-  <header class="nav">
-    <div class="nav__inner container">
-      <button class="brand" onclick="scrollToId('hero')" aria-label="Go to home">Irfan <span>Waseem</span></button>
-      <nav class="nav__links" id="navLinks" aria-label="Primary">
-        <a href="#hero">Home</a>
-        <a href="#about">About</a>
-        <a href="#skills">Skills</a>
-        <a href="#projects">Projects</a>
-        <a href="#contact">Contact</a>
-        <button id="themeToggle" class="theme-toggle" aria-label="Toggle theme">🌓</button>
-      </nav>
-      <button id="hamburger" class="hamburger" aria-label="Toggle menu" aria-expanded="false">
-        <span></span><span></span><span></span>
-      </button>
+    <div class="preloader">
+        <div class="loader-content">
+            <div class="loader-text">IRFAN<span>.</span></div>
+            <div class="loading-bar-container">
+                <div class="loading-bar"></div>
+            </div>
+        </div>
     </div>
-  </header>
 
-  <main id="main">
+    <div class="cursor-dot"></div>
+    <div class="cursor-outline"></div>
 
-    <section id="hero" class="hero">
-      <div class="container hero__inner">
-        <h1 class="hero__title">Muhammad Irfan Waseem</h1>
-        <p class="hero__subtitle">Front-End Developer · Mobile App Developer · Graphic Designer</p>
-        <p class="hero__blurb">
-          I build modern, responsive web and mobile applications with clean UX and strong visual design. 
-          Passionate about performance, simplicity, and learning new technologies.
-        </p>
-       <div class="hero__cta">
-  <!-- Email Button (opens Gmail compose) -->
-  <a
-    class="btn btn--solid"
-    href="https://mail.google.com/mail/?view=cm&fs=1&to=irfanwaseem5628@gmail.com&su=Project%20Inquiry&body=Hi%20Irfan,%0D%0AI%20saw%20your%20portfolio%20and%20would%20like%20to%20discuss%20a%20project."
-    target="_blank"
-    rel="noopener noreferrer"
-    aria-label="Email Muhammad Irfan Waseem via Gmail"
-  >
-    📧 Email Me
-  </a>
+    <div class="ambient-bg">
+        <div class="gradient-orb orb-1"></div>
+        <div class="gradient-orb orb-2"></div>
+        <div class="noise-overlay"></div>
+    </div>
 
-  <!-- Scroll to Projects -->
-  <button class="btn btn--ghost" onclick="scrollToId('projects')" aria-label="View my work">
-    💼 View Work
-  </button>
+    <nav class="navbar">
+        <div class="container nav-inner">
+            <a href="#" class="logo">IRFAN<span>.</span></a>
+            
+            <div class="nav-actions">
+                <ul class="nav-links">
+                    <li><a href="#home" class="nav-link">Home</a></li>
+                    <li><a href="#about" class="nav-link">About</a></li>
+                    <li><a href="#projects" class="nav-link">Work</a></li>
+                    <li><a href="#gallery" class="nav-link">Gallery</a></li>
+                </ul>
+                
+                <button id="theme-toggle" class="theme-btn" aria-label="Toggle Theme">
+                    <i class="fas fa-sun"></i>
+                    <i class="fas fa-moon"></i>
+                </button>
 
-  <!-- GitHub Profile -->
-  <a
-    class="btn btn--ghost"
-    href="https://github.com/Ir786106"
-    target="_blank"
-    rel="noopener noreferrer"
-    aria-label="Visit my GitHub profile"
-  >
-    🐙 GitHub
-  </a>
+                <a href="#contact" class="btn-primary desktop-btn">Let's Talk</a>
+                
+                <div class="hamburger">
+                    <div class="bar"></div>
+                    <div class="bar"></div>
+                </div>
+            </div>
+        </div>
+    </nav>
 
-  <!-- LinkedIn Profile -->
-  <a
-    class="btn btn--ghost"
-    href="https://linkedin.com/in/muhammad-irfan-waseem-48226b297"
-    target="_blank"
-    rel="noopener noreferrer"
-    aria-label="Visit my LinkedIn profile"
-  >
-    🔗 LinkedIn
-  </a>
-</div>
+    <div class="mobile-menu">
+        <ul class="mobile-links">
+            <li><a href="#home">Home</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#projects">Work</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+    </div>
 
-      </div>
-      <div class="hero__bg" aria-hidden="true"></div>
+    <section id="home" class="hero-section">
+        <div class="container hero-grid">
+            <div class="hero-content">
+                <div class="status-badge">
+                    <span class="pulse-dot"></span> Available for Projects
+                </div>
+                <h1 class="hero-title">Building <span class="gradient-text">Intelligent</span> Digital Systems.</h1>
+                <p class="hero-subtitle">I engineer high-performance mobile apps, desktop software, and web solutions. Currently integrating AI into industrial workflows.</p>
+                
+                <div class="hero-btns">
+                    <a href="#projects" class="btn-primary">View My Work <i class="fas fa-arrow-right"></i></a>
+                    <a href="Images/my-cv.pdf" download="Muhammad_Irfan_CV" class="btn-outline"><i class="fas fa-download"></i> Download CV</a>
+                </div>
+
+                <div class="social-row">
+                    <a href="https://github.com/Ir786106" target="_blank" class="social-icon"><i class="fab fa-github"></i></a>
+                    <a href="https://linkedin.com/in/muhammad-irfan-waseem-48226b297" target="_blank" class="social-icon"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="https://x.com/Irfan_CyberSec" target="_blank" class="social-icon"><i class="fab fa-twitter"></i></a>
+                </div>
+            </div>
+            
+            <div class="hero-visual">
+                <div class="profile-card glass-panel">
+                    <img src="Images/Irfan.jpg" alt="Muhammad Irfan Waseem" class="profile-img" onerror="this.style.display='none'; alert('Image Error: Check path. Ensure folder is Images and file is Irfan.jpg');">
+                    
+                    <div class="floating-badge badge-1">
+                        <i class="fas fa-code"></i> <span>Flutter Dev</span>
+                    </div>
+                    <div class="floating-badge badge-2">
+                        <i class="fas fa-shield-alt"></i> <span>CyberSec</span>
+                    </div>
+                </div>
+            </div>
+        </div>
     </section>
 
     <section id="about" class="section">
-      <div class="container grid-2">
-        <div>
-          <h2 class="section__title">About Me</h2>
-          <p>
-            Hello! I’m Muhammad Irfan Waseem, a developer and designer based in <strong>Arifwala, Pakistan</strong>.
-            I have experience creating desktop applications, mobile apps, and web projects using modern tools.
-            I value accessibility, performance, and thoughtful details. Currently, I am also learning <strong>Cyber Security</strong>.
-          </p>
-          <ul class="about__list">
-            <li><strong>Email:</strong> <a href="mailto:irfanwaseem5628@gmail.com">irfanwaseem5628@gmail.com</a></li>
-            <li><strong>Phone:</strong> <a href="tel:+923277121147">+92 327 7121147</a></li>
-            <li><strong>Location:</strong> Arifwala, Pakistan</li>
-          </ul>
-        </div>
-        <div class="cards">
-          <article class="card"><h3>Web UI Development</h3><p>Responsive, accessible front-ends optimized for speed and SEO.</p></article>
-          <article class="card"><h3>Desktop Applications</h3><p>Reliable Windows desktop apps with clean UX and maintainable code.</p></article>
-          <article class="card"><h3>Mobile App Development</h3><p>Building Flutter-based mobile applications for Android and iOS.</p></article>
-          <article class="card"><h3>Graphic Design</h3><p>Branding, posters, and marketing designs for businesses.</p></article>
-        </div>
-      </div>
-    </section>
+        <div class="container">
+            <div class="section-header text-center">
+                <h2 class="section-title">About <span class="gradient-text">Me</span></h2>
+            </div>
 
-    <section id="skills" class="section section--tint">
-      <div class="container">
-        <h2 class="section__title">Skills</h2>
-        <div class="skills">
-          <div class="skill"><span>HTML</span><div class="bar"><i style="--w:85%"></i></div></div>
-          <div class="skill"><span>CSS</span><div class="bar"><i style="--w:80%"></i></div></div>
-          <div class="skill"><span>Flutter</span><div class="bar"><i style="--w:60%"></i></div></div>
-          <div class="skill"><span>C / C++</span><div class="bar"><i style="--w:85%"></i></div></div>
-          <div class="skill"><span>Java</span><div class="bar"><i style="--w:80%"></i></div></div>
-          <div class="skill"><span>Photoshop</span><div class="bar"><i style="--w:90%"></i></div></div>
-          <div class="skill"><span>Illustrator</span><div class="bar"><i style="--w:80%"></i></div></div>
-          <div class="skill"><span>Canva</span><div class="bar"><i style="--w:95%"></i></div></div>
-          <div class="skill"><span>Cyber Security (Learning)</span><div class="bar"><i style="--w:40%"></i></div></div>
+            <div class="about-grid">
+                <div class="about-text glass-panel">
+                    <h3>The Developer</h3>
+                    <p>I’m <strong>Muhammad Irfan Waseem</strong>, a Computer Science student (5th Sem) and Full Stack Developer. I don't just write code; I build systems that solve business problems.</p>
+                    <p>My journey started in 2023. Since then, I've mastered <strong>Flutter</strong> for mobile, <strong>Java/Swing</strong> for desktop, and I am now diving deep into <strong>Artificial Intelligence</strong> and <strong>Cyber Security</strong>.</p>
+                    
+                    <div class="stats-container">
+                        <div class="stat-item">
+                            <h4>BSCS</h4>
+                            <span>Degree</span>
+                        </div>
+                        <div class="stat-item">
+                            <h4>6+</h4>
+                            <span>Projects</span>
+                        </div>
+                        <div class="stat-item">
+                            <h4>2023</h4>
+                            <span>Since</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="skills-showcase">
+                    <div class="skill-box">
+                        <i class="fas fa-mobile-alt"></i>
+                        <h4>Mobile App Dev</h4>
+                        <p>Flutter, Dart, Firebase</p>
+                    </div>
+                    <div class="skill-box">
+                        <i class="fas fa-desktop"></i>
+                        <h4>Desktop Software</h4>
+                        <p>Java, Swing, SQL</p>
+                    </div>
+                    <div class="skill-box">
+                        <i class="fas fa-globe"></i>
+                        <h4>Web Development</h4>
+                        <p>HTML, CSS, Django</p>
+                    </div>
+                    <div class="skill-box">
+                        <i class="fas fa-brain"></i>
+                        <h4>AI Integration</h4>
+                        <p>Python, Algorithms</p>
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
     </section>
 
     <section id="projects" class="section">
-      <div class="container">
-        <h2 class="section__title">Selected Projects</h2>
-        <div class="grid-3 projects">
-          <article class="project" data-type="desktop">
-            <img src="https://i.pinimg.com/736x/ac/1b/32/ac1b32f72296d862fd20406d90a22a87.jpg" alt="Hotel Management System">
-            <div class="project__body"><h3>Hotel Management System</h3><p>Desktop application to manage hotel operations efficiently.</p></div>
-          </article>
-          <article class="project" data-type="web">
-            <img src="https://i.pinimg.com/736x/35/b6/67/35b667a4082809c4af5fe38a7e035b52.jpg" alt="Itthat Food Industries Portal">
-            <div class="project__body"><h3>Itthat Food Industries Pvt Ltd</h3><p>Web and mobile app project to streamline operations and enhance usability.</p></div>
-          </article>
-          <article class="project" data-type="desktop">
-            <img src="https://i.pinimg.com/736x/21/de/6a/21de6aa253ae7842546c9258b5f9495d.jpg" alt="Quiz Game">
-            <div class="project__body"><h3>Quiz Game Project</h3><p>Interactive quiz game for learning and entertainment.</p></div>
-          </article>
-          <article class="project" data-type="web">
-            <img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?q=80&w=1200&auto=format&fit=crop" alt="Portfolio Website">
-            <div class="project__body"><h3>Portfolio Website</h3><p>A fast, responsive personal site with dark mode and animations.</p></div>
-          </article>
-          <article class="project" data-type="design">
-            <img src="/Images/4.jpg" alt="Brand Identity">
-            <div class="project__body"><h3>Brand Identity Pack</h3><p>Logo, posters, and social media designs for clients — featured on Instagram.</p></div>
-          </article>
-        </div>
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Featured <span class="gradient-text">Work</span></h2>
+                <p>A selection of my 6 major projects. Click to view details.</p>
+            </div>
 
-        <div class="poster-gallery">
-          <h3>Poster Gallery</h3>
-          <div class="grid-3">
-            <img src="Images/1.jpg" alt="Poster 1">
-            <img src="Images/2.jpg" alt="Poster 2">
-            <img src="Images/3.jpg" alt="Poster 3">
-            <img src="Images/4.jpg" alt="Poster 4">
-            <img src="Images/5.jpg" alt="Poster 5">
-          </div>
+            <div class="filter-controls">
+                <button class="filter-btn active" data-filter="all">All Projects</button>
+                <button class="filter-btn" data-filter="itthad">Itthad Industries</button>
+                <button class="filter-btn" data-filter="desktop">Desktop</button>
+                <button class="filter-btn" data-filter="web">Web/Portfolio</button>
+            </div>
+
+            <div class="projects-grid">
+                
+                <div class="project-card glass-panel" data-category="itthad">
+                    <div class="card-header">
+                        <div class="folder-icon"><i class="fas fa-mobile-alt"></i></div>
+                        <div class="links"><button class="sm-btn" onclick="openModal('modal-itthad-app')">View Case Study</button></div>
+                    </div>
+                    <div class="card-body">
+                        <h3>Itthad Food App</h3>
+                        <p>A complete mobile workflow application for internal company management with real-time sync.</p>
+                        <div class="card-tags">
+                            <span>Flutter</span><span>Firebase</span><span>Mobile</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="project-card glass-panel" data-category="itthad">
+                    <div class="card-header">
+                        <div class="folder-icon"><i class="fas fa-laptop-code"></i></div>
+                        <div class="links"><button class="sm-btn" onclick="openModal('modal-itthad-web')">View Case Study</button></div>
+                    </div>
+                    <div class="card-body">
+                        <h3>Itthad Web Portal</h3>
+                        <p>Admin dashboard for the Rice Mill System to monitor operations via web interface.</p>
+                        <div class="card-tags">
+                            <span>HTML/CSS</span><span>JS</span><span>Web</span>
+                        </div>
+                    </div>
+                </div>
+
+                 <div class="project-card glass-panel" data-category="itthad">
+                    <div class="card-header">
+                        <div class="folder-icon"><i class="fas fa-brain"></i></div>
+                        <div class="links"><button class="sm-btn" onclick="openModal('modal-itthad-ai')">View Case Study</button></div>
+                    </div>
+                    <div class="card-body">
+                        <h3>Itthad AI Integration</h3>
+                        <p>Integrating AI algorithms (BFS/DFS) to optimize industrial mill operations.</p>
+                        <div class="card-tags">
+                            <span>Python</span><span>AI</span><span>Algorithms</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="project-card glass-panel" data-category="desktop">
+                    <div class="card-header">
+                        <div class="folder-icon"><i class="fas fa-hotel"></i></div>
+                        <div class="links"><button class="sm-btn" onclick="openModal('modal-hotel')">View Case Study</button></div>
+                    </div>
+                    <div class="card-body">
+                        <h3>Hotel Management System</h3>
+                        <p>A robust Desktop application built with Java Swing and MySQL for booking and billing.</p>
+                        <div class="card-tags">
+                            <span>Java</span><span>MySQL</span><span>Desktop</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="project-card glass-panel" data-category="web">
+                    <div class="card-header">
+                        <div class="folder-icon"><i class="fas fa-code"></i></div>
+                        <div class="links"><button class="sm-btn" onclick="openModal('modal-port1')">View Case Study</button></div>
+                    </div>
+                    <div class="card-body">
+                        <h3>Personal Portfolio V1</h3>
+                        <p>My initial developer portfolio. Focused on core HTML structure and layout.</p>
+                        <div class="card-tags">
+                            <span>HTML5</span><span>CSS3</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="project-card glass-panel" data-category="web">
+                    <div class="card-header">
+                        <div class="folder-icon"><i class="fas fa-briefcase"></i></div>
+                        <div class="links"><button class="sm-btn" onclick="openModal('modal-port2')">View Case Study</button></div>
+                    </div>
+                    <div class="card-body">
+                        <h3>Client Portfolio Build</h3>
+                        <p>A professional portfolio website developed for a client (Brother) to showcase work.</p>
+                        <div class="card-tags">
+                            <span>Web Design</span><span>Responsive</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
     </section>
 
-    <section id="contact" class="section section--tint">
-      <div class="container grid-2">
-        <div>
-          <h2 class="section__title">Let’s Build Something</h2>
-          <p>Have a project in mind or want to say hello? Send me a message and I’ll reply soon.</p>
+    <div id="modal-itthad-app" class="modal-overlay">
+        <div class="modal-content glass-panel">
+            <button class="close-modal">&times;</button>
+            <h2>Itthad Food App</h2>
+            <div class="modal-scroll">
+                <h4>Problem</h4>
+                <p>The company faced issues with manual data entry and lack of real-time communication between departments.</p>
+                <h4>Solution</h4>
+                <p>I developed a Flutter-based mobile app integrated with Firebase. This allows staff to update inventory and order status instantly.</p>
+                <h4>Key Features</h4>
+                <ul>
+                    <li>Real-time Database (Firebase)</li>
+                    <li>User Authentication</li>
+                    <li>Cross-platform (Android/iOS)</li>
+                </ul>
+            </div>
         </div>
-        <form class="form" onsubmit="return contactSubmit(event)">
-          <label>Name<input type="text" name="name" required></label>
-          <label>Email<input type="email" name="email" required></label>
-          <label>Topic<input type="text" name="topic" placeholder="e.g., Website redesign"></label>
-          <label>Message<textarea name="message" rows="4" required></textarea></label>
-          <button type="submit" class="btn btn--solid" id="sendBtn">Send Message</button>
-        </form>
-      </div>
-    </section>
-  </main>
-
-  <footer class="footer">
-    <div class="container footer__inner">
-      <p>© <span id="year"></span> Muhammad Irfan Waseem. All rights reserved.</p>
-      <div class="footer__links">
-        <a href="https://github.com/Ir786106" target="_blank">GitHub</a>
-        <a href="https://linkedin.com/in/muhammad-irfan-waseem-48226b297" target="_blank">LinkedIn</a>
-        <a href="#hero">Top</a>
-      </div>
     </div>
-  </footer>
+
+    <div id="modal-itthad-web" class="modal-overlay">
+        <div class="modal-content glass-panel">
+            <button class="close-modal">&times;</button>
+            <h2>Itthad Web Portal</h2>
+            <div class="modal-scroll">
+                <h4>Overview</h4>
+                <p>A web-based dashboard for the admin staff to visualize data coming from the mobile app.</p>
+                <h4>Tech Stack</h4>
+                <ul>
+                    <li>Frontend: HTML5, Custom CSS, JavaScript</li>
+                    <li>Design: Responsive Grid Layout</li>
+                </ul>
+                <h4>Result</h4>
+                <p>Improved administrative decision-making by providing a clear view of daily operations.</p>
+            </div>
+        </div>
+    </div>
+
+    <div id="modal-itthad-ai" class="modal-overlay">
+        <div class="modal-content glass-panel">
+            <button class="close-modal">&times;</button>
+            <h2>Itthad AI Integration</h2>
+            <div class="modal-scroll">
+                <h4>Challenge</h4>
+                <p>Optimizing the routing and processing logic within the mill management system.</p>
+                <h4>Approach</h4>
+                <p>Using Python to implement search algorithms (BFS, DFS, A*) to find the most efficient workflows.</p>
+                <h4>Future Plans</h4>
+                <p>Integrating Machine Learning for demand prediction.</p>
+            </div>
+        </div>
+    </div>
+
+    <div id="modal-hotel" class="modal-overlay">
+        <div class="modal-content glass-panel">
+            <button class="close-modal">&times;</button>
+            <h2>Hotel Management System</h2>
+            <div class="modal-scroll">
+                <h4>Problem</h4>
+                <p>Manual hotel operations were causing booking errors and slow billing processes.</p>
+                <h4>Solution</h4>
+                <p>Developed a multi-module Java Swing application with a MySQL database to automate check-ins, employee records, and invoicing.</p>
+                <h4>Result</h4>
+                <p>Streamlined workflow and reduced manual data entry errors by 80%.</p>
+            </div>
+        </div>
+    </div>
+
+    <div id="modal-port1" class="modal-overlay">
+        <div class="modal-content glass-panel">
+            <button class="close-modal">&times;</button>
+            <h2>Personal Portfolio (Legacy)</h2>
+            <div class="modal-scroll">
+                <h4>Objective</h4>
+                <p>To learn the fundamentals of web structure without relying on frameworks.</p>
+                <h4>Learning Outcome</h4>
+                <p>Mastered the box model, positioning, and basic responsive design principles using raw HTML and CSS.</p>
+            </div>
+        </div>
+    </div>
+
+    <div id="modal-port2" class="modal-overlay">
+        <div class="modal-content glass-panel">
+            <button class="close-modal">&times;</button>
+            <h2>Client Portfolio Project</h2>
+            <div class="modal-scroll">
+                <h4>Requirement</h4>
+                <p>A clean, professional portfolio for a client to showcase their CV and projects.</p>
+                <h4>Execution</h4>
+                <p>Delivered a high-performance, fast-loading static site with a focus on typography and visual hierarchy.</p>
+            </div>
+        </div>
+    </div>
+
+    <section id="gallery" class="section">
+        <div class="container">
+            <div class="section-header text-center">
+                <h2 class="section-title">Creative <span class="gradient-text">Gallery</span></h2>
+                <p>Posters & Visual Branding.</p>
+            </div>
+            <div class="gallery-grid">
+                <div class="gallery-item" onclick="openLightbox(this)"><img src="Images/1.jpg" alt="Design 1"></div>
+                <div class="gallery-item large" onclick="openLightbox(this)"><img src="Images/2.jpg" alt="Design 2"></div>
+                <div class="gallery-item" onclick="openLightbox(this)"><img src="Images/3.jpg" alt="Design 3"></div>
+                <div class="gallery-item wide" onclick="openLightbox(this)"><img src="Images/4.jpg" alt="Design 4"></div>
+                <div class="gallery-item" onclick="openLightbox(this)"><img src="Images/5.jpg" alt="Design 5"></div>
+            </div>
+        </div>
+    </section>
+
+    <div id="lightbox" class="lightbox">
+        <span class="close-lightbox" onclick="closeLightbox()">&times;</span>
+        <img id="lightbox-img" class="lightbox-content">
+    </div>
+
+    <section id="testimonials" class="section bg-dim">
+        <div class="container">
+            <div class="section-header text-center">
+                <h2 class="section-title">Client <span class="gradient-text">Feedback</span></h2>
+                <p>Real-time feedback powered by Firebase.</p>
+                <button class="btn-primary" onclick="openModal('feedback-modal')"><i class="fas fa-plus"></i> Add Feedback</button>
+            </div>
+
+            <div class="reviews-container" id="testimonial-container">
+                <div class="review-card glass-panel">
+                    <div class="stars">★★★★★</div>
+                    <p>"Irfan is a dedicated developer. His work on the Itthad app was impressive."</p>
+                    <h5>- Project Manager</h5>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div id="feedback-modal" class="modal-overlay">
+        <div class="modal-content glass-panel">
+            <button class="close-modal">&times;</button>
+            <h2>Leave Feedback</h2>
+            <form id="feedbackForm">
+                <div class="form-group">
+                    <label>Name</label>
+                    <input type="text" id="feedback-name" required placeholder="Your Name">
+                </div>
+                <div class="form-group">
+                    <label>Message</label>
+                    <textarea id="feedback-message" rows="4" required placeholder="Your experience working with me..."></textarea>
+                </div>
+                <button type="submit" class="btn-primary full-width">Submit Review</button>
+            </form>
+        </div>
+    </div>
+
+    <section id="contact" class="section">
+        <div class="container contact-layout">
+            <div class="contact-info">
+                <h2 class="section-title">Let's <span class="gradient-text">Collaborate</span></h2>
+                <p>Have a project in mind? Let's build something amazing together.</p>
+                
+                <div class="info-card glass-panel">
+                    <i class="fas fa-envelope"></i>
+                    <div>
+                        <span>Email Me</span>
+                        <h4>irfanwaseem5628@gmail.com</h4>
+                    </div>
+                </div>
+
+                <div class="info-card glass-panel">
+                    <i class="fas fa-phone"></i>
+                    <div>
+                        <span>Call Me</span>
+                        <h4>+92 327 7121147</h4>
+                    </div>
+                </div>
+
+                <div class="cv-download-area">
+                    <a href="Images/my-cv.pdf" download class="btn-outline full-width">Download Resume / CV</a>
+                </div>
+            </div>
+
+            <form id="contactForm" class="contact-form glass-panel">
+                <div class="row">
+                    <div class="form-group">
+                        <label>Name</label>
+                        <input type="text" id="name" required placeholder="John Doe">
+                    </div>
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input type="email" id="email" required placeholder="john@email.com">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Message</label>
+                    <textarea id="message" rows="5" required placeholder="Project details..."></textarea>
+                </div>
+                <button type="submit" class="btn-primary full-width">Send Message</button>
+            </form>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container footer-content">
+            <p>&copy; 2025 Muhammad Irfan Waseem. All rights reserved.</p>
+            <div class="social-mini">
+                <a href="#"><i class="fab fa-linkedin"></i></a>
+                <a href="#"><i class="fab fa-github"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script type="module" src="script.js"></script>
 </body>
 </html>
