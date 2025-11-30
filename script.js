@@ -1,12 +1,6 @@
-// --- Import Firebase (Standard Modular SDK) ---
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
 import { getFirestore, collection, addDoc, getDocs, query, orderBy, limit } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js";
 
-/* =========================================================
-   FIREBASE CONFIGURATION
-   Paste your configuration from the Firebase Console here.
-   =========================================================
-*/
 const firebaseConfig = {
     apiKey: "YOUR_REAL_API_KEY",
     authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
@@ -16,7 +10,6 @@ const firebaseConfig = {
     appId: "YOUR_APP_ID"
 };
 
-// Initialize Firebase
 let db;
 try {
     const app = initializeApp(firebaseConfig);
@@ -26,20 +19,16 @@ try {
     console.warn("System Status: Demo Mode (Firebase config missing).");
 }
 
-// --- UI Logic & Animations ---
-
-// 1. Preloader
 window.addEventListener('load', () => {
     const preloader = document.querySelector('.preloader');
     setTimeout(() => {
         preloader.style.opacity = '0';
         preloader.style.visibility = 'hidden';
-        initAnimations(); // Start animations after load
-        fetchTestimonials(); // Load data
+        initAnimations(); 
+        fetchTestimonials(); 
     }, 1500);
 });
 
-// 2. Custom Cursor
 const dot = document.querySelector('.cursor-dot');
 const outline = document.querySelector('.cursor-outline');
 
@@ -47,31 +36,13 @@ window.addEventListener('mousemove', (e) => {
     const x = e.clientX;
     const y = e.clientY;
     
-    // Dot follows instantly
     dot.style.left = `${x}px`;
     dot.style.top = `${y}px`;
     
-    // Outline follows with slight delay (built-in CSS transition)
     outline.style.left = `${x}px`;
     outline.style.top = `${y}px`;
 });
 
-// Hover effect for interactive elements
-const interactiveElements = document.querySelectorAll('a, button, .project-card, .gallery-item');
-interactiveElements.forEach(el => {
-    el.addEventListener('mouseenter', () => {
-        outline.style.transform = 'translate(-50%, -50%) scale(1.5)';
-        outline.style.backgroundColor = 'rgba(59, 130, 246, 0.1)';
-        outline.style.borderColor = 'transparent';
-    });
-    el.addEventListener('mouseleave', () => {
-        outline.style.transform = 'translate(-50%, -50%) scale(1)';
-        outline.style.backgroundColor = 'transparent';
-        outline.style.borderColor = 'var(--text-muted)';
-    });
-});
-
-// 3. Theme Toggle
 const themeBtn = document.getElementById('theme-toggle');
 const html = document.documentElement;
 const savedTheme = localStorage.getItem('theme') || 'dark';
@@ -85,7 +56,6 @@ themeBtn.addEventListener('click', () => {
     localStorage.setItem('theme', next);
 });
 
-// 4. Mobile Menu
 const hamburger = document.querySelector('.hamburger');
 const mobileMenu = document.querySelector('.mobile-menu');
 
@@ -93,7 +63,6 @@ hamburger.addEventListener('click', () => {
     hamburger.classList.toggle('active');
     mobileMenu.classList.toggle('active');
     
-    // Toggle hamburger icon animation
     if(mobileMenu.classList.contains('active')) {
         gsap.to(".bar:nth-child(1)", { rotate: 45, y: 8 });
         gsap.to(".bar:nth-child(2)", { rotate: -45, y: -8 });
@@ -102,7 +71,6 @@ hamburger.addEventListener('click', () => {
     }
 });
 
-// Close menu on link click
 document.querySelectorAll('.mobile-links a').forEach(link => {
     link.addEventListener('click', () => {
         mobileMenu.classList.remove('active');
@@ -110,7 +78,6 @@ document.querySelectorAll('.mobile-links a').forEach(link => {
     });
 });
 
-// 5. Project Filter
 const filterBtns = document.querySelectorAll('.filter-btn');
 const projectCards = document.querySelectorAll('.project-card');
 
@@ -132,23 +99,18 @@ filterBtns.forEach(btn => {
     });
 });
 
-// 6. GSAP Animations (FIXED: Image Disappearing Issue)
 gsap.registerPlugin(ScrollTrigger);
 
 function initAnimations() {
-    // Text Animations
     gsap.from(".hero-title", { opacity: 0, y: 50, duration: 1, ease: "power4.out" });
     gsap.from(".hero-subtitle", { opacity: 0, y: 30, delay: 0.2, duration: 1 });
     gsap.from(".hero-btns", { opacity: 0, y: 20, delay: 0.4, duration: 1 });
     
-    // IMAGE ANIMATION FIX:
-    // Using fromTo ensures start and end states are explicit, preventing disappearance
     gsap.fromTo(".profile-card", 
         { opacity: 0, scale: 0.9, rotation: -10 },
-        { opacity: 1, scale: 1, rotation: -3, delay: 0.5, duration: 1.2, ease: "elastic.out(1, 0.5)" }
+        { opacity: 1, scale: 1, rotation: 0, delay: 0.5, duration: 1.2, ease: "elastic.out(1, 0.5)" }
     );
 
-    // Section Headers
     gsap.utils.toArray('.section-title').forEach(title => {
         gsap.from(title, {
             scrollTrigger: { trigger: title, start: "top 85%" },
@@ -157,7 +119,6 @@ function initAnimations() {
     });
 }
 
-// 7. Modals & Lightbox
 window.openModal = (id) => {
     document.getElementById(id).style.display = 'flex';
     setTimeout(() => document.getElementById(id).classList.add('active'), 10);
@@ -178,9 +139,6 @@ window.openLightbox = (el) => {
 };
 window.closeLightbox = () => document.getElementById('lightbox').style.display = 'none';
 
-// --- FIREBASE FUNCTIONS ---
-
-// Fetch Reviews
 async function fetchTestimonials() {
     if (!db) return;
     const container = document.getElementById('testimonial-container');
@@ -203,15 +161,13 @@ async function fetchTestimonials() {
             });
         }
     } catch (err) {
-        console.error("Error loading reviews:", err);
+        console.error("Error:", err);
     }
 }
 
-// Submit Feedback
 document.getElementById('feedbackForm').addEventListener('submit', async (e) => {
     e.preventDefault();
     const btn = e.target.querySelector('button');
-    const originalText = btn.innerText;
     btn.innerText = "Sending...";
     
     const name = document.getElementById('feedback-name').value;
@@ -224,7 +180,7 @@ document.getElementById('feedbackForm').addEventListener('submit', async (e) => 
                 message: msg,
                 date: new Date()
             });
-            alert("Thanks for your feedback!");
+            alert("Thanks!");
             e.target.reset();
             document.getElementById('feedback-modal').classList.remove('active');
             setTimeout(() => document.getElementById('feedback-modal').style.display = 'none', 300);
@@ -232,13 +188,10 @@ document.getElementById('feedbackForm').addEventListener('submit', async (e) => 
         } catch (err) {
             alert("Error: " + err.message);
         }
-    } else {
-        alert("Demo Mode: Feedback not saved (No Firebase Config).");
     }
-    btn.innerText = originalText;
+    btn.innerText = "Submit";
 });
 
-// Contact Form
 document.getElementById('contactForm').addEventListener('submit', async (e) => {
     e.preventDefault();
     const btn = e.target.querySelector('button');
@@ -254,14 +207,11 @@ document.getElementById('contactForm').addEventListener('submit', async (e) => {
     if (db) {
         try {
             await addDoc(collection(db, "contacts"), data);
-            alert("Message Sent! I will get back to you soon.");
+            alert("Message Sent!");
             e.target.reset();
         } catch (err) {
             alert("Error sending message.");
         }
-    } else {
-        alert("Demo Mode: Message logged to console.");
-        console.log(data);
     }
     btn.innerText = "Send Message";
 });
