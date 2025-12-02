@@ -1,18 +1,14 @@
 :root {
     --bg-base: #030712; 
     --bg-card: rgba(20, 20, 25, 0.85); 
-    
     --grid-color: rgba(59, 130, 246, 0.15);
     --grid-shadow: radial-gradient(circle, transparent 0%, #030712 90%);
-    
     --nav-bg: rgba(3, 7, 18, 0.85);
     --border-color: rgba(255, 255, 255, 0.08);
-    
     --primary: #3b82f6;
     --accent: #8b5cf6;
     --text-main: #ffffff;
     --text-muted: #94a3b8;
-    
     --nav-height: 80px;
     --font-heading: 'Space Grotesk', sans-serif;
     --font-body: 'Outfit', sans-serif;
@@ -21,13 +17,10 @@
 [data-theme="light"] {
     --bg-base: #f0f4f8; 
     --bg-card: rgba(255, 255, 255, 0.95); 
-    
     --grid-color: rgba(37, 99, 235, 0.08); 
     --grid-shadow: radial-gradient(circle, transparent 20%, #f0f4f8 100%);
-    
     --nav-bg: rgba(255, 255, 255, 0.9);
     --border-color: rgba(37, 99, 235, 0.15);
-    
     --primary: #2563eb;
     --text-main: #0f172a; 
     --text-muted: #475569; 
@@ -163,19 +156,16 @@ a { text-decoration: none; color: inherit; cursor: none; }
     background: var(--bg-card); 
     backdrop-filter: blur(20px); 
     -webkit-backdrop-filter: blur(20px);
-    
     padding: 30px 20px; 
     border-radius: 16px; 
     border: 1px solid var(--border-color); 
     text-align: center; 
     transition: 0.3s;
-    
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     min-height: 180px;
-    
     opacity: 1 !important; 
     transform: translateZ(0); 
     box-shadow: 0 10px 40px -10px rgba(0,0,0,0.3); 
@@ -216,7 +206,25 @@ a { text-decoration: none; color: inherit; cursor: none; }
 
 .reviews-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 25px; margin-top: 40px; }
 .review-card { padding: 40px; border-left: 4px solid var(--primary); }
-.stars { color: #fbbf24; font-size: 1.2rem; margin-bottom: 10px; }
+.stars { color: #fbbf24; font-size: 1.2rem; margin-bottom: 10px; letter-spacing: 2px; }
+
+.rating-input-group {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+.star-btn {
+    font-size: 1.8rem;
+    color: var(--text-muted);
+    cursor: pointer;
+    transition: color 0.2s ease, transform 0.2s ease;
+}
+.star-btn.active, .star-btn:hover {
+    color: #fbbf24;
+}
+.star-btn:active {
+    transform: scale(1.2);
+}
 
 .gallery-grid { column-count: 3; column-gap: 25px; }
 .gallery-item { border-radius: 16px; overflow: hidden; position: relative; cursor: pointer; margin-bottom: 25px; break-inside: avoid; display: block; border: 1px solid var(--border-color); }
@@ -264,18 +272,11 @@ footer { background: var(--bg-dark); border-top: 1px solid var(--border-color); 
 .loading-bar-container { width: 180px; height: 3px; background: var(--border-color); border-radius: 2px; overflow: hidden; }
 .loading-bar { width: 0%; height: 100%; background: var(--primary); animation: load 1.2s ease-in-out forwards; }
 @keyframes load { to { width: 100%; } }
+
 @media (max-width: 1024px) {
     .hero-title { font-size: 3rem; }
-    
-    .about-grid { 
-        grid-template-columns: 1fr; 
-        gap: 3rem; 
-    }
-    
-    .skills-showcase { 
-        grid-template-columns: repeat(2, 1fr);
-        gap: 1.5rem;
-    }
+    .about-grid { grid-template-columns: 1fr; gap: 3rem; }
+    .skills-showcase { grid-template-columns: repeat(2, 1fr); gap: 1.5rem; }
 }
 
 @media (max-width: 900px) {
@@ -283,34 +284,22 @@ footer { background: var(--bg-dark); border-top: 1px solid var(--border-color); 
     .hero-btns { justify-content: center; }
     .hero-subtitle { margin: 0 auto 2.5rem; }
     .social-row { justify-content: center; }
-    
     .nav-links, .desktop-btn { display: none; }
     .hamburger { display: block; }
-    
     .contact-layout { grid-template-columns: 1fr; gap: 3rem; }
-    
     .hero-visual { order: -1; transform: none; margin-bottom: 2rem; }
     .profile-card { transform: rotate(0); max-width: 100%; margin: 0 auto; min-height: 300px; }
     .profile-img { min-height: 300px; }
-    
     .gallery-grid { column-count: 2; }
 }
 
 @media (max-width: 600px) {
     .section-title { font-size: 2.2rem; }
     .hero-title { font-size: 2.5rem; }
-    
-    .skills-showcase { 
-        grid-template-columns: 1fr; 
-    }
-    .skill-box {
-        aspect-ratio: auto;
-        padding: 30px;
-    }
-    
+    .skills-showcase { grid-template-columns: 1fr; }
+    .skill-box { aspect-ratio: auto; padding: 30px; }
     .stats-container { flex-direction: column; gap: 1.5rem; text-align: center; }
     .row { grid-template-columns: 1fr; }
     .gallery-grid { column-count: 1; }
-    
     .modal-content { padding: 30px 20px; }
 }

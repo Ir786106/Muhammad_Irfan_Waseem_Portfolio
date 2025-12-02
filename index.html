@@ -6,7 +6,7 @@
     <title>Muhammad Irfan Waseem | Mobile & Web Developer</title>
     <meta name="description" content="Portfolio of Muhammad Irfan Waseem - Flutter, Java, & Web Developer.">
     
-    <link rel="icon" type="image/png" href="Images/favicon.svg">
+    <link rel="icon" type="image/svg+xml" href="Images/favicon.svg">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -370,9 +370,7 @@
 
             <div class="reviews-container" id="testimonial-container">
                 <div class="review-card glass-panel">
-                    <div class="stars">★★★★★</div>
-                    <p>"Irfan is a dedicated developer. His work on the Itthad app was impressive."</p>
-                    <h5>- Project Manager</h5>
+                    <p>Loading reviews...</p>
                 </div>
             </div>
         </div>
@@ -382,15 +380,30 @@
         <div class="modal-content glass-panel">
             <button class="close-modal">&times;</button>
             <h2>Leave Feedback</h2>
+            
             <form id="feedbackForm">
                 <div class="form-group">
-                    <label>Name</label>
-                    <input type="text" id="feedback-name" required placeholder="Your Name">
+                    <label>Your Name</label>
+                    <input type="text" id="feedback-name" required placeholder="John Doe">
                 </div>
+                
+                <div class="form-group">
+                    <label>Rating</label>
+                    <div class="rating-input-group">
+                        <i class="fas fa-star star-btn" data-value="1"></i>
+                        <i class="fas fa-star star-btn" data-value="2"></i>
+                        <i class="fas fa-star star-btn" data-value="3"></i>
+                        <i class="fas fa-star star-btn" data-value="4"></i>
+                        <i class="fas fa-star star-btn active" data-value="5"></i>
+                    </div>
+                    <input type="hidden" id="feedback-rating" value="5">
+                </div>
+
                 <div class="form-group">
                     <label>Message</label>
-                    <textarea id="feedback-message" rows="4" required placeholder="Your experience working with me..."></textarea>
+                    <textarea id="feedback-message" rows="4" required placeholder="Describe your experience..."></textarea>
                 </div>
+                
                 <button type="submit" class="btn-primary full-width">Submit Review</button>
             </form>
         </div>
@@ -458,3 +471,4 @@
     <script type="module" src="script.js"></script>
 </body>
 </html>
+<!-- service_vd9njvm -->

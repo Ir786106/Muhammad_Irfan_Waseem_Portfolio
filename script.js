@@ -1,11 +1,7 @@
-// --- Import Firebase (Standard Modular SDK) ---
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-app.js";
 import { getFirestore, collection, addDoc, getDocs, query, orderBy, limit } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-firestore.js";
 import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-analytics.js";
 
-/* =========================================================
-   FIREBASE CONFIGURATION (Verified)
-   ========================================================= */
 const firebaseConfig = {
     apiKey: "AIzaSyAJsGuQRpzpfWHszomeg0q_dtUZkeBh0Go",
     authDomain: "irfan-portfolio-ae62a.firebaseapp.com",
@@ -16,7 +12,19 @@ const firebaseConfig = {
     measurementId: "G-FX3Q38PZT6"
 };
 
-// Initialize Firebase
+const EMAILJS_PUBLIC_KEY = "T6t0E0wX4gRcBmMAJ";      
+const EMAILJS_SERVICE_ID = "service_vd9njvm";         
+const EMAILJS_NOTIFY_TEMPLATE_ID = "template_l7f804p"; 
+const EMAILJS_AUTO_REPLY_TEMPLATE_ID = "template_9njvygb"; 
+
+(function() {
+    if (typeof emailjs !== 'undefined') {
+        emailjs.init(EMAILJS_PUBLIC_KEY);
+    } else {
+        console.warn("EmailJS SDK not loaded. Check index.html");
+    }
+})();
+
 let db;
 let analytics;
 
@@ -29,42 +37,46 @@ try {
     console.warn("System Status: Demo Mode (Connection Failed).", e);
 }
 
-// --- UI UTILITIES ---
+const stars = document.querySelectorAll('.star-btn');
+const ratingInput = document.getElementById('feedback-rating');
 
-// 1. Professional Toast Notification (Replaces Alerts)
+if (stars.length > 0) {
+    stars.forEach(star => {
+        star.addEventListener('click', () => {
+            const value = parseInt(star.dataset.value);
+            if(ratingInput) ratingInput.value = value;
+            
+            stars.forEach(s => {
+                const sVal = parseInt(s.dataset.value);
+                if (sVal <= value) {
+                    s.classList.add('active');
+                } else {
+                    s.classList.remove('active');
+                }
+            });
+        });
+    });
+}
+
+
 function showToast(message, type = 'success') {
-    // Create element
     const toast = document.createElement('div');
     toast.className = `toast-notification ${type}`;
     toast.innerText = message;
     
-    // Style dynamically (so you don't need to edit CSS)
     Object.assign(toast.style, {
-        position: 'fixed',
-        bottom: '30px',
-        right: '30px',
+        position: 'fixed', bottom: '30px', right: '30px',
         background: type === 'success' ? '#10b981' : '#ef4444',
-        color: '#fff',
-        padding: '12px 24px',
-        borderRadius: '8px',
-        boxShadow: '0 10px 30px rgba(0,0,0,0.2)',
-        zIndex: '10002',
-        fontFamily: "'Outfit', sans-serif",
-        fontWeight: '500',
-        transform: 'translateY(100px)',
-        opacity: '0',
-        transition: 'all 0.4s cubic-bezier(0.16, 1, 0.3, 1)'
+        color: '#fff', padding: '12px 24px', borderRadius: '8px',
+        zIndex: '10002', fontFamily: "'Outfit', sans-serif", fontWeight: '500',
+        transform: 'translateY(100px)', opacity: '0', transition: 'all 0.4s cubic-bezier(0.16, 1, 0.3, 1)'
     });
 
     document.body.appendChild(toast);
-
-    // Animate In
     requestAnimationFrame(() => {
         toast.style.transform = 'translateY(0)';
         toast.style.opacity = '1';
     });
-
-    // Remove after 3 seconds
     setTimeout(() => {
         toast.style.transform = 'translateY(20px)';
         toast.style.opacity = '0';
@@ -72,38 +84,31 @@ function showToast(message, type = 'success') {
     }, 3000);
 }
 
-// 2. Preloader with Smooth Fade
 window.addEventListener('load', () => {
     const preloader = document.querySelector('.preloader');
-    gsap.to(preloader, {
-        opacity: 0,
-        duration: 0.8,
-        ease: "power2.inOut",
-        onComplete: () => {
-            preloader.style.visibility = 'hidden';
-            initAnimations(); 
-            fetchTestimonials(); 
-        }
-    });
+    if(preloader) {
+        gsap.to(preloader, {
+            opacity: 0, duration: 0.8, ease: "power2.inOut",
+            onComplete: () => {
+                preloader.style.visibility = 'hidden';
+                initAnimations(); 
+                fetchTestimonials(); 
+            }
+        });
+    }
 });
 
-// 3. High-Performance Cursor (Using GSAP quickTo)
 const cursorDot = document.querySelector('.cursor-dot');
 const cursorOutline = document.querySelector('.cursor-outline');
-
-// Optimize movement
 let xTo = gsap.quickTo(cursorOutline, "left", { duration: 0.2, ease: "power3" }),
     yTo = gsap.quickTo(cursorOutline, "top", { duration: 0.2, ease: "power3" });
 
 window.addEventListener('mousemove', (e) => {
-    // Dot follows instantly
     gsap.set(cursorDot, { left: e.clientX, top: e.clientY });
-    // Outline follows smoothly
     xTo(e.clientX);
     yTo(e.clientY);
 });
 
-// Hover Magnet Effect for Buttons
 const magnets = document.querySelectorAll('.btn-primary, .social-icon, .nav-link');
 magnets.forEach((magnet) => {
     magnet.addEventListener('mousemove', (e) => {
@@ -119,43 +124,42 @@ magnets.forEach((magnet) => {
     });
 });
 
-// 4. Theme Toggle
 const themeBtn = document.getElementById('theme-toggle');
 const html = document.documentElement;
 const savedTheme = localStorage.getItem('theme') || 'dark';
 
 html.setAttribute('data-theme', savedTheme);
 
-themeBtn.addEventListener('click', () => {
-    const current = html.getAttribute('data-theme');
-    const next = current === 'dark' ? 'light' : 'dark';
-    html.setAttribute('data-theme', next);
-    localStorage.setItem('theme', next);
-    
-    // Rotate Icon Animation
-    gsap.fromTo(themeBtn.querySelector('i'), { rotate: -90, scale: 0 }, { rotate: 0, scale: 1, duration: 0.4 });
-});
+if(themeBtn) {
+    themeBtn.addEventListener('click', () => {
+        const current = html.getAttribute('data-theme');
+        const next = current === 'dark' ? 'light' : 'dark';
+        html.setAttribute('data-theme', next);
+        localStorage.setItem('theme', next);
+        gsap.fromTo(themeBtn.querySelector('i'), { rotate: -90, scale: 0 }, { rotate: 0, scale: 1, duration: 0.4 });
+    });
+}
 
-// 5. Mobile Menu
 const hamburger = document.querySelector('.hamburger');
 const mobileMenu = document.querySelector('.mobile-menu');
 
-hamburger.addEventListener('click', () => {
-    hamburger.classList.toggle('active');
-    mobileMenu.classList.toggle('active');
-    
-    if(mobileMenu.classList.contains('active')) {
-        gsap.to(".bar:nth-child(1)", { rotate: 45, y: 8, duration: 0.3 });
-        gsap.to(".bar:nth-child(2)", { rotate: -45, y: -8, duration: 0.3 });
-        // Stagger links entrance
-        gsap.fromTo(".mobile-links li", 
-            { y: 20, opacity: 0 }, 
-            { y: 0, opacity: 1, duration: 0.4, stagger: 0.1, delay: 0.2 }
-        );
-    } else {
-        gsap.to(".bar", { rotate: 0, y: 0, duration: 0.3 });
-    }
-});
+if(hamburger) {
+    hamburger.addEventListener('click', () => {
+        hamburger.classList.toggle('active');
+        mobileMenu.classList.toggle('active');
+        
+        if(mobileMenu.classList.contains('active')) {
+            gsap.to(".bar:nth-child(1)", { rotate: 45, y: 8, duration: 0.3 });
+            gsap.to(".bar:nth-child(2)", { rotate: -45, y: -8, duration: 0.3 });
+            gsap.fromTo(".mobile-links li", 
+                { y: 20, opacity: 0 }, 
+                { y: 0, opacity: 1, duration: 0.4, stagger: 0.1, delay: 0.2 }
+            );
+        } else {
+            gsap.to(".bar", { rotate: 0, y: 0, duration: 0.3 });
+        }
+    });
+}
 
 document.querySelectorAll('.mobile-links a').forEach(link => {
     link.addEventListener('click', () => {
@@ -165,7 +169,6 @@ document.querySelectorAll('.mobile-links a').forEach(link => {
     });
 });
 
-// 6. Project Filter
 const filterBtns = document.querySelectorAll('.filter-btn');
 const projectCards = document.querySelectorAll('.project-card');
 
@@ -173,7 +176,6 @@ filterBtns.forEach(btn => {
     btn.addEventListener('click', () => {
         document.querySelector('.filter-btn.active').classList.remove('active');
         btn.classList.add('active');
-        
         const filter = btn.dataset.filter;
         
         projectCards.forEach(card => {
@@ -188,40 +190,12 @@ filterBtns.forEach(btn => {
     });
 });
 
-// --- ANIMATIONS (GSAP) ---
-gsap.registerPlugin(ScrollTrigger);
-
-function initAnimations() {
-    // Hero Elements Stagger
-    const tl = gsap.timeline();
-    tl.from(".hero-title", { opacity: 0, y: 50, duration: 1, ease: "power3.out" })
-      .from(".hero-subtitle", { opacity: 0, y: 20, duration: 0.8 }, "-=0.6")
-      .from(".hero-btns", { opacity: 0, y: 20, duration: 0.8 }, "-=0.6")
-      .from(".profile-card", { opacity: 0, scale: 0.9, rotation: -5, duration: 1, ease: "back.out(1.7)" }, "-=0.8");
-
-    // Sections Headers
-    gsap.utils.toArray('.section-title').forEach(title => {
-        gsap.from(title, {
-            scrollTrigger: { trigger: title, start: "top 85%" },
-            opacity: 0, y: 40, duration: 0.8, ease: "power3.out"
-        });
-    });
-
-    // Stagger Cards (Projects, Skills)
-    gsap.utils.toArray('.projects-grid, .skills-showcase, .gallery-grid').forEach(grid => {
-        gsap.from(grid.children, {
-            scrollTrigger: { trigger: grid, start: "top 85%" },
-            opacity: 0, y: 30, duration: 0.8, stagger: 0.1, ease: "power3.out"
-        });
-    });
-}
-
-// --- MODALS & LIGHTBOX ---
 window.openModal = (id) => {
     const modal = document.getElementById(id);
-    modal.style.display = 'flex';
-    // Small delay to allow display:flex to apply before adding class for transition
-    requestAnimationFrame(() => modal.classList.add('active'));
+    if(modal) {
+        modal.style.display = 'flex';
+        requestAnimationFrame(() => modal.classList.add('active'));
+    }
 };
 
 document.querySelectorAll('.close-modal').forEach(btn => {
@@ -239,9 +213,30 @@ window.openLightbox = (el) => {
 };
 window.closeLightbox = () => document.getElementById('lightbox').style.display = 'none';
 
-// --- FIREBASE INTERACTIONS ---
+gsap.registerPlugin(ScrollTrigger);
 
-// Fetch Reviews
+function initAnimations() {
+    const tl = gsap.timeline();
+    tl.from(".hero-title", { opacity: 0, y: 50, duration: 1, ease: "power3.out" })
+      .from(".hero-subtitle", { opacity: 0, y: 20, duration: 0.8 }, "-=0.6")
+      .from(".hero-btns", { opacity: 0, y: 20, duration: 0.8 }, "-=0.6")
+      .from(".profile-card", { opacity: 0, scale: 0.9, rotation: -5, duration: 1, ease: "back.out(1.7)" }, "-=0.8");
+
+    gsap.utils.toArray('.section-title').forEach(title => {
+        gsap.from(title, {
+            scrollTrigger: { trigger: title, start: "top 85%" },
+            opacity: 0, y: 40, duration: 0.8, ease: "power3.out"
+        });
+    });
+
+    gsap.utils.toArray('.projects-grid, .skills-showcase, .gallery-grid').forEach(grid => {
+        gsap.from(grid.children, {
+            scrollTrigger: { trigger: grid, start: "top 85%" },
+            opacity: 0, y: 30, duration: 0.8, stagger: 0.1, ease: "power3.out"
+        });
+    });
+}
+
 async function fetchTestimonials() {
     if (!db) return;
     const container = document.getElementById('testimonial-container');
@@ -254,9 +249,16 @@ async function fetchTestimonials() {
             container.innerHTML = '';
             snapshot.forEach(doc => {
                 const data = doc.data();
+                
+                let starsHTML = '';
+                const rating = data.rating || 5; 
+                for(let i=0; i<rating; i++) {
+                    starsHTML += '★';
+                }
+
                 container.innerHTML += `
                     <div class="review-card glass-panel" style="animation: slideUp 0.5s ease">
-                        <div class="stars" style="color:#fbbf24; margin-bottom:10px">★★★★★</div>
+                        <div class="stars">${starsHTML}</div>
                         <p style="font-style:italic; margin-bottom:15px">"${data.message}"</p>
                         <h5 style="font-weight:700">- ${data.name}</h5>
                     </div>
@@ -268,100 +270,116 @@ async function fetchTestimonials() {
     }
 }
 
-// Submit Feedback
-document.getElementById('feedbackForm').addEventListener('submit', async (e) => {
-    e.preventDefault();
-    const btn = e.target.querySelector('button');
-    const originalText = btn.innerText;
-    
-    btn.innerText = "Processing...";
-    btn.disabled = true;
-    
-    const name = document.getElementById('feedback-name').value;
-    const msg = document.getElementById('feedback-message').value;
+const feedbackForm = document.getElementById('feedbackForm');
+if(feedbackForm) {
+    feedbackForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const btn = e.target.querySelector('button');
+        const originalText = btn.innerText;
+        
+        btn.innerText = "Processing...";
+        btn.disabled = true;
+        
+        const name = document.getElementById('feedback-name').value;
+        const msg = document.getElementById('feedback-message').value;
+        const rating = document.getElementById('feedback-rating') ? document.getElementById('feedback-rating').value : 5;
 
-    if (db) {
-        try {
-            await addDoc(collection(db, "testimonials"), {
-                name: name,
-                message: msg,
-                date: new Date()
-            });
-            
-            showToast("Review submitted successfully!", "success");
-            
-            e.target.reset();
-            document.getElementById('feedback-modal').classList.remove('active');
-            setTimeout(() => document.getElementById('feedback-modal').style.display = 'none', 300);
-            fetchTestimonials();
-        } catch (err) {
-            showToast("Error submitting review.", "error");
-            console.error(err);
+        if (db) {
+            try {
+                await addDoc(collection(db, "testimonials"), {
+                    name: name,
+                    message: msg,
+                    rating: parseInt(rating),
+                    date: new Date()
+                });
+                
+                showToast("Review submitted successfully!", "success");
+                e.target.reset();
+
+                if(stars.length > 0) {
+                    stars.forEach(s => s.classList.add('active'));
+                    if(ratingInput) ratingInput.value = 5;
+                }
+
+                document.getElementById('feedback-modal').classList.remove('active');
+                setTimeout(() => document.getElementById('feedback-modal').style.display = 'none', 300);
+                fetchTestimonials();
+            } catch (err) {
+                showToast("Error submitting review.", "error");
+                console.error(err);
+            }
+        } else {
+            showToast("Demo Mode: Firebase not connected.", "error");
         }
-    } else {
-        showToast("Demo Mode: Firebase not connected.", "error");
-    }
-    
-    btn.innerText = originalText;
-    btn.disabled = false;
-});
+        
+        btn.innerText = originalText;
+        btn.disabled = false;
+    });
+}
 
-// Contact Form
-document.getElementById('contactForm').addEventListener('submit', async (e) => {
-    e.preventDefault();
-    const btn = e.target.querySelector('button');
-    const originalText = btn.innerText;
-    
-    btn.innerText = "Sending...";
-    btn.disabled = true;
-    
-    const data = {
-        name: document.getElementById('name').value,
-        email: document.getElementById('email').value,
-        message: document.getElementById('message').value,
-        date: new Date()
-    };
+const contactForm = document.getElementById('contactForm');
+if(contactForm) {
+    contactForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const btn = e.target.querySelector('button');
+        const originalText = btn.innerText;
+        
+        btn.innerText = "Sending...";
+        btn.disabled = true;
+        
+        const name = document.getElementById('name').value;
+        const email = document.getElementById('email').value;
+        const message = document.getElementById('message').value;
+        
+        const data = {
+            name: name,
+            email: email,
+            message: message,
+            date: new Date()
+        };
 
-    if (db) {
+        const emailParams = {
+            from_name: name, 
+            name: name,           
+            from_email: email,
+            message: message,
+            title: message,      
+            date: new Date().toLocaleString()
+        };
+
         try {
-            await addDoc(collection(db, "contacts"), data);
-            showToast("Message Sent! I'll contact you soon.", "success");
+            const actions = [];
+            
+            if (db) {
+                actions.push(addDoc(collection(db, "contacts"), data));
+            }
+            if (typeof emailjs !== 'undefined') {
+                if(EMAILJS_NOTIFY_TEMPLATE_ID) {
+                    actions.push(emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_NOTIFY_TEMPLATE_ID, emailParams));
+                }
+
+                if(EMAILJS_AUTO_REPLY_TEMPLATE_ID) {
+                    actions.push(emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_AUTO_REPLY_TEMPLATE_ID, emailParams));
+                }
+            } else {
+                console.warn("EmailJS not configured properly.");
+            }
+
+            await Promise.all(actions);
+
+            showToast("Message Sent! Check your email.", "success");
             e.target.reset();
+
         } catch (err) {
-            showToast("Failed to send message.", "error");
-            console.error(err);
+            console.error("Error sending message:", err);
+            if(err.text) { 
+                showToast("Email failed, but message saved.", "warning");
+            } else {
+                showToast("Something went wrong. Try again.", "error");
+            }
+        } finally {
+            btn.innerText = originalText;
+            btn.disabled = false;
         }
-    } else {
-        showToast("Demo Mode: Message logged to console.", "success");
-        console.log(data);
-    }
-    
-    btn.innerText = originalText;
-    btn.disabled = false;
-});
-
-
-// // --- END OF SCRIPT.JS ---
-// //<script type="module">
-//   // Import the functions you need from the SDKs you need
-//  // import { initializeApp } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-app.js";
-//   import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-analytics.js";
-//   // TODO: Add SDKs for Firebase products that you want to use
-//   // https://firebase.google.com/docs/web/setup#available-libraries
-
-//   // Your web app's Firebase configuration
-//   // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-//   const firebaseConfig = {
-//     apiKey: "AIzaSyAJsGuQRpzpfWHszomeg0q_dtUZkeBh0Go",
-//     authDomain: "irfan-portfolio-ae62a.firebaseapp.com",
-//     projectId: "irfan-portfolio-ae62a",
-//     storageBucket: "irfan-portfolio-ae62a.firebasestorage.app",
-//     messagingSenderId: "220875740206",
-//     appId: "1:220875740206:web:4dc00c10fa86784b063bbf",
-//     measurementId: "G-FX3Q38PZT6"
-//   };
-
-//   // Initialize Firebase
-//   const app = initializeApp(firebaseConfig);
-//   const analytics = getAnalytics(app);
-// </script>
+    });
+}
