@@ -1,6 +1,7 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-app.js";
-import { getFirestore, collection, addDoc, getDocs, query, orderBy, limit } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-firestore.js";
+import { getFirestore, collection, addDoc, getDocs, query, orderBy, limit, where } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-firestore.js";
 import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-analytics.js";
+import { getAuth, signInWithPopup, GoogleAuthProvider, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-auth.js";
 
 const firebaseConfig = {
     apiKey: "AIzaSyAJsGuQRpzpfWHszomeg0q_dtUZkeBh0Go",
@@ -27,14 +28,72 @@ const EMAILJS_AUTO_REPLY_TEMPLATE_ID = "template_9njvygb";
 
 let db;
 let analytics;
+let auth;
+let currentUser = null;
 
 try {
     const app = initializeApp(firebaseConfig);
     db = getFirestore(app);
     analytics = getAnalytics(app);
-    console.log("System Status: Firebase Connected.");
+    auth = getAuth(app);
+    console.log("System Status: Firebase & Auth Connected.");
 } catch (e) {
     console.warn("System Status: Demo Mode (Connection Failed).", e);
+}
+
+const authLoading = document.getElementById('auth-loading');
+const authSection = document.getElementById('auth-section');
+const feedbackFormDisplay = document.getElementById('feedbackForm');
+const loginBtn = document.getElementById('google-login-btn');
+const logoutBtn = document.getElementById('logout-btn');
+
+if (auth) {
+    onAuthStateChanged(auth, (user) => {
+        if(authLoading) authLoading.style.display = 'none';
+        
+        if (user) {
+            currentUser = user;
+            showFeedbackUI(user);
+        } else {
+            currentUser = null;
+            showLoginUI();
+        }
+    });
+}
+
+function showFeedbackUI(user) {
+    if(authSection) authSection.style.display = 'none';
+    if(feedbackFormDisplay) {
+        feedbackFormDisplay.style.display = 'block';
+        document.getElementById('user-name-display').innerText = user.displayName;
+        document.getElementById('user-avatar').src = user.photoURL;
+    }
+}
+
+function showLoginUI() {
+    if(feedbackFormDisplay) feedbackFormDisplay.style.display = 'none';
+    if(authSection) authSection.style.display = 'block';
+}
+
+if(loginBtn) {
+    loginBtn.addEventListener('click', async () => {
+        const provider = new GoogleAuthProvider();
+        try {
+            await signInWithPopup(auth, provider);
+            showToast("Welcome back!", "success");
+        } catch (error) {
+            console.error(error);
+            showToast("Login Failed.", "error");
+        }
+    });
+}
+
+if(logoutBtn) {
+    logoutBtn.addEventListener('click', () => {
+        signOut(auth).then(() => {
+            showToast("Logged out successfully.", "success");
+        });
+    });
 }
 
 const stars = document.querySelectorAll('.star-btn');
@@ -58,6 +117,73 @@ if (stars.length > 0) {
     });
 }
 
+const feedbackForm = document.getElementById('feedbackForm');
+if(feedbackForm) {
+    feedbackForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        
+        if (!currentUser) {
+            showToast("Please login first.", "error");
+            return;
+        }
+
+        const btn = e.target.querySelector('button[type="submit"]');
+        const originalText = btn.innerText;
+        btn.innerText = "Processing...";
+        btn.disabled = true;
+        
+        const msg = document.getElementById('feedback-message').value;
+        const rating = document.getElementById('feedback-rating') ? document.getElementById('feedback-rating').value : 5;
+
+        if (db) {
+            try {
+                const q = query(collection(db, "testimonials"), where("uid", "==", currentUser.uid));
+                const existingDocs = await getDocs(q);
+
+                if (!existingDocs.empty) {
+                    showToast("You have already submitted a review.", "warning");
+                    closeFeedbackModal();
+                } else {
+                    await addDoc(collection(db, "testimonials"), {
+                        uid: currentUser.uid,
+                        name: currentUser.displayName,
+                        photo: currentUser.photoURL,
+                        message: msg,
+                        rating: parseInt(rating),
+                        date: new Date()
+                    });
+                    
+                    showToast("Review submitted successfully!", "success");
+                    e.target.reset();
+                    
+                    if(stars.length > 0) {
+                        stars.forEach(s => s.classList.add('active'));
+                        if(ratingInput) ratingInput.value = 5;
+                    }
+
+                    closeFeedbackModal();
+                    fetchTestimonials();
+                }
+            } catch (err) {
+                showToast("Error submitting review.", "error");
+                console.error(err);
+            }
+        } else {
+            showToast("Demo Mode: Firebase not connected.", "error");
+        }
+        
+        btn.innerText = originalText;
+        btn.disabled = false;
+    });
+}
+
+function closeFeedbackModal() {
+    const modal = document.getElementById('feedback-modal');
+    if(modal) {
+        modal.classList.remove('active');
+        setTimeout(() => modal.style.display = 'none', 300);
+    }
+}
 
 function showToast(message, type = 'success') {
     const toast = document.createElement('div');
@@ -218,9 +344,9 @@ gsap.registerPlugin(ScrollTrigger);
 function initAnimations() {
     const tl = gsap.timeline();
     tl.from(".hero-title", { opacity: 0, y: 50, duration: 1, ease: "power3.out" })
-      .from(".hero-subtitle", { opacity: 0, y: 20, duration: 0.8 }, "-=0.6")
-      .from(".hero-btns", { opacity: 0, y: 20, duration: 0.8 }, "-=0.6")
-      .from(".profile-card", { opacity: 0, scale: 0.9, rotation: -5, duration: 1, ease: "back.out(1.7)" }, "-=0.8");
+        .from(".hero-subtitle", { opacity: 0, y: 20, duration: 0.8 }, "-=0.6")
+        .from(".hero-btns", { opacity: 0, y: 20, duration: 0.8 }, "-=0.6")
+        .from(".profile-card", { opacity: 0, scale: 0.9, rotation: -5, duration: 1, ease: "back.out(1.7)" }, "-=0.8");
 
     gsap.utils.toArray('.section-title').forEach(title => {
         gsap.from(title, {
@@ -270,53 +396,6 @@ async function fetchTestimonials() {
     }
 }
 
-const feedbackForm = document.getElementById('feedbackForm');
-if(feedbackForm) {
-    feedbackForm.addEventListener('submit', async (e) => {
-        e.preventDefault();
-        const btn = e.target.querySelector('button');
-        const originalText = btn.innerText;
-        
-        btn.innerText = "Processing...";
-        btn.disabled = true;
-        
-        const name = document.getElementById('feedback-name').value;
-        const msg = document.getElementById('feedback-message').value;
-        const rating = document.getElementById('feedback-rating') ? document.getElementById('feedback-rating').value : 5;
-
-        if (db) {
-            try {
-                await addDoc(collection(db, "testimonials"), {
-                    name: name,
-                    message: msg,
-                    rating: parseInt(rating),
-                    date: new Date()
-                });
-                
-                showToast("Review submitted successfully!", "success");
-                e.target.reset();
-
-                if(stars.length > 0) {
-                    stars.forEach(s => s.classList.add('active'));
-                    if(ratingInput) ratingInput.value = 5;
-                }
-
-                document.getElementById('feedback-modal').classList.remove('active');
-                setTimeout(() => document.getElementById('feedback-modal').style.display = 'none', 300);
-                fetchTestimonials();
-            } catch (err) {
-                showToast("Error submitting review.", "error");
-                console.error(err);
-            }
-        } else {
-            showToast("Demo Mode: Firebase not connected.", "error");
-        }
-        
-        btn.innerText = originalText;
-        btn.disabled = false;
-    });
-}
-
 const contactForm = document.getElementById('contactForm');
 if(contactForm) {
     contactForm.addEventListener('submit', async (e) => {
@@ -362,7 +441,7 @@ if(contactForm) {
                     actions.push(emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_AUTO_REPLY_TEMPLATE_ID, emailParams));
                 }
             } else {
-                console.warn("EmailJS not configured properly.");
+                console.warn("EmailJS SDK not found. Make sure <script> tag is in index.html");
             }
 
             await Promise.all(actions);
