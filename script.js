@@ -3,8 +3,6 @@ import { getFirestore, collection, addDoc, getDocs, query, orderBy, limit, where
 import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-analytics.js";
 import { getAuth, signInWithPopup, GoogleAuthProvider, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-auth.js";
 
-// --- CONFIGURATION ---
-// Yahan apni Formspree ID ya poora Link paste karein
 const FORMSPREE_ENDPOINT = "https://formspree.io/f/xnnevkrd"; 
 
 const firebaseConfig = {
@@ -17,7 +15,6 @@ const firebaseConfig = {
     measurementId: "G-FX3Q38PZT6"
 };
 
-// --- INITIALIZATION ---
 let db, auth, analytics;
 let currentUser = null;
 
@@ -31,16 +28,12 @@ try {
     console.warn("System Status: Connection Failed.", e);
 }
 
-// ==========================================
-// 1. AUTHENTICATION & FEEDBACK LOGIC
-// ==========================================
 const authLoading = document.getElementById('auth-loading');
 const authSection = document.getElementById('auth-section');
 const feedbackFormDisplay = document.getElementById('feedbackForm');
 const loginBtn = document.getElementById('google-login-btn');
 const logoutBtn = document.getElementById('logout-btn');
 
-// Auto-Detect User Login Status
 if (auth) {
     onAuthStateChanged(auth, (user) => {
         if(authLoading) authLoading.style.display = 'none';
@@ -71,7 +64,6 @@ function showLoginUI() {
     if(authSection) authSection.style.display = 'block';
 }
 
-// Google Login
 if(loginBtn) {
     loginBtn.addEventListener('click', async () => {
         const provider = new GoogleAuthProvider();
@@ -85,7 +77,6 @@ if(loginBtn) {
     });
 }
 
-// Logout
 if(logoutBtn) {
     logoutBtn.addEventListener('click', () => {
         signOut(auth).then(() => {
@@ -115,8 +106,6 @@ if (stars.length > 0) {
         });
     });
 }
-
-// Feedback Submission (Secure & Duplicate Check)
 const feedbackForm = document.getElementById('feedbackForm');
 if(feedbackForm) {
     feedbackForm.addEventListener('submit', async (e) => {
@@ -169,9 +158,6 @@ if(feedbackForm) {
     });
 }
 
-// ==========================================
-// 2. CONTACT FORM (FORMSPREE - FREE & NO BACKEND)
-// ==========================================
 const contactForm = document.getElementById('contactForm');
 if(contactForm) {
     contactForm.addEventListener('submit', async (e) => {
@@ -187,14 +173,11 @@ if(contactForm) {
         const message = document.getElementById('message').value;
 
         try {
-            // 1. Save to Firebase (Backup - Optional)
             if (db) {
                 addDoc(collection(db, "contacts"), {
                     name, email, message, date: new Date()
                 }).catch(err => console.warn("Firebase backup failed", err));
             }
-
-            // 2. Send Email via Formspree
             const response = await fetch(FORMSPREE_ENDPOINT, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -217,10 +200,6 @@ if(contactForm) {
         }
     });
 }
-
-// ==========================================
-// 3. UTILITY FUNCTIONS
-// ==========================================
 
 function closeFeedbackModal() {
     const modal = document.getElementById('feedback-modal');
@@ -274,7 +253,6 @@ function showToast(message, type = 'success') {
     }, 3000);
 }
 
-// UI Animations
 window.addEventListener('load', () => {
     const preloader = document.querySelector('.preloader');
     if(preloader) {
