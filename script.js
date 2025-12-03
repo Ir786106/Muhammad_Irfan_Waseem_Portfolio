@@ -3,6 +3,10 @@ import { getFirestore, collection, addDoc, getDocs, query, orderBy, limit, where
 import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-analytics.js";
 import { getAuth, signInWithPopup, GoogleAuthProvider, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-auth.js";
 
+// --- CONFIGURATION ---
+// Yahan apni Formspree ID ya poora Link paste karein
+const FORMSPREE_ENDPOINT = "https://formspree.io/f/xnnevkrd"; 
+
 const firebaseConfig = {
     apiKey: "AIzaSyAJsGuQRpzpfWHszomeg0q_dtUZkeBh0Go",
     authDomain: "irfan-portfolio-ae62a.firebaseapp.com",
@@ -13,40 +17,30 @@ const firebaseConfig = {
     measurementId: "G-FX3Q38PZT6"
 };
 
-const EMAILJS_PUBLIC_KEY = "T6t0E0wX4gRcBmMAJ";      
-const EMAILJS_SERVICE_ID = "service_vd9njvm";         
-const EMAILJS_NOTIFY_TEMPLATE_ID = "template_l7f804p"; 
-const EMAILJS_AUTO_REPLY_TEMPLATE_ID = "template_9njvygb"; 
-
-(function() {
-    if (typeof emailjs !== 'undefined') {
-        emailjs.init(EMAILJS_PUBLIC_KEY);
-    } else {
-        console.warn("EmailJS SDK not loaded. Check index.html");
-    }
-})();
-
-let db;
-let analytics;
-let auth;
+// --- INITIALIZATION ---
+let db, auth, analytics;
 let currentUser = null;
 
 try {
     const app = initializeApp(firebaseConfig);
     db = getFirestore(app);
-    analytics = getAnalytics(app);
     auth = getAuth(app);
-    console.log("System Status: Firebase & Auth Connected.");
+    analytics = getAnalytics(app);
+    console.log("System Status: Firebase Connected.");
 } catch (e) {
-    console.warn("System Status: Demo Mode (Connection Failed).", e);
+    console.warn("System Status: Connection Failed.", e);
 }
 
+// ==========================================
+// 1. AUTHENTICATION & FEEDBACK LOGIC
+// ==========================================
 const authLoading = document.getElementById('auth-loading');
 const authSection = document.getElementById('auth-section');
 const feedbackFormDisplay = document.getElementById('feedbackForm');
 const loginBtn = document.getElementById('google-login-btn');
 const logoutBtn = document.getElementById('logout-btn');
 
+// Auto-Detect User Login Status
 if (auth) {
     onAuthStateChanged(auth, (user) => {
         if(authLoading) authLoading.style.display = 'none';
@@ -65,8 +59,10 @@ function showFeedbackUI(user) {
     if(authSection) authSection.style.display = 'none';
     if(feedbackFormDisplay) {
         feedbackFormDisplay.style.display = 'block';
-        document.getElementById('user-name-display').innerText = user.displayName;
-        document.getElementById('user-avatar').src = user.photoURL;
+        const nameEl = document.getElementById('user-name-display');
+        const imgEl = document.getElementById('user-avatar');
+        if(nameEl) nameEl.innerText = user.displayName;
+        if(imgEl) imgEl.src = user.photoURL;
     }
 }
 
@@ -75,6 +71,7 @@ function showLoginUI() {
     if(authSection) authSection.style.display = 'block';
 }
 
+// Google Login
 if(loginBtn) {
     loginBtn.addEventListener('click', async () => {
         const provider = new GoogleAuthProvider();
@@ -82,12 +79,13 @@ if(loginBtn) {
             await signInWithPopup(auth, provider);
             showToast("Welcome back!", "success");
         } catch (error) {
-            console.error(error);
+            console.error("Login Error:", error);
             showToast("Login Failed.", "error");
         }
     });
 }
 
+// Logout
 if(logoutBtn) {
     logoutBtn.addEventListener('click', () => {
         signOut(auth).then(() => {
@@ -96,6 +94,7 @@ if(logoutBtn) {
     });
 }
 
+// Star Rating Logic
 const stars = document.querySelectorAll('.star-btn');
 const ratingInput = document.getElementById('feedback-rating');
 
@@ -117,6 +116,7 @@ if (stars.length > 0) {
     });
 }
 
+// Feedback Submission (Secure & Duplicate Check)
 const feedbackForm = document.getElementById('feedbackForm');
 if(feedbackForm) {
     feedbackForm.addEventListener('submit', async (e) => {
@@ -155,12 +155,7 @@ if(feedbackForm) {
                     
                     showToast("Review submitted successfully!", "success");
                     e.target.reset();
-                    
-                    if(stars.length > 0) {
-                        stars.forEach(s => s.classList.add('active'));
-                        if(ratingInput) ratingInput.value = 5;
-                    }
-
+                    if(stars.length > 0) stars.forEach(s => s.classList.add('active'));
                     closeFeedbackModal();
                     fetchTestimonials();
                 }
@@ -168,14 +163,64 @@ if(feedbackForm) {
                 showToast("Error submitting review.", "error");
                 console.error(err);
             }
-        } else {
-            showToast("Demo Mode: Firebase not connected.", "error");
         }
-        
         btn.innerText = originalText;
         btn.disabled = false;
     });
 }
+
+// ==========================================
+// 2. CONTACT FORM (FORMSPREE - FREE & NO BACKEND)
+// ==========================================
+const contactForm = document.getElementById('contactForm');
+if(contactForm) {
+    contactForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const btn = e.target.querySelector('button');
+        const originalText = btn.innerText;
+        
+        btn.innerText = "Sending...";
+        btn.disabled = true;
+        
+        const name = document.getElementById('name').value;
+        const email = document.getElementById('email').value;
+        const message = document.getElementById('message').value;
+
+        try {
+            // 1. Save to Firebase (Backup - Optional)
+            if (db) {
+                addDoc(collection(db, "contacts"), {
+                    name, email, message, date: new Date()
+                }).catch(err => console.warn("Firebase backup failed", err));
+            }
+
+            // 2. Send Email via Formspree
+            const response = await fetch(FORMSPREE_ENDPOINT, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ name, email, message })
+            });
+
+            if (response.ok) {
+                showToast("Message Sent! I'll contact you soon.", "success");
+                e.target.reset();
+            } else {
+                showToast("Failed to send email. Try again.", "error");
+            }
+
+        } catch (err) {
+            console.error("Error:", err);
+            showToast("Something went wrong.", "error");
+        } finally {
+            btn.innerText = originalText;
+            btn.disabled = false;
+        }
+    });
+}
+
+// ==========================================
+// 3. UTILITY FUNCTIONS
+// ==========================================
 
 function closeFeedbackModal() {
     const modal = document.getElementById('feedback-modal');
@@ -185,31 +230,51 @@ function closeFeedbackModal() {
     }
 }
 
+async function fetchTestimonials() {
+    if (!db) return;
+    const container = document.getElementById('testimonial-container');
+    try {
+        const q = query(collection(db, "testimonials"), orderBy("date", "desc"), limit(4));
+        const snapshot = await getDocs(q);
+        if (!snapshot.empty) {
+            container.innerHTML = '';
+            snapshot.forEach(doc => {
+                const data = doc.data();
+                let starsHTML = '★'.repeat(data.rating || 5);
+                container.innerHTML += `
+                    <div class="review-card glass-panel" style="animation: slideUp 0.5s ease">
+                        <div class="stars">${starsHTML}</div>
+                        <p style="font-style:italic; margin-bottom:15px">"${data.message}"</p>
+                        <h5 style="font-weight:700">- ${data.name}</h5>
+                    </div>`;
+            });
+        }
+    } catch (err) { console.error("Reviews Error:", err); }
+}
+
 function showToast(message, type = 'success') {
     const toast = document.createElement('div');
     toast.className = `toast-notification ${type}`;
     toast.innerText = message;
     
+    const bgColor = type === 'success' ? '#10b981' : (type === 'warning' ? '#f59e0b' : '#ef4444');
+
     Object.assign(toast.style, {
         position: 'fixed', bottom: '30px', right: '30px',
-        background: type === 'success' ? '#10b981' : '#ef4444',
+        background: bgColor,
         color: '#fff', padding: '12px 24px', borderRadius: '8px',
         zIndex: '10002', fontFamily: "'Outfit', sans-serif", fontWeight: '500',
         transform: 'translateY(100px)', opacity: '0', transition: 'all 0.4s cubic-bezier(0.16, 1, 0.3, 1)'
     });
-
     document.body.appendChild(toast);
-    requestAnimationFrame(() => {
-        toast.style.transform = 'translateY(0)';
-        toast.style.opacity = '1';
-    });
+    requestAnimationFrame(() => { toast.style.transform = 'translateY(0)'; toast.style.opacity = '1'; });
     setTimeout(() => {
-        toast.style.transform = 'translateY(20px)';
-        toast.style.opacity = '0';
+        toast.style.transform = 'translateY(20px)'; toast.style.opacity = '0';
         setTimeout(() => toast.remove(), 400);
     }, 3000);
 }
 
+// UI Animations
 window.addEventListener('load', () => {
     const preloader = document.querySelector('.preloader');
     if(preloader) {
@@ -217,24 +282,19 @@ window.addEventListener('load', () => {
             opacity: 0, duration: 0.8, ease: "power2.inOut",
             onComplete: () => {
                 preloader.style.visibility = 'hidden';
-                initAnimations(); 
-                fetchTestimonials(); 
+                initAnimations(); fetchTestimonials(); 
             }
         });
     }
 });
-
 const cursorDot = document.querySelector('.cursor-dot');
 const cursorOutline = document.querySelector('.cursor-outline');
 let xTo = gsap.quickTo(cursorOutline, "left", { duration: 0.2, ease: "power3" }),
     yTo = gsap.quickTo(cursorOutline, "top", { duration: 0.2, ease: "power3" });
-
 window.addEventListener('mousemove', (e) => {
     gsap.set(cursorDot, { left: e.clientX, top: e.clientY });
-    xTo(e.clientX);
-    yTo(e.clientY);
+    xTo(e.clientX); yTo(e.clientY);
 });
-
 const magnets = document.querySelectorAll('.btn-primary, .social-icon, .nav-link');
 magnets.forEach((magnet) => {
     magnet.addEventListener('mousemove', (e) => {
@@ -249,13 +309,10 @@ magnets.forEach((magnet) => {
         gsap.to(cursorOutline, { scale: 1, borderColor: 'var(--text-muted)', backgroundColor: 'transparent', duration: 0.3 });
     });
 });
-
 const themeBtn = document.getElementById('theme-toggle');
 const html = document.documentElement;
 const savedTheme = localStorage.getItem('theme') || 'dark';
-
 html.setAttribute('data-theme', savedTheme);
-
 if(themeBtn) {
     themeBtn.addEventListener('click', () => {
         const current = html.getAttribute('data-theme');
@@ -265,28 +322,21 @@ if(themeBtn) {
         gsap.fromTo(themeBtn.querySelector('i'), { rotate: -90, scale: 0 }, { rotate: 0, scale: 1, duration: 0.4 });
     });
 }
-
 const hamburger = document.querySelector('.hamburger');
 const mobileMenu = document.querySelector('.mobile-menu');
-
 if(hamburger) {
     hamburger.addEventListener('click', () => {
         hamburger.classList.toggle('active');
         mobileMenu.classList.toggle('active');
-        
         if(mobileMenu.classList.contains('active')) {
             gsap.to(".bar:nth-child(1)", { rotate: 45, y: 8, duration: 0.3 });
             gsap.to(".bar:nth-child(2)", { rotate: -45, y: -8, duration: 0.3 });
-            gsap.fromTo(".mobile-links li", 
-                { y: 20, opacity: 0 }, 
-                { y: 0, opacity: 1, duration: 0.4, stagger: 0.1, delay: 0.2 }
-            );
+            gsap.fromTo(".mobile-links li", { y: 20, opacity: 0 }, { y: 0, opacity: 1, duration: 0.4, stagger: 0.1, delay: 0.2 });
         } else {
             gsap.to(".bar", { rotate: 0, y: 0, duration: 0.3 });
         }
     });
 }
-
 document.querySelectorAll('.mobile-links a').forEach(link => {
     link.addEventListener('click', () => {
         mobileMenu.classList.remove('active');
@@ -294,36 +344,26 @@ document.querySelectorAll('.mobile-links a').forEach(link => {
         gsap.to(".bar", { rotate: 0, y: 0 });
     });
 });
-
 const filterBtns = document.querySelectorAll('.filter-btn');
 const projectCards = document.querySelectorAll('.project-card');
-
 filterBtns.forEach(btn => {
     btn.addEventListener('click', () => {
         document.querySelector('.filter-btn.active').classList.remove('active');
         btn.classList.add('active');
         const filter = btn.dataset.filter;
-        
         projectCards.forEach(card => {
             const category = card.dataset.category;
             if (filter === 'all' || category === filter) {
                 card.style.display = 'flex';
                 gsap.fromTo(card, { opacity: 0, scale: 0.95 }, { opacity: 1, scale: 1, duration: 0.4, ease: "power2.out" });
-            } else {
-                card.style.display = 'none';
-            }
+            } else { card.style.display = 'none'; }
         });
     });
 });
-
 window.openModal = (id) => {
     const modal = document.getElementById(id);
-    if(modal) {
-        modal.style.display = 'flex';
-        requestAnimationFrame(() => modal.classList.add('active'));
-    }
+    if(modal) { modal.style.display = 'flex'; requestAnimationFrame(() => modal.classList.add('active')); }
 };
-
 document.querySelectorAll('.close-modal').forEach(btn => {
     btn.addEventListener('click', function() {
         const modal = this.closest('.modal-overlay');
@@ -331,134 +371,23 @@ document.querySelectorAll('.close-modal').forEach(btn => {
         setTimeout(() => modal.style.display = 'none', 300);
     });
 });
-
 window.openLightbox = (el) => {
     const src = el.querySelector('img').src;
     document.getElementById('lightbox-img').src = src;
     document.getElementById('lightbox').style.display = 'flex';
 };
 window.closeLightbox = () => document.getElementById('lightbox').style.display = 'none';
-
 gsap.registerPlugin(ScrollTrigger);
-
 function initAnimations() {
     const tl = gsap.timeline();
     tl.from(".hero-title", { opacity: 0, y: 50, duration: 1, ease: "power3.out" })
-        .from(".hero-subtitle", { opacity: 0, y: 20, duration: 0.8 }, "-=0.6")
-        .from(".hero-btns", { opacity: 0, y: 20, duration: 0.8 }, "-=0.6")
-        .from(".profile-card", { opacity: 0, scale: 0.9, rotation: -5, duration: 1, ease: "back.out(1.7)" }, "-=0.8");
-
+      .from(".hero-subtitle", { opacity: 0, y: 20, duration: 0.8 }, "-=0.6")
+      .from(".hero-btns", { opacity: 0, y: 20, duration: 0.8 }, "-=0.6")
+      .from(".profile-card", { opacity: 0, scale: 0.9, rotation: -5, duration: 1, ease: "back.out(1.7)" }, "-=0.8");
     gsap.utils.toArray('.section-title').forEach(title => {
-        gsap.from(title, {
-            scrollTrigger: { trigger: title, start: "top 85%" },
-            opacity: 0, y: 40, duration: 0.8, ease: "power3.out"
-        });
+        gsap.from(title, { scrollTrigger: { trigger: title, start: "top 85%" }, opacity: 0, y: 40, duration: 0.8, ease: "power3.out" });
     });
-
     gsap.utils.toArray('.projects-grid, .skills-showcase, .gallery-grid').forEach(grid => {
-        gsap.from(grid.children, {
-            scrollTrigger: { trigger: grid, start: "top 85%" },
-            opacity: 0, y: 30, duration: 0.8, stagger: 0.1, ease: "power3.out"
-        });
-    });
-}
-
-async function fetchTestimonials() {
-    if (!db) return;
-    const container = document.getElementById('testimonial-container');
-    
-    try {
-        const q = query(collection(db, "testimonials"), orderBy("date", "desc"), limit(4));
-        const snapshot = await getDocs(q);
-        
-        if (!snapshot.empty) {
-            container.innerHTML = '';
-            snapshot.forEach(doc => {
-                const data = doc.data();
-                
-                let starsHTML = '';
-                const rating = data.rating || 5; 
-                for(let i=0; i<rating; i++) {
-                    starsHTML += '★';
-                }
-
-                container.innerHTML += `
-                    <div class="review-card glass-panel" style="animation: slideUp 0.5s ease">
-                        <div class="stars">${starsHTML}</div>
-                        <p style="font-style:italic; margin-bottom:15px">"${data.message}"</p>
-                        <h5 style="font-weight:700">- ${data.name}</h5>
-                    </div>
-                `;
-            });
-        }
-    } catch (err) {
-        console.error("Reviews Error:", err);
-    }
-}
-
-const contactForm = document.getElementById('contactForm');
-if(contactForm) {
-    contactForm.addEventListener('submit', async (e) => {
-        e.preventDefault();
-        const btn = e.target.querySelector('button');
-        const originalText = btn.innerText;
-        
-        btn.innerText = "Sending...";
-        btn.disabled = true;
-        
-        const name = document.getElementById('name').value;
-        const email = document.getElementById('email').value;
-        const message = document.getElementById('message').value;
-        
-        const data = {
-            name: name,
-            email: email,
-            message: message,
-            date: new Date()
-        };
-
-        const emailParams = {
-            from_name: name, 
-            name: name,           
-            from_email: email,
-            message: message,
-            title: message,      
-            date: new Date().toLocaleString()
-        };
-
-        try {
-            const actions = [];
-            
-            if (db) {
-                actions.push(addDoc(collection(db, "contacts"), data));
-            }
-            if (typeof emailjs !== 'undefined') {
-                if(EMAILJS_NOTIFY_TEMPLATE_ID) {
-                    actions.push(emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_NOTIFY_TEMPLATE_ID, emailParams));
-                }
-
-                if(EMAILJS_AUTO_REPLY_TEMPLATE_ID) {
-                    actions.push(emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_AUTO_REPLY_TEMPLATE_ID, emailParams));
-                }
-            } else {
-                console.warn("EmailJS SDK not found. Make sure <script> tag is in index.html");
-            }
-
-            await Promise.all(actions);
-
-            showToast("Message Sent! Check your email.", "success");
-            e.target.reset();
-
-        } catch (err) {
-            console.error("Error sending message:", err);
-            if(err.text) { 
-                showToast("Email failed, but message saved.", "warning");
-            } else {
-                showToast("Something went wrong. Try again.", "error");
-            }
-        } finally {
-            btn.innerText = originalText;
-            btn.disabled = false;
-        }
+        gsap.from(grid.children, { scrollTrigger: { trigger: grid, start: "top 85%" }, opacity: 0, y: 30, duration: 0.8, stagger: 0.1, ease: "power3.out" });
     });
 }
