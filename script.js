@@ -1,4 +1,4 @@
-// --- 1. Fixed Imports (Version 10.12.2 & Added Missing Functions) ---
+// --- FIXED IMPORTS (Version 10.12.2 & Added updateDoc/doc) ---
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 import { getFirestore, collection, addDoc, getDocs, query, orderBy, limit, where, updateDoc, doc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-analytics.js";
@@ -108,7 +108,6 @@ if (stars.length > 0) {
     });
 }
 
-// --- Feedback Submission Logic (Fixed) ---
 const feedbackForm = document.getElementById('feedbackForm');
 if(feedbackForm) {
     feedbackForm.addEventListener('submit', async (e) => {
@@ -140,7 +139,6 @@ if(feedbackForm) {
                     const lastDoc = snapshot.docs[0];
                     const lastData = lastDoc.data();
                     
-                    // 24 Hour Check Logic
                     if (lastData.date) {
                         const lastDate = lastData.date.toDate();
                         const now = new Date();
@@ -158,7 +156,6 @@ if(feedbackForm) {
                 }
 
                 if (shouldUpdate && docIdToUpdate) {
-                    // Update Existing Review
                     const reviewRef = doc(db, "testimonials", docIdToUpdate);
                     await updateDoc(reviewRef, {
                         message: msg,
@@ -167,7 +164,6 @@ if(feedbackForm) {
                     });
                     showToast("Your feedback has been updated!", "success");
                 } else {
-                    // Create New Review
                     await addDoc(collection(db, "testimonials"), {
                         uid: currentUser.uid,
                         name: currentUser.displayName,
@@ -179,7 +175,6 @@ if(feedbackForm) {
                     showToast("Review submitted successfully!", "success");
                 }
                 
-                // Cleanup UI
                 e.target.reset();
                 if(stars.length > 0) stars.forEach(s => s.classList.add('active'));
                 closeFeedbackModal();
@@ -273,7 +268,6 @@ function showToast(message, type = 'success') {
     toast.className = `toast-notification ${type}`;
     toast.innerText = message;
     
-    // Fallback inline styles
     const bgColor = type === 'success' ? '#10b981' : (type === 'warning' ? '#f59e0b' : '#ef4444');
     toast.style.background = bgColor;
 
@@ -302,7 +296,6 @@ window.addEventListener('load', () => {
 const cursorDot = document.querySelector('.cursor-dot');
 const cursorOutline = document.querySelector('.cursor-outline');
 
-// Cursor Logic (Desktop Only)
 if (window.matchMedia("(hover: hover) and (pointer: fine)").matches) {
     let xTo = gsap.quickTo(cursorOutline, "left", { duration: 0.2, ease: "power3" }),
         yTo = gsap.quickTo(cursorOutline, "top", { duration: 0.2, ease: "power3" });
@@ -402,9 +395,8 @@ window.closeLightbox = () => document.getElementById('lightbox').style.display =
 
 gsap.registerPlugin(ScrollTrigger);
 
-// --- 3. Animation Fix (Safety Check for Mobile) ---
+// --- Safest Animation Function ---
 function initAnimations() {
-    // Check if device is larger than 900px
     if (window.innerWidth > 900) {
         const tl = gsap.timeline();
         tl.from(".hero-title", { opacity: 0, y: 50, duration: 1, ease: "power3.out" })
@@ -420,8 +412,7 @@ function initAnimations() {
             gsap.from(grid.children, { scrollTrigger: { trigger: grid, start: "top 85%" }, opacity: 0, y: 30, duration: 0.8, stagger: 0.1, ease: "power3.out" });
         });
     } else {
-        // Mobile Safe Mode: Force visibility so nothing stays hidden
-        console.log("Mobile detected: Animations skipped to ensure data visibility.");
+        console.log("Mobile detected: Animations skipped.");
         gsap.set(".hero-title, .hero-subtitle, .hero-btns, .profile-card, .section-title, .skill-box, .project-card, .gallery-item", { 
             opacity: 1, visibility: "visible", y: 0 
         });
