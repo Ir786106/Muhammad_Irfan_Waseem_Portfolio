@@ -1,7 +1,7 @@
-import { initializeApp } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-app.js";
-import { getFirestore, collection, addDoc, getDocs, query, orderBy, limit, where } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-firestore.js";
-import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-analytics.js";
-import { getAuth, signInWithPopup, GoogleAuthProvider, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-auth.js";
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { getFirestore, collection, addDoc, getDocs, query, orderBy, limit, where, updateDoc, doc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-analytics.js";
+import { getAuth, signInWithPopup, GoogleAuthProvider, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
 const FORMSPREE_ENDPOINT = "https://formspree.io/f/xnnevkrd"; 
 
@@ -85,7 +85,6 @@ if(logoutBtn) {
     });
 }
 
-// Star Rating Logic
 const stars = document.querySelectorAll('.star-btn');
 const ratingInput = document.getElementById('feedback-rating');
 
@@ -106,6 +105,7 @@ if (stars.length > 0) {
         });
     });
 }
+
 const feedbackForm = document.getElementById('feedbackForm');
 if(feedbackForm) {
     feedbackForm.addEventListener('submit', async (e) => {
@@ -126,12 +126,40 @@ if(feedbackForm) {
 
         if (db) {
             try {
-                const q = query(collection(db, "testimonials"), where("uid", "==", currentUser.uid));
-                const existingDocs = await getDocs(q);
+                const q = query(collection(db, "testimonials"), where("uid", "==", currentUser.uid), orderBy("date", "desc"), limit(1));
+                const snapshot = await getDocs(q);
 
-                if (!existingDocs.empty) {
-                    showToast("You have already submitted a review.", "warning");
-                    closeFeedbackModal();
+                let shouldUpdate = false;
+                let docIdToUpdate = null;
+
+                if (!snapshot.empty) {
+                    const lastDoc = snapshot.docs[0];
+                    const lastData = lastDoc.data();
+                    
+                    if (lastData.date) {
+                        const lastDate = lastData.date.toDate();
+                        const now = new Date();
+                        const diffMs = now - lastDate; 
+                        const diffHours = diffMs / (1000 * 60 * 60); 
+
+                        if (diffHours < 24) {
+                            const userChoice = confirm("You submitted a feedback less than 24 hours ago.\n\nClick OK to UPDATE your last feedback.\nClick CANCEL to submit a NEW feedback.");
+                            if (userChoice) {
+                                shouldUpdate = true;
+                                docIdToUpdate = lastDoc.id;
+                            }
+                        }
+                    }
+                }
+
+                if (shouldUpdate && docIdToUpdate) {
+                    const reviewRef = doc(db, "testimonials", docIdToUpdate);
+                    await updateDoc(reviewRef, {
+                        message: msg,
+                        rating: parseInt(rating),
+                        date: new Date() 
+                    });
+                    showToast("Your feedback has been updated!", "success");
                 } else {
                     await addDoc(collection(db, "testimonials"), {
                         uid: currentUser.uid,
@@ -141,15 +169,16 @@ if(feedbackForm) {
                         rating: parseInt(rating),
                         date: new Date()
                     });
-                    
-                    showToast("Review submitted successfully!", "success");
-                    e.target.reset();
-                    if(stars.length > 0) stars.forEach(s => s.classList.add('active'));
-                    closeFeedbackModal();
-                    fetchTestimonials();
+                    showToast("New review submitted successfully!", "success");
                 }
+
+                e.target.reset();
+                if(stars.length > 0) stars.forEach(s => s.classList.add('active'));
+                closeFeedbackModal();
+                fetchTestimonials();
+
             } catch (err) {
-                showToast("Error submitting review.", "error");
+                showToast("Error processing review.", "error");
                 console.error(err);
             }
         }
@@ -237,16 +266,10 @@ function showToast(message, type = 'success') {
     toast.innerText = message;
     
     const bgColor = type === 'success' ? '#10b981' : (type === 'warning' ? '#f59e0b' : '#ef4444');
+    toast.style.background = bgColor;
 
-    Object.assign(toast.style, {
-        position: 'fixed', bottom: '30px', right: '30px',
-        background: bgColor,
-        color: '#fff', padding: '12px 24px', borderRadius: '8px',
-        zIndex: '10002', fontFamily: "'Outfit', sans-serif", fontWeight: '500',
-        transform: 'translateY(100px)', opacity: '0', transition: 'all 0.4s cubic-bezier(0.16, 1, 0.3, 1)'
-    });
     document.body.appendChild(toast);
-    requestAnimationFrame(() => { toast.style.transform = 'translateY(0)'; toast.style.opacity = '1'; });
+    requestAnimationFrame(() => { toast.style.opacity = '1'; toast.style.transform = 'translateY(0)'; });
     setTimeout(() => {
         toast.style.transform = 'translateY(20px)'; toast.style.opacity = '0';
         setTimeout(() => toast.remove(), 400);
@@ -260,33 +283,41 @@ window.addEventListener('load', () => {
             opacity: 0, duration: 0.8, ease: "power2.inOut",
             onComplete: () => {
                 preloader.style.visibility = 'hidden';
-                initAnimations(); fetchTestimonials(); 
+                initAnimations(); 
+                fetchTestimonials(); 
             }
         });
     }
 });
+
 const cursorDot = document.querySelector('.cursor-dot');
 const cursorOutline = document.querySelector('.cursor-outline');
-let xTo = gsap.quickTo(cursorOutline, "left", { duration: 0.2, ease: "power3" }),
-    yTo = gsap.quickTo(cursorOutline, "top", { duration: 0.2, ease: "power3" });
-window.addEventListener('mousemove', (e) => {
-    gsap.set(cursorDot, { left: e.clientX, top: e.clientY });
-    xTo(e.clientX); yTo(e.clientY);
-});
-const magnets = document.querySelectorAll('.btn-primary, .social-icon, .nav-link');
-magnets.forEach((magnet) => {
-    magnet.addEventListener('mousemove', (e) => {
-        const rect = magnet.getBoundingClientRect();
-        const x = e.clientX - rect.left - rect.width / 2;
-        const y = e.clientY - rect.top - rect.height / 2;
-        gsap.to(magnet, { x: x * 0.3, y: y * 0.3, duration: 0.3, ease: "power2.out" });
-        gsap.to(cursorOutline, { scale: 1.5, borderColor: 'transparent', backgroundColor: 'rgba(59, 130, 246, 0.1)', duration: 0.3 });
+
+if (window.matchMedia("(hover: hover) and (pointer: fine)").matches) {
+    let xTo = gsap.quickTo(cursorOutline, "left", { duration: 0.2, ease: "power3" }),
+        yTo = gsap.quickTo(cursorOutline, "top", { duration: 0.2, ease: "power3" });
+
+    window.addEventListener('mousemove', (e) => {
+        gsap.set(cursorDot, { left: e.clientX, top: e.clientY });
+        xTo(e.clientX); yTo(e.clientY);
     });
-    magnet.addEventListener('mouseleave', () => {
-        gsap.to(magnet, { x: 0, y: 0, duration: 0.3, ease: "elastic.out(1, 0.3)" });
-        gsap.to(cursorOutline, { scale: 1, borderColor: 'var(--text-muted)', backgroundColor: 'transparent', duration: 0.3 });
+
+    const magnets = document.querySelectorAll('.btn-primary, .social-icon, .nav-link');
+    magnets.forEach((magnet) => {
+        magnet.addEventListener('mousemove', (e) => {
+            const rect = magnet.getBoundingClientRect();
+            const x = e.clientX - rect.left - rect.width / 2;
+            const y = e.clientY - rect.top - rect.height / 2;
+            gsap.to(magnet, { x: x * 0.3, y: y * 0.3, duration: 0.3, ease: "power2.out" });
+            gsap.to(cursorOutline, { scale: 1.5, borderColor: 'transparent', backgroundColor: 'rgba(59, 130, 246, 0.1)', duration: 0.3 });
+        });
+        magnet.addEventListener('mouseleave', () => {
+            gsap.to(magnet, { x: 0, y: 0, duration: 0.3, ease: "elastic.out(1, 0.3)" });
+            gsap.to(cursorOutline, { scale: 1, borderColor: 'var(--text-muted)', backgroundColor: 'transparent', duration: 0.3 });
+        });
     });
-});
+}
+
 const themeBtn = document.getElementById('theme-toggle');
 const html = document.documentElement;
 const savedTheme = localStorage.getItem('theme') || 'dark';
@@ -300,6 +331,7 @@ if(themeBtn) {
         gsap.fromTo(themeBtn.querySelector('i'), { rotate: -90, scale: 0 }, { rotate: 0, scale: 1, duration: 0.4 });
     });
 }
+
 const hamburger = document.querySelector('.hamburger');
 const mobileMenu = document.querySelector('.mobile-menu');
 if(hamburger) {
@@ -322,6 +354,7 @@ document.querySelectorAll('.mobile-links a').forEach(link => {
         gsap.to(".bar", { rotate: 0, y: 0 });
     });
 });
+
 const filterBtns = document.querySelectorAll('.filter-btn');
 const projectCards = document.querySelectorAll('.project-card');
 filterBtns.forEach(btn => {
@@ -338,6 +371,7 @@ filterBtns.forEach(btn => {
         });
     });
 });
+
 window.openModal = (id) => {
     const modal = document.getElementById(id);
     if(modal) { modal.style.display = 'flex'; requestAnimationFrame(() => modal.classList.add('active')); }
@@ -355,17 +389,27 @@ window.openLightbox = (el) => {
     document.getElementById('lightbox').style.display = 'flex';
 };
 window.closeLightbox = () => document.getElementById('lightbox').style.display = 'none';
+
 gsap.registerPlugin(ScrollTrigger);
+
 function initAnimations() {
-    const tl = gsap.timeline();
-    tl.from(".hero-title", { opacity: 0, y: 50, duration: 1, ease: "power3.out" })
-      .from(".hero-subtitle", { opacity: 0, y: 20, duration: 0.8 }, "-=0.6")
-      .from(".hero-btns", { opacity: 0, y: 20, duration: 0.8 }, "-=0.6")
-      .from(".profile-card", { opacity: 0, scale: 0.9, rotation: -5, duration: 1, ease: "back.out(1.7)" }, "-=0.8");
-    gsap.utils.toArray('.section-title').forEach(title => {
-        gsap.from(title, { scrollTrigger: { trigger: title, start: "top 85%" }, opacity: 0, y: 40, duration: 0.8, ease: "power3.out" });
-    });
-    gsap.utils.toArray('.projects-grid, .skills-showcase, .gallery-grid').forEach(grid => {
-        gsap.from(grid.children, { scrollTrigger: { trigger: grid, start: "top 85%" }, opacity: 0, y: 30, duration: 0.8, stagger: 0.1, ease: "power3.out" });
-    });
+    if (window.innerWidth > 900) {
+        const tl = gsap.timeline();
+        tl.from(".hero-title", { opacity: 0, y: 50, duration: 1, ease: "power3.out" })
+            .from(".hero-subtitle", { opacity: 0, y: 20, duration: 0.8 }, "-=0.6")
+            .from(".hero-btns", { opacity: 0, y: 20, duration: 0.8 }, "-=0.6")
+            .from(".profile-card", { opacity: 0, scale: 0.9, rotation: -5, duration: 1, ease: "back.out(1.7)" }, "-=0.8");
+        
+        gsap.utils.toArray('.section-title').forEach(title => {
+            gsap.from(title, { scrollTrigger: { trigger: title, start: "top 85%" }, opacity: 0, y: 40, duration: 0.8, ease: "power3.out" });
+        });
+        
+        gsap.utils.toArray('.projects-grid, .skills-showcase, .gallery-grid').forEach(grid => {
+            gsap.from(grid.children, { scrollTrigger: { trigger: grid, start: "top 85%" }, opacity: 0, y: 30, duration: 0.8, stagger: 0.1, ease: "power3.out" });
+        });
+    } else {
+        console.log("Mobile View: Animations skipped to prevent hiding.");
+        gsap.set(".hero-title, .hero-subtitle, .hero-btns, .profile-card, .section-title", { opacity: 1, y: 0, visibility: "visible" });
+        gsap.set(".skill-box, .project-card, .gallery-item", { opacity: 1, y: 0, visibility: "visible" });
+    }
 }

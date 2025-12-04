@@ -3,10 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Muhammad Irfan Waseem | Mobile & Web Developer</title>
-    <meta name="description" content="Portfolio of Muhammad Irfan Waseem - Flutter, Java, & Web Developer.">
     
-    <link rel="icon" type="image/svg+xml" href="Images/favicon.svg">
+    <title>Muhammad Irfan Waseem | Mobile & Web Developer</title>
+    <meta name="title" content="Muhammad Irfan Waseem | Mobile & Web Developer">
+    <meta name="description" content="Portfolio of Muhammad Irfan Waseem - Expert in Flutter, Java, & Web Development. Based in Pakistan. Building intelligent solutions for mobile and desktop.">
+    <meta name="keywords" content="Muhammad Irfan Waseem, Flutter Developer, Java Developer, Web Developer, Portfolio, Software Engineer, Pakistan, Android, iOS, Firebase">
+    <meta name="author" content="Muhammad Irfan Waseem">
+    <meta name="robots" content="index, follow">
+
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://irfan-portfolio-ae62a.web.app/">
+    <meta property="og:title" content="Muhammad Irfan Waseem | Mobile & Web Developer">
+    <meta property="og:description" content="Portfolio of Muhammad Irfan Waseem - Flutter, Java, & Web Developer.">
+    <meta property="og:image" content="Images/Irfan.jpg">
+
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://irfan-portfolio-ae62a.web.app/">
+    <meta property="twitter:title" content="Muhammad Irfan Waseem | Mobile & Web Developer">
+    <meta property="twitter:description" content="Portfolio of Muhammad Irfan Waseem - Flutter, Java, & Web Developer.">
+    <meta property="twitter:image" content="Images/Irfan.jpg">
+    
+    <link rel="icon" type="image/svg+xml" href="Images/logo.svg">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -87,15 +104,15 @@
                 </div>
 
                 <div class="social-row">
-                    <a href="https://github.com/Ir786106" target="_blank" class="social-icon"><i class="fab fa-github"></i></a>
-                    <a href="https://linkedin.com/in/muhammad-irfan-waseem-48226b297" target="_blank" class="social-icon"><i class="fab fa-linkedin-in"></i></a>
-                    <a href="https://x.com/Irfan_CyberSec" target="_blank" class="social-icon"><i class="fab fa-twitter"></i></a>
+                    <a href="https://github.com/Ir786106" target="_blank" rel="noopener noreferrer" class="social-icon" aria-label="GitHub"><i class="fab fa-github"></i></a>
+                    <a href="https://linkedin.com/in/muhammad-irfan-waseem-48226b297" target="_blank" rel="noopener noreferrer" class="social-icon" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="https://x.com/Irfan_CyberSec" target="_blank" rel="noopener noreferrer" class="social-icon" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
                 </div>
             </div>
             
             <div class="hero-visual">
                 <div class="profile-card glass-panel">
-                    <img src="Images/Irfan.jpg" alt="Muhammad Irfan Waseem" class="profile-img">
+                    <img src="Images/Irfan.jpg" alt="Muhammad Irfan Waseem Profile" class="profile-img" loading="eager">
                     
                     <div class="floating-badge badge-1">
                         <i class="fas fa-code"></i> <span>Flutter Dev</span>
@@ -149,7 +166,7 @@
                     <div class="skill-box">
                         <i class="fas fa-globe"></i>
                         <h4>Web Development</h4>
-                        <p>HTML, CSS, Django</p>
+                        <p>HTML, CSS, JS, Django</p>
                     </div>
                     <div class="skill-box">
                         <i class="fas fa-brain"></i>
@@ -205,7 +222,7 @@
                     </div>
                 </div>
 
-                 <div class="project-card glass-panel" data-category="itthad">
+                <div class="project-card glass-panel" data-category="itthad">
                     <div class="card-header">
                         <div class="folder-icon"><i class="fas fa-brain"></i></div>
                         <div class="links"><button class="sm-btn" onclick="openModal('modal-itthad-ai')">View Details</button></div>
@@ -347,18 +364,18 @@
                 <p>Posters & Visual Branding.</p>
             </div>
             <div class="gallery-grid">
-                <div class="gallery-item" onclick="openLightbox(this)"><img src="Images/1.jpg" alt="Design 1"></div>
-                <div class="gallery-item large" onclick="openLightbox(this)"><img src="Images/2.jpg" alt="Design 2"></div>
-                <div class="gallery-item" onclick="openLightbox(this)"><img src="Images/3.jpg" alt="Design 3"></div>
-                <div class="gallery-item wide" onclick="openLightbox(this)"><img src="Images/4.jpg" alt="Design 4"></div>
-                <div class="gallery-item" onclick="openLightbox(this)"><img src="Images/5.jpg" alt="Design 5"></div>
+                <div class="gallery-item" onclick="openLightbox(this)"><img src="Images/1.jpg" alt="Coffee Brand Poster Design" loading="lazy"></div>
+                <div class="gallery-item large" onclick="openLightbox(this)"><img src="Images/2.jpg" alt="Food Menu Design" loading="lazy"></div>
+                <div class="gallery-item" onclick="openLightbox(this)"><img src="Images/3.jpg" alt="Travel Agency Advertisement" loading="lazy"></div>
+                <div class="gallery-item wide" onclick="openLightbox(this)"><img src="Images/4.jpg" alt="Brand Logo Design" loading="lazy"></div>
+                <div class="gallery-item" onclick="openLightbox(this)"><img src="Images/5.jpg" alt="Study in Canada Poster" loading="lazy"></div>
             </div>
         </div>
     </section>
 
     <div id="lightbox" class="lightbox">
         <span class="close-lightbox" onclick="closeLightbox()">&times;</span>
-        <img id="lightbox-img" class="lightbox-content">
+        <img id="lightbox-img" class="lightbox-content" alt="Enlarged Gallery Image">
     </div>
 
     <section id="testimonials" class="section bg-dim">
@@ -395,7 +412,7 @@
 
             <form id="feedbackForm" style="display: none;">
                 <div class="user-info-display" style="display: flex; align-items: center; gap: 15px; margin-bottom: 25px; padding: 15px; background: rgba(59, 130, 246, 0.1); border-radius: 12px; border: 1px solid rgba(59, 130, 246, 0.2);">
-                    <img id="user-avatar" src="" alt="User" style="width: 45px; height: 45px; border-radius: 50%; object-fit: cover;">
+                    <img id="user-avatar" src="" alt="User Avatar" style="width: 45px; height: 45px; border-radius: 50%; object-fit: cover;">
                     <div style="text-align: left;">
                         <h4 id="user-name-display" style="color: var(--text-main); margin: 0; font-size: 1rem;">User Name</h4>
                         <small style="color: var(--primary); display: flex; align-items: center; gap: 5px;">
@@ -450,23 +467,23 @@
                 </div>
 
                 <div class="cv-download-area">
-                    <a href="Images/my-cv.pdf" download class="btn-outline full-width">Download Resume / CV</a>
+                    <a href="Images/my-cv.pdf" download="Muhammad_Irfan_CV" class="btn-outline full-width">Download Resume / CV</a>
                 </div>
             </div>
 
             <form id="contactForm" class="contact-form glass-panel">
                 <div class="row">
                     <div class="form-group">
-                        <label>Name</label>
+                        <label for="name">Name</label>
                         <input type="text" id="name" required placeholder="John Doe">
                     </div>
                     <div class="form-group">
-                        <label>Email</label>
+                        <label for="email">Email</label>
                         <input type="email" id="email" required placeholder="john@email.com">
                     </div>
                 </div>
                 <div class="form-group">
-                    <label>Message</label>
+                    <label for="message">Message</label>
                     <textarea id="message" rows="5" required placeholder="Project details..."></textarea>
                 </div>
                 <button type="submit" class="btn-primary full-width">Send Message</button>
@@ -478,8 +495,8 @@
         <div class="container footer-content">
             <p>&copy; 2025 Muhammad Irfan Waseem. All rights reserved.</p>
             <div class="social-mini">
-                <a href="#"><i class="fab fa-linkedin"></i></a>
-                <a href="#"><i class="fab fa-github"></i></a>
+                <a href="https://linkedin.com/in/muhammad-irfan-waseem-48226b297" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                <a href="https://github.com/Ir786106" target="_blank" rel="noopener noreferrer" aria-label="GitHub"><i class="fab fa-github"></i></a>
             </div>
         </div>
     </footer>
