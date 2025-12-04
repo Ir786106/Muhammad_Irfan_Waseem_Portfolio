@@ -139,8 +139,8 @@ if(feedbackForm) {
                     if (lastData.date) {
                         const lastDate = lastData.date.toDate();
                         const now = new Date();
-                        const diffMs = now - lastDate; 
-                        const diffHours = diffMs / (1000 * 60 * 60); 
+                        const diffMs = now - lastDate;
+                        const diffHours = diffMs / (1000 * 60 * 60);
 
                         if (diffHours < 24) {
                             const userChoice = confirm("You submitted a feedback less than 24 hours ago.\n\nClick OK to UPDATE your last feedback.\nClick CANCEL to submit a NEW feedback.");
@@ -157,7 +157,7 @@ if(feedbackForm) {
                     await updateDoc(reviewRef, {
                         message: msg,
                         rating: parseInt(rating),
-                        date: new Date() 
+                        date: new Date()
                     });
                     showToast("Your feedback has been updated!", "success");
                 } else {
@@ -169,9 +169,9 @@ if(feedbackForm) {
                         rating: parseInt(rating),
                         date: new Date()
                     });
-                    showToast("New review submitted successfully!", "success");
+                    showToast("Review submitted successfully!", "success");
                 }
-
+                
                 e.target.reset();
                 if(stars.length > 0) stars.forEach(s => s.classList.add('active'));
                 closeFeedbackModal();
@@ -179,7 +179,7 @@ if(feedbackForm) {
 
             } catch (err) {
                 showToast("Error processing review.", "error");
-                console.error(err);
+                console.error("Firebase Error:", err);
             }
         }
         btn.innerText = originalText;
@@ -265,9 +265,9 @@ function showToast(message, type = 'success') {
     toast.className = `toast-notification ${type}`;
     toast.innerText = message;
     
-    const bgColor = type === 'success' ? '#10b981' : (type === 'warning' ? '#f59e0b' : '#ef4444');
-    toast.style.background = bgColor;
-
+    if(type === 'error') toast.style.background = '#ef4444';
+    if(type === 'warning') toast.style.background = '#f59e0b';
+    
     document.body.appendChild(toast);
     requestAnimationFrame(() => { toast.style.opacity = '1'; toast.style.transform = 'translateY(0)'; });
     setTimeout(() => {
@@ -396,9 +396,9 @@ function initAnimations() {
     if (window.innerWidth > 900) {
         const tl = gsap.timeline();
         tl.from(".hero-title", { opacity: 0, y: 50, duration: 1, ease: "power3.out" })
-            .from(".hero-subtitle", { opacity: 0, y: 20, duration: 0.8 }, "-=0.6")
-            .from(".hero-btns", { opacity: 0, y: 20, duration: 0.8 }, "-=0.6")
-            .from(".profile-card", { opacity: 0, scale: 0.9, rotation: -5, duration: 1, ease: "back.out(1.7)" }, "-=0.8");
+          .from(".hero-subtitle", { opacity: 0, y: 20, duration: 0.8 }, "-=0.6")
+          .from(".hero-btns", { opacity: 0, y: 20, duration: 0.8 }, "-=0.6")
+          .from(".profile-card", { opacity: 0, scale: 0.9, rotation: -5, duration: 1, ease: "back.out(1.7)" }, "-=0.8");
         
         gsap.utils.toArray('.section-title').forEach(title => {
             gsap.from(title, { scrollTrigger: { trigger: title, start: "top 85%" }, opacity: 0, y: 40, duration: 0.8, ease: "power3.out" });
@@ -408,8 +408,9 @@ function initAnimations() {
             gsap.from(grid.children, { scrollTrigger: { trigger: grid, start: "top 85%" }, opacity: 0, y: 30, duration: 0.8, stagger: 0.1, ease: "power3.out" });
         });
     } else {
-        console.log("Mobile View: Animations skipped to prevent hiding.");
-        gsap.set(".hero-title, .hero-subtitle, .hero-btns, .profile-card, .section-title", { opacity: 1, y: 0, visibility: "visible" });
-        gsap.set(".skill-box, .project-card, .gallery-item", { opacity: 1, y: 0, visibility: "visible" });
+        console.log("Mobile detected: Animations skipped to ensure data visibility.");
+        gsap.set(".hero-title, .hero-subtitle, .hero-btns, .profile-card, .section-title, .skill-box, .project-card, .gallery-item", { 
+            opacity: 1, visibility: "visible", y: 0 
+        });
     }
 }
