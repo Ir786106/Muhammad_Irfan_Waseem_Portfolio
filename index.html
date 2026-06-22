@@ -1,0 +1,1257 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark" data-sky-mode="night">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Muhammad Irfan Waseem | Flutter & MERN Developer</title>
+    <meta name="description" content="Portfolio of Muhammad Irfan Waseem — Flutter & MERN Developer, AI Integrations, Cybersecurity. CS undergraduate at COMSATS University. Building InterviewMate AI Pro & TarseelX.">
+    <meta name="keywords" content="Muhammad Irfan Waseem, Flutter Developer, MERN Stack, React Native, FastAPI, AI Developer, Cybersecurity, Pakistan, Firebase, COMSATS, InterviewMate, VeilGuard">
+    <meta name="author" content="Muhammad Irfan Waseem">
+    <meta name="robots" content="index, follow">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://ir786106.github.io/Muhammad_Irfan_Waseem_Portfolio/">
+    <meta property="og:title" content="Muhammad Irfan Waseem | Flutter & MERN Developer">
+    <meta property="og:description" content="Flutter & MERN Developer building AI-powered platforms, ERP systems, and cross-platform apps. Based in Pakistan.">
+    <meta property="og:image" content="Images/Irfan.jpg">
+    <meta property="twitter:card" content="summary_large_image">
+
+    <link rel="icon" type="image/svg+xml" href="Images/logo.svg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- ══ PRELOADER ════════════════════════════════════════ -->
+    <div class="preloader" id="preloader">
+        <div class="preloader-inner">
+            <div class="pre-logo">IRFAN<span>.</span></div>
+            <div class="pre-bar-wrap"><div class="pre-bar"></div></div>
+            <div class="pre-status">Initialising portfolio...</div>
+        </div>
+    </div>
+
+    <!-- ══ CURSOR ════════════════════════════════════════════ -->
+    <div class="cursor-dot"></div>
+    <div class="cursor-outline"></div>
+
+    <!-- ══ BACKGROUND: ANIMATED SKY CANVAS ══════════════════ -->
+    <canvas id="sky-canvas" class="sky-canvas"></canvas>
+
+    <!-- ══ SCROLL PROGRESS BAR ═══════════════════════════════ -->
+    <div id="scrollProgress"></div>
+
+    <!-- ══ NAV ═══════════════════════════════════════════════ -->
+    <nav class="navbar" id="navbar">
+        <div class="container nav-inner">
+            <a href="#home" class="logo">IRFAN<span class="dot">.</span></a>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#home"        class="nav-link" data-section="home">Home</a></li>
+                <li><a href="#about"       class="nav-link" data-section="about">About</a></li>
+                <li><a href="#skills"      class="nav-link" data-section="skills">Skills</a></li>
+                <li><a href="#experience"  class="nav-link" data-section="experience">Experience</a></li>
+                <li><a href="#projects"    class="nav-link" data-section="projects">Projects</a></li>
+                <li><a href="#showcase"    class="nav-link" data-section="showcase">3D</a></li>
+                <li><a href="#awards"      class="nav-link" data-section="awards">Awards</a></li>
+                <li><a href="#blog"        class="nav-link" data-section="blog">Blog</a></li>
+                <li><a href="#contact"     class="nav-link" data-section="contact">Contact</a></li>
+            </ul>
+            <div class="nav-right">
+                <!-- Live Clock -->
+                <div class="live-clock" id="liveClockWrapper">
+                    <span id="clockTime">12:00</span>
+                    <span id="clockAMPM" class="clock-ampm">AM</span>
+                </div>
+
+                <!-- Sky Mode Selector -->
+                <div class="sky-mode-wrap">
+                    <button class="sky-mode-btn" id="skyModeBtn" aria-label="Sky Mode">
+                        <span class="sky-mode-icon">🌙</span>
+                        <span class="sky-mode-label" id="skyModeLabel">Night</span>
+                        <i class="fas fa-chevron-down" style="font-size:0.7rem;opacity:0.6"></i>
+                    </button>
+                    <div class="sky-mode-dropdown" id="skyModeDropdown">
+                        <button class="sky-mode-option" data-mode="dawn" title="04:00 - 06:00">
+                            <span>🌠</span> Dawn
+                        </button>
+                        <button class="sky-mode-option" data-mode="morning" title="06:00 - 10:30">
+                            <span>🌅</span> Morning
+                        </button>
+                        <button class="sky-mode-option" data-mode="afternoon" title="10:30 - 16:30">
+                            <span>☀️</span> Day
+                        </button>
+                        <button class="sky-mode-option" data-mode="evening" title="16:30 - 20:00">
+                            <span>🌇</span> Evening
+                        </button>
+                        <button class="sky-mode-option active" data-mode="night" title="20:00 - 04:00">
+                            <span>🌙</span> Night
+                        </button>
+                        <div class="sky-auto-row">
+                            <span>Auto</span>
+                            <label class="toggle-switch">
+                                <input type="checkbox" id="skyAutoToggle" checked>
+                                <span class="toggle-slider"></span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <button id="theme-toggle" class="icon-round-btn" aria-label="Toggle Theme">
+                    <i class="fas fa-sun" id="icon-sun"></i>
+                    <i class="fas fa-moon" id="icon-moon"></i>
+                </button>
+                <a href="#contact" class="btn-primary nav-cta">Let's Talk <i class="fas fa-arrow-right"></i></a>
+                <button class="hamburger" id="hamburger" aria-label="Menu">
+                    <span></span><span></span><span></span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ══ MOBILE MENU ════════════════════════════════════════ -->
+    <div class="mobile-menu" id="mobileMenu">
+        <div class="mobile-menu-inner">
+            <a href="#home"       class="m-link" data-section="home">Home</a>
+            <a href="#about"      class="m-link" data-section="about">About</a>
+            <a href="#skills"     class="m-link" data-section="skills">Skills</a>
+            <a href="#experience" class="m-link" data-section="experience">Experience</a>
+            <a href="#projects"   class="m-link" data-section="projects">Projects</a>
+            <a href="#showcase"   class="m-link" data-section="showcase">3D Showcase</a>
+            <a href="#awards"     class="m-link" data-section="awards">Awards</a>
+            <a href="#blog"       class="m-link" data-section="blog">Blog</a>
+            <a href="#contact"    class="m-link" data-section="contact">Contact</a>
+        </div>
+    </div>
+
+    <!-- ════════════════════════════════════════════════════════
+         §1  HERO
+    ════════════════════════════════════════════════════════ -->
+    <section id="home" class="hero-section">
+        <div class="container hero-grid">
+
+            <!-- LEFT -->
+            <div class="hero-content">
+                <div class="hero-chips">
+                    <span class="chip chip-green">
+                        <i class="fas fa-circle pulse-green"></i> Available for Projects
+                    </span>
+                    <span class="chip chip-amber">
+                        <i class="fas fa-medal"></i> CSDS Runner Up '26
+                    </span>
+                    <span class="chip chip-blue">
+                        <i class="fas fa-briefcase"></i> ARCH Tech Intern
+                    </span>
+                </div>
+
+                <h1 class="hero-title">
+                    Turning Ideas into<br>
+                    <span class="gradient-text typed-wrap">
+                        <span class="typed-text" id="typedText"></span><span class="typed-cursor">|</span>
+                    </span>
+                </h1>
+
+                <p class="hero-sub">
+                    Flutter & MERN Developer building AI-powered platforms, ERP systems,
+                    and cross-platform apps. CS undergraduate at COMSATS University
+                    — currently shipping <strong>InterviewMate AI Pro</strong> &amp; <strong>TarseelX</strong>.
+                </p>
+
+                <div class="hero-btns">
+                    <a href="#projects" class="btn-primary">View My Work <i class="fas fa-arrow-right"></i></a>
+                    <a href="Images/Irfan_Resume.pdf" download="Muhammad_Irfan_Waseem_CV" class="btn-outline">
+                        <i class="fas fa-download"></i> Download CV
+                    </a>
+                </div>
+
+                <div class="hero-socials">
+                    <a href="https://github.com/Ir786106"                               target="_blank" rel="noopener" class="soc-btn" title="GitHub">      <i class="fab fa-github"></i></a>
+                    <a href="https://linkedin.com/in/muhammad-irfan-waseem-48226b297"   target="_blank" rel="noopener" class="soc-btn" title="LinkedIn">    <i class="fab fa-linkedin-in"></i></a>
+                    <a href="https://x.com/Irfan_CyberSec"                              target="_blank" rel="noopener" class="soc-btn" title="X/Twitter">   <i class="fab fa-twitter"></i></a>
+                    <a href="https://veilguardsecjournal.blogspot.com"                   target="_blank" rel="noopener" class="soc-btn soc-blog" title="VeilGuard Blog"><i class="fas fa-shield-halved"></i></a>
+                    <a href="mailto:muhammadirfan.infosec@gmail.com"                     class="soc-btn" title="Email">    <i class="fas fa-envelope"></i></a>
+                </div>
+
+                <div class="stack-pills">
+                    <span class="pill">Flutter</span>
+                    <span class="pill">React&nbsp;/&nbsp;MERN</span>
+                    <span class="pill">FastAPI&nbsp;/&nbsp;Python</span>
+                    <span class="pill">Gemini&nbsp;AI</span>
+                    <span class="pill">Firebase</span>
+                    <span class="pill">Java</span>
+                </div>
+            </div>
+
+            <!-- RIGHT — 3D profile card -->
+            <div class="hero-visual">
+                <div class="profile-scene">
+                    <div class="profile-card-3d">
+                        <img src="Images/Irfan.jpg" alt="Muhammad Irfan Waseem" class="profile-img">
+                    </div>
+                    <!-- floating chips -->
+                    <div class="fl-chip fc-1"><i class="fab fa-flutter"></i> Flutter Dev</div>
+                    <div class="fl-chip fc-2"><i class="fas fa-brain"></i> AI Builder</div>
+                    <div class="fl-chip fc-3"><i class="fas fa-shield-halved"></i> CyberSec</div>
+                    <div class="fl-chip fc-4"><i class="fas fa-trophy"></i> Award Winner</div>
+                    <!-- glow orbs -->
+                    <div class="orb orb-blue"></div>
+                    <div class="orb orb-purple"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Scroll indicator -->
+        <div class="scroll-hint">
+            <div class="scroll-mouse"><div class="scroll-wheel"></div></div>
+            <span>Scroll</span>
+        </div>
+    </section>
+
+    <!-- ════════════════════════════════════════════════════════
+         §2  ABOUT
+    ════════════════════════════════════════════════════════ -->
+    <section id="about" class="section">
+        <div class="container">
+            <div class="section-head" data-aos="fade-up">
+                <span class="eyebrow">Who I Am</span>
+                <h2 class="section-title">About <span class="gradient-text">Me</span></h2>
+            </div>
+
+            <div class="about-grid">
+                <!-- left — text -->
+                <div class="about-card glass" data-aos="fade-right">
+                    <h3>Full-Stack & Mobile Developer</h3>
+                    <p>I'm <strong>Muhammad Irfan Waseem</strong>, a Computer Science undergraduate
+                       (6th Semester) at <strong>COMSATS University Islamabad, Sahiwal Campus</strong>.
+                       I build production-ready software that solves real business problems — from
+                       grain-market ERP systems to AI-powered interview platforms.</p>
+                    <p>Currently deep into <strong>AI integrations</strong> (Gemini, Groq, OpenRouter),
+                       <strong>MERN Stack</strong>, and <strong>React Native</strong> — while
+                       maintaining a cybersecurity research blog.</p>
+
+                    <!-- Dart class style "card" -->
+                    <div class="dart-card">
+                        <div class="dart-header"><span class="dart-kw">class</span> <span class="dart-cls">IrfanWaseem</span> {</div>
+                        <div class="dart-body">
+                            <div><span class="dart-kw">final</span> role <span class="dart-op">=</span> <span class="dart-str">"Full-Stack &amp; Mobile Developer"</span>;</div>
+                            <div><span class="dart-kw">final</span> semester <span class="dart-op">=</span> <span class="dart-str">"6th Semester BSCS"</span>;</div>
+                            <div><span class="dart-kw">final</span> university <span class="dart-op">=</span> <span class="dart-str">"COMSATS Sahiwal"</span>;</div>
+                            <div><span class="dart-kw">final</span> available <span class="dart-op">=</span> <span class="dart-bool">true</span>; <span class="dart-comment">// internship/freelance</span></div>
+                        </div>
+                        <div class="dart-footer">}</div>
+                    </div>
+
+                    <!-- Education timeline -->
+                    <div class="edu-timeline">
+                        <div class="edu-item">
+                            <div class="edu-dot"></div>
+                            <div>
+                                <span class="edu-date">Sep 2023 – Present</span>
+                                <h4>BS Computer Science — 6th Semester</h4>
+                                <p>COMSATS University Islamabad, Sahiwal Campus</p>
+                            </div>
+                        </div>
+                        <div class="edu-item">
+                            <div class="edu-dot edu-dot-done"></div>
+                            <div>
+                                <span class="edu-date">2021 – 2023</span>
+                                <h4>Intermediate in Computer Science</h4>
+                                <p>Misali Zakariya Group of Schools & Colleges, Arifwala</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Stats row -->
+                    <div class="stats-row">
+                        <div class="stat"><h4>10+</h4><span>Projects</span></div>
+                        <div class="stat"><h4>3+</h4><span>Yrs Design</span></div>
+                        <div class="stat"><h4>20+</h4><span>Design Clients</span></div>
+                        <div class="stat"><h4>🥈</h4><span>Award</span></div>
+                    </div>
+
+                    <!-- Interests -->
+                    <div class="interests">
+                        <span class="interest-tag"><i class="fas fa-pen-nib"></i> Blogging</span>
+                        <span class="interest-tag"><i class="fab fa-github"></i> Open Source</span>
+                        <span class="interest-tag"><i class="fas fa-music"></i> Music</span>
+                        <span class="interest-tag"><i class="fas fa-shield-halved"></i> Cybersecurity</span>
+                        <span class="interest-tag"><i class="fas fa-robot"></i> AI / LLMs</span>
+                    </div>
+                </div>
+
+                <!-- right — skill boxes -->
+                <div class="skill-boxes" data-aos="fade-left">
+                    <div class="sk-box" data-aos="zoom-in" data-aos-delay="0">
+                        <i class="fas fa-mobile-alt"></i>
+                        <h4>Mobile Dev</h4>
+                        <p>Flutter · Dart · React Native · Expo · Firebase</p>
+                    </div>
+                    <div class="sk-box" data-aos="zoom-in" data-aos-delay="80">
+                        <i class="fas fa-layer-group"></i>
+                        <h4>MERN Stack</h4>
+                        <p>React · Node.js · Express · MongoDB · Tailwind</p>
+                    </div>
+                    <div class="sk-box" data-aos="zoom-in" data-aos-delay="160">
+                        <i class="fas fa-robot"></i>
+                        <h4>AI Integration</h4>
+                        <p>Gemini API · Groq · OpenRouter · MediaPipe · LLMs</p>
+                    </div>
+                    <div class="sk-box" data-aos="zoom-in" data-aos-delay="240">
+                        <i class="fas fa-server"></i>
+                        <h4>Backend & DB</h4>
+                        <p>FastAPI · Django · MySQL · Supabase · Firestore</p>
+                    </div>
+                    <div class="sk-box" data-aos="zoom-in" data-aos-delay="320">
+                        <i class="fas fa-shield-halved"></i>
+                        <h4>Cybersecurity</h4>
+                        <p>Kali Linux · Wireshark · Burp Suite · OWASP</p>
+                    </div>
+                    <div class="sk-box" data-aos="zoom-in" data-aos-delay="400">
+                        <i class="fas fa-palette"></i>
+                        <h4>Graphic Design</h4>
+                        <p>Photoshop · Canva · Illustrator · 20+ Clients</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ════════════════════════════════════════════════════════
+         §3  SKILLS
+    ════════════════════════════════════════════════════════ -->
+    <section id="skills" class="section bg-alt">
+        <div class="container">
+            <div class="section-head text-center" data-aos="fade-up">
+                <span class="eyebrow">What I Use</span>
+                <h2 class="section-title">Tech <span class="gradient-text">Stack</span></h2>
+                <p>Tools and technologies I work with daily.</p>
+            </div>
+
+            <div class="skills-tabs-wrap" data-aos="fade-up" data-aos-delay="100">
+                <div class="skills-tabs">
+                    <button class="stab active" data-tab="mobile">📱 Mobile</button>
+                    <button class="stab" data-tab="web">🌐 Web / MERN</button>
+                    <button class="stab" data-tab="ai">🧠 AI</button>
+                    <button class="stab" data-tab="backend">🗄️ Backend & DB</button>
+                    <button class="stab" data-tab="security">🔐 Security</button>
+                    <button class="stab" data-tab="tools">💻 Tools</button>
+                </div>
+
+                <div class="skills-panel active" id="tab-mobile">
+                    <div class="skill-grid">
+                        <div class="skill-item"><i class="fab fa-flutter-bird" style="color:#54C5F8"></i><span>Flutter</span></div>
+                        <div class="skill-item"><i class="fas fa-code" style="color:#0175C2"></i><span>Dart</span></div>
+                        <div class="skill-item"><i class="fab fa-react" style="color:#61DAFB"></i><span>React Native</span></div>
+                        <div class="skill-item"><i class="fas fa-cube" style="color:#ffffff"></i><span>Expo</span></div>
+                        <div class="skill-item"><i class="fab fa-android" style="color:#3DDC84"></i><span>Android</span></div>
+                        <div class="skill-item"><i class="fas fa-fire" style="color:#FFCA28"></i><span>Firebase</span></div>
+                    </div>
+                </div>
+
+                <div class="skills-panel" id="tab-web">
+                    <div class="skill-grid">
+                        <div class="skill-item"><i class="fab fa-react" style="color:#61DAFB"></i><span>React</span></div>
+                        <div class="skill-item"><i class="fab fa-node-js" style="color:#339933"></i><span>Node.js</span></div>
+                        <div class="skill-item"><i class="fas fa-server" style="color:#ffffff"></i><span>Express</span></div>
+                        <div class="skill-item"><i class="fab fa-js-square" style="color:#F7DF1E"></i><span>JavaScript</span></div>
+                        <div class="skill-item"><i class="fab fa-html5" style="color:#E34F26"></i><span>HTML5</span></div>
+                        <div class="skill-item"><i class="fab fa-css3-alt" style="color:#1572B6"></i><span>CSS3</span></div>
+                        <div class="skill-item"><i class="fas fa-wind" style="color:#38B2AC"></i><span>Tailwind CSS</span></div>
+                        <div class="skill-item"><i class="fab fa-java" style="color:#ED8B00"></i><span>Java</span></div>
+                    </div>
+                </div>
+
+                <div class="skills-panel" id="tab-ai">
+                    <div class="skill-grid">
+                        <div class="skill-item"><i class="fab fa-google" style="color:#4285F4"></i><span>Gemini API</span></div>
+                        <div class="skill-item"><i class="fas fa-bolt" style="color:#F55036"></i><span>Groq</span></div>
+                        <div class="skill-item"><i class="fas fa-route" style="color:#412991"></i><span>OpenRouter</span></div>
+                        <div class="skill-item"><i class="fas fa-eye" style="color:#0097A7"></i><span>MediaPipe</span></div>
+                        <div class="skill-item"><i class="fab fa-python" style="color:#3776AB"></i><span>Python</span></div>
+                        <div class="skill-item"><i class="fas fa-brain" style="color:#a855f7"></i><span>LLM Agents</span></div>
+                    </div>
+                </div>
+
+                <div class="skills-panel" id="tab-backend">
+                    <div class="skill-grid">
+                        <div class="skill-item"><i class="fas fa-leaf" style="color:#47A248"></i><span>MongoDB</span></div>
+                        <div class="skill-item"><i class="fas fa-database" style="color:#4479A1"></i><span>MySQL</span></div>
+                        <div class="skill-item"><i class="fas fa-fire" style="color:#FFCA28"></i><span>Firestore</span></div>
+                        <div class="skill-item"><i class="fas fa-bolt" style="color:#3ECF8E"></i><span>Supabase</span></div>
+                        <div class="skill-item"><i class="fas fa-rocket" style="color:#009688"></i><span>FastAPI</span></div>
+                        <div class="skill-item"><i class="fab fa-python" style="color:#092E20"></i><span>Django</span></div>
+                    </div>
+                </div>
+
+                <div class="skills-panel" id="tab-security">
+                    <div class="skill-grid">
+                        <div class="skill-item"><i class="fas fa-dragon" style="color:#557C94"></i><span>Kali Linux</span></div>
+                        <div class="skill-item"><i class="fas fa-fish" style="color:#1679A7"></i><span>Wireshark</span></div>
+                        <div class="skill-item"><i class="fas fa-bug" style="color:#FF6633"></i><span>Burp Suite</span></div>
+                        <div class="skill-item"><i class="fas fa-shield-halved" style="color:#f59e0b"></i><span>OWASP</span></div>
+                        <div class="skill-item"><i class="fab fa-linux" style="color:#FCC624"></i><span>Linux</span></div>
+                        <div class="skill-item"><i class="fas fa-lock" style="color:#10b981"></i><span>InfoSec</span></div>
+                    </div>
+                </div>
+
+                <div class="skills-panel" id="tab-tools">
+                    <div class="skill-grid">
+                        <div class="skill-item"><i class="fab fa-git-alt" style="color:#F05032"></i><span>Git</span></div>
+                        <div class="skill-item"><i class="fab fa-github" style="color:#ffffff"></i><span>GitHub</span></div>
+                        <div class="skill-item"><i class="fas fa-code" style="color:#007ACC"></i><span>VS Code</span></div>
+                        <div class="skill-item"><i class="fas fa-vial" style="color:#FF6C37"></i><span>Postman</span></div>
+                        <div class="skill-item"><i class="fab fa-android" style="color:#3DDC84"></i><span>Android Studio</span></div>
+                        <div class="skill-item"><i class="fas fa-image" style="color:#31A8FF"></i><span>Photoshop</span></div>
+                        <div class="skill-item"><i class="fas fa-pen-ruler" style="color:#00C4CC"></i><span>Canva</span></div>
+                        <div class="skill-item"><i class="fas fa-c" style="color:#00599C"></i><span>C++</span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ════════════════════════════════════════════════════════
+         §4  EXPERIENCE
+    ════════════════════════════════════════════════════════ -->
+    <section id="experience" class="section">
+        <div class="container">
+            <div class="section-head" data-aos="fade-up">
+                <span class="eyebrow">Work History</span>
+                <h2 class="section-title">Experience <span class="gradient-text">&amp; Roles</span></h2>
+            </div>
+
+            <div class="exp-timeline">
+
+                <div class="exp-item" data-aos="fade-up" data-aos-delay="0">
+                    <div class="exp-connector">
+                        <div class="exp-dot exp-dot-active"></div>
+                        <div class="exp-line"></div>
+                    </div>
+                    <div class="exp-card glass">
+                        <div class="exp-header">
+                            <div class="exp-icon exp-icon-blue"><i class="fab fa-android"></i></div>
+                            <div>
+                                <h3>Android App Developer Intern</h3>
+                                <span class="exp-org">ARCH Technology <em>(Remote)</em></span>
+                            </div>
+                            <span class="exp-badge exp-badge-active">Completed</span>
+                        </div>
+                        <div class="exp-meta">
+                            <span><i class="fas fa-calendar-alt"></i> April 1 – May 30, 2026 (8 Weeks)</span>
+                            <span><i class="fas fa-globe"></i> Remote</span>
+                        </div>
+                        <p>Worked as an Android App Developer intern, applying Flutter &amp; Dart skills in a professional environment. Contributed to real client-facing features and gained hands-on experience with team workflows and agile development.</p>
+                        <div class="exp-tags"><span>Flutter</span><span>Dart</span><span>Android</span><span>Agile</span></div>
+                    </div>
+                </div>
+
+                <div class="exp-item" data-aos="fade-up" data-aos-delay="100">
+                    <div class="exp-connector">
+                        <div class="exp-dot"></div>
+                        <div class="exp-line"></div>
+                    </div>
+                    <div class="exp-card glass">
+                        <div class="exp-header">
+                            <div class="exp-icon exp-icon-amber"><i class="fas fa-palette"></i></div>
+                            <div>
+                                <h3>Freelance Graphic Designer</h3>
+                                <span class="exp-org">Self-Employed</span>
+                            </div>
+                            <span class="exp-badge">2021 – 2024</span>
+                        </div>
+                        <div class="exp-meta">
+                            <span><i class="fas fa-users"></i> 20 Clients</span>
+                            <span><i class="fas fa-star"></i> 100% Satisfaction</span>
+                        </div>
+                        <p>Designed posters, CVs, logos, and branding materials for 20+ clients over 3+ years using Adobe Photoshop, Illustrator, and Canva. Maintained perfect client satisfaction record.</p>
+                        <div class="exp-tags"><span>Photoshop</span><span>Canva</span><span>Illustrator</span><span>Branding</span></div>
+                    </div>
+                </div>
+
+                <div class="exp-item" data-aos="fade-up" data-aos-delay="200">
+                    <div class="exp-connector">
+                        <div class="exp-dot"></div>
+                        <div class="exp-line"></div>
+                    </div>
+                    <div class="exp-card glass">
+                        <div class="exp-header">
+                            <div class="exp-icon exp-icon-purple"><i class="fab fa-facebook"></i></div>
+                            <div>
+                                <h3>Social Media Manager</h3>
+                                <span class="exp-org">Facebook &amp; Instagram</span>
+                            </div>
+                            <span class="exp-badge">2021 – 2023</span>
+                        </div>
+                        <p>Managed social media accounts on Facebook and Instagram — creating content strategy, growing engagement, and maintaining brand consistency for client pages.</p>
+                        <div class="exp-tags"><span>Content Strategy</span><span>Social Media</span><span>Branding</span></div>
+                    </div>
+                </div>
+
+                <div class="exp-item" data-aos="fade-up" data-aos-delay="300">
+                    <div class="exp-connector">
+                        <div class="exp-dot"></div>
+                    </div>
+                    <div class="exp-card glass">
+                        <div class="exp-header">
+                            <div class="exp-icon exp-icon-green"><i class="fas fa-graduation-cap"></i></div>
+                            <div>
+                                <h3>Class Representative</h3>
+                                <span class="exp-org">Misali Zakariya Group of Schools &amp; Colleges</span>
+                            </div>
+                            <span class="exp-badge">2021 – 2023</span>
+                        </div>
+                        <p>Served as Class Representative — coordinating between faculty and students, leading class initiatives, and demonstrating leadership and communication skills.</p>
+                        <div class="exp-tags"><span>Leadership</span><span>Communication</span><span>Team Management</span></div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- ════════════════════════════════════════════════════════
+         §5  PROJECTS
+    ════════════════════════════════════════════════════════ -->
+    <section id="projects" class="section bg-alt">
+        <div class="container">
+            <div class="section-head" data-aos="fade-up">
+                <span class="eyebrow">What I've Built</span>
+                <h2 class="section-title">Featured <span class="gradient-text">Projects</span></h2>
+                <p>Real software shipped for real users and businesses.</p>
+            </div>
+
+            <!-- Filter -->
+            <div class="filter-row" data-aos="fade-up" data-aos-delay="80">
+                <button class="filter-btn active" data-filter="all">All</button>
+                <button class="filter-btn" data-filter="ai">AI / ML</button>
+                <button class="filter-btn" data-filter="mobile">Mobile</button>
+                <button class="filter-btn" data-filter="web">Web</button>
+                <button class="filter-btn" data-filter="desktop">Desktop</button>
+            </div>
+
+            <div class="projects-grid">
+
+                <!-- ① InterviewMate AI Pro — FEATURED -->
+                <div class="proj-card glass featured-proj" data-category="ai" data-aos="fade-up">
+                    <div class="proj-top">
+                        <div class="proj-icon-wrap" style="--icon-color:#6366f1"><i class="fas fa-robot"></i></div>
+                        <div class="proj-links">
+                            <span class="status-pill status-active"><i class="fas fa-circle"></i> Active</span>
+                            <button class="sm-btn" onclick="openModal('m-interviewmate')">Details</button>
+                        </div>
+                    </div>
+                    <div class="proj-new-tag">🔥 Currently Building</div>
+                    <h3>InterviewMate AI Pro</h3>
+                    <p>End-to-end AI-powered interview preparation platform with a 6-stage pipeline: MCQ → Written → Technical → HR → Audio → Video. Features real LLM agents, MediaPipe facial analysis, and multi-language support.</p>
+                    <div class="proj-tags">
+                        <span>MERN</span><span>FastAPI</span><span>Gemini&nbsp;AI</span><span>Groq</span><span>MediaPipe</span><span>React</span>
+                    </div>
+                </div>
+
+                <!-- ② TarseelX -->
+                <div class="proj-card glass" data-category="mobile" data-aos="fade-up" data-aos-delay="60">
+                    <div class="proj-top">
+                        <div class="proj-icon-wrap" style="--icon-color:#f59e0b"><i class="fas fa-truck"></i></div>
+                        <div class="proj-links">
+                            <span class="status-pill status-active"><i class="fas fa-circle"></i> Active</span>
+                            <button class="sm-btn" onclick="openModal('m-tarseelx')">Details</button>
+                        </div>
+                    </div>
+                    <div class="proj-new-tag">🚧 In Development</div>
+                    <h3>TarseelX</h3>
+                    <p>Pakistan cargo logistics platform — connecting shippers with carriers across the country. Real-time tracking, order management, and route optimization built for scale.</p>
+                    <div class="proj-tags">
+                        <span>React&nbsp;Native</span><span>Expo</span><span>Firebase</span><span>Logistics</span>
+                    </div>
+                </div>
+
+                <!-- ③ Mandi Pro ERP -->
+                <div class="proj-card glass" data-category="mobile" data-aos="fade-up" data-aos-delay="120">
+                    <div class="proj-top">
+                        <div class="proj-icon-wrap" style="--icon-color:#3b82f6"><i class="fas fa-chart-bar"></i></div>
+                        <div class="proj-links">
+                            <a href="https://github.com/Ir786106/mandi-pro-erp" target="_blank" class="sm-btn icon-only" title="GitHub"><i class="fab fa-github"></i></a>
+                            <button class="sm-btn" onclick="openModal('m-mandi')">Details</button>
+                        </div>
+                    </div>
+                    <span class="proj-date">Jun 2026</span>
+                    <h3>Mandi Pro ERP</h3>
+                    <p>Complete cross-platform ERP system for grain market businesses. Digitizes sales, purchases, stock, ledgers, invoices, and cloud backups — eliminating paper-based record keeping.</p>
+                    <div class="proj-tags"><span>Flutter</span><span>Dart</span><span>Firebase</span><span>ERP</span></div>
+                </div>
+
+                <!-- ④ Itthad Food App -->
+                <div class="proj-card glass" data-category="mobile" data-aos="fade-up" data-aos-delay="180">
+                    <div class="proj-top">
+                        <div class="proj-icon-wrap" style="--icon-color:#10b981"><i class="fas fa-industry"></i></div>
+                        <div class="proj-links">
+                            <a href="https://github.com/Ir786106/itthad_food_industries" target="_blank" class="sm-btn icon-only" title="GitHub"><i class="fab fa-github"></i></a>
+                            <button class="sm-btn" onclick="openModal('m-itthad')">Details</button>
+                        </div>
+                    </div>
+                    <span class="proj-date">Jan 2026</span>
+                    <h3>Itthad Food App</h3>
+                    <p>Industrial inventory management mobile app with Firebase Realtime Database for live stock and order tracking. Includes role-based authentication and cross-platform support.</p>
+                    <div class="proj-tags"><span>Flutter</span><span>Firebase</span><span>Supabase</span><span>Mobile</span></div>
+                </div>
+
+                <!-- ⑤ Saqib Shop POS -->
+                <div class="proj-card glass" data-category="mobile" data-aos="fade-up" data-aos-delay="240">
+                    <div class="proj-top">
+                        <div class="proj-icon-wrap" style="--icon-color:#8b5cf6"><i class="fas fa-cash-register"></i></div>
+                        <div class="proj-links">
+                            <button class="sm-btn" onclick="openModal('m-saqib')">Details</button>
+                        </div>
+                    </div>
+                    <h3>Saqib Shop — POS &amp; Ledger</h3>
+                    <p>Custom Point of Sale and digital ledger mobile app tailored for retail businesses. Simplified inventory tracking and daily business operations with clean UX.</p>
+                    <div class="proj-tags"><span>Flutter</span><span>Dart</span><span>POS</span></div>
+                </div>
+
+                <!-- ⑥ Hotel Management -->
+                <div class="proj-card glass" data-category="desktop" data-aos="fade-up" data-aos-delay="300">
+                    <div class="proj-top">
+                        <div class="proj-icon-wrap" style="--icon-color:#06b6d4"><i class="fas fa-hotel"></i></div>
+                        <div class="proj-links">
+                            <button class="sm-btn" onclick="openModal('m-hotel')">Details</button>
+                        </div>
+                    </div>
+                    <h3>Hotel Management System</h3>
+                    <p>Robust multi-module Java desktop application for hotel booking, billing, and guest management. Reduced manual data entry errors by 80%.</p>
+                    <div class="proj-tags"><span>Java</span><span>Swing</span><span>MySQL</span><span>Desktop</span></div>
+                </div>
+
+                <!-- ⑦ Quiz Game -->
+                <div class="proj-card glass" data-category="web" data-aos="fade-up" data-aos-delay="360">
+                    <div class="proj-top">
+                        <div class="proj-icon-wrap" style="--icon-color:#ef4444"><i class="fas fa-gamepad"></i></div>
+                        <div class="proj-links">
+                            <a href="https://github.com/Ir786106/Quiz-game" target="_blank" class="sm-btn icon-only" title="GitHub"><i class="fab fa-github"></i></a>
+                            <button class="sm-btn" onclick="openModal('m-quiz')">Details</button>
+                        </div>
+                    </div>
+                    <span class="proj-date">Mar 2026</span>
+                    <h3>Quiz Game</h3>
+                    <p>Browser-based interactive quiz game built with vanilla JavaScript — score tracking, timers, smooth animations, and zero dependencies.</p>
+                    <div class="proj-tags"><span>HTML5</span><span>CSS3</span><span>JavaScript</span></div>
+                </div>
+
+                <!-- ⑧ Python Logic Building -->
+                <div class="proj-card glass" data-category="web" data-aos="fade-up" data-aos-delay="420">
+                    <div class="proj-top">
+                        <div class="proj-icon-wrap" style="--icon-color:#3776AB"><i class="fab fa-python"></i></div>
+                        <div class="proj-links">
+                            <a href="https://github.com/Ir786106/python-logic-building" target="_blank" class="sm-btn icon-only" title="GitHub"><i class="fab fa-github"></i></a>
+                            <button class="sm-btn" onclick="openModal('m-python')">Details</button>
+                        </div>
+                    </div>
+                    <h3>Python Logic Building</h3>
+                    <p>Practical Python scripting collection — business logic, algorithms (BFS/DFS/A*), and backend fundamentals. Used as a foundation for AI &amp; web backend work.</p>
+                    <div class="proj-tags"><span>Python</span><span>Algorithms</span><span>AI/ML</span></div>
+                </div>
+
+                <!-- ⑨ Portfolio Website -->
+                <div class="proj-card glass" data-category="web" data-aos="fade-up" data-aos-delay="480">
+                    <div class="proj-top">
+                        <div class="proj-icon-wrap" style="--icon-color:#f59e0b"><i class="fas fa-globe"></i></div>
+                        <div class="proj-links">
+                            <a href="https://github.com/Ir786106/Muhammad_Irfan_Waseem_Portfolio" target="_blank" class="sm-btn icon-only" title="GitHub"><i class="fab fa-github"></i></a>
+                            <a href="https://ir786106.github.io/Muhammad_Irfan_Waseem_Portfolio/" target="_blank" class="sm-btn icon-only" title="Live"><i class="fas fa-external-link-alt"></i></a>
+                        </div>
+                    </div>
+                    <span class="proj-date">Nov 2025</span>
+                    <h3>Portfolio Website</h3>
+                    <p>This very portfolio — glassmorphism UI, Three.js 3D showcase, GSAP animations, Firebase testimonials, Google OAuth, and dark/light theme.</p>
+                    <div class="proj-tags"><span>HTML</span><span>CSS</span><span>Three.js</span><span>Firebase</span><span>GSAP</span></div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- ════════════════════ PROJECT MODALS ══════════════════ -->
+    <div id="m-interviewmate" class="modal-overlay">
+        <div class="modal-box glass">
+            <button class="modal-close" onclick="closeModal('m-interviewmate')">&times;</button>
+            <div class="modal-tag" style="--tag-color:#6366f1">AI Platform · MERN · FastAPI</div>
+            <h2>InterviewMate AI Pro</h2>
+            <div class="modal-scroll">
+                <p>End-to-end AI-powered interview preparation platform featuring a 6-stage pipeline:</p>
+                <div class="pipeline-steps">
+                    <div class="pipe-step"><span>1</span>MCQ</div>
+                    <div class="pipe-arrow">→</div>
+                    <div class="pipe-step"><span>2</span>Written</div>
+                    <div class="pipe-arrow">→</div>
+                    <div class="pipe-step"><span>3</span>Technical</div>
+                    <div class="pipe-arrow">→</div>
+                    <div class="pipe-step"><span>4</span>HR</div>
+                    <div class="pipe-arrow">→</div>
+                    <div class="pipe-step"><span>5</span>Audio</div>
+                    <div class="pipe-arrow">→</div>
+                    <div class="pipe-step"><span>6</span>Video</div>
+                </div>
+                <h4><i class="fas fa-star"></i> Key Features</h4>
+                <ul>
+                    <li>Real conversational AI agents via Gemini API, Groq, OpenRouter &amp; open-source LLMs</li>
+                    <li>Genuine audio/video recording with MediaPipe facial &amp; emotion analysis</li>
+                    <li>Multi-language support including Urdu &amp; Arabic (RTL)</li>
+                    <li>Functional Admin Panel with analytics dashboard</li>
+                </ul>
+                <div class="proj-tags" style="margin-top:16px">
+                    <span>MERN</span><span>FastAPI</span><span>Gemini&nbsp;API</span><span>Groq</span><span>OpenRouter</span><span>MediaPipe</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="m-tarseelx" class="modal-overlay">
+        <div class="modal-box glass">
+            <button class="modal-close" onclick="closeModal('m-tarseelx')">&times;</button>
+            <div class="modal-tag" style="--tag-color:#f59e0b">Logistics · React Native</div>
+            <h2>TarseelX</h2>
+            <div class="modal-scroll">
+                <p>Pakistan's cargo logistics platform — connecting shippers and carriers seamlessly.</p>
+                <h4><i class="fas fa-star"></i> Features</h4>
+                <ul>
+                    <li>Real-time shipment tracking with Firebase</li>
+                    <li>Order management system for shippers and drivers</li>
+                    <li>Route optimization algorithms</li>
+                    <li>Cross-platform iOS &amp; Android via Expo</li>
+                </ul>
+                <div class="proj-tags" style="margin-top:16px">
+                    <span>React&nbsp;Native</span><span>Expo</span><span>Firebase</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="m-mandi" class="modal-overlay">
+        <div class="modal-box glass">
+            <button class="modal-close" onclick="closeModal('m-mandi')">&times;</button>
+            <div class="modal-tag" style="--tag-color:#3b82f6">Flutter · ERP · Jun 2026</div>
+            <h2>Mandi Pro ERP</h2>
+            <div class="modal-scroll">
+                <h4><i class="fas fa-bullseye"></i> Problem</h4>
+                <p>Grain market (mandi) businesses in Pakistan relied entirely on manual paper registers — leading to errors, payment disputes, and zero digital records.</p>
+                <h4><i class="fas fa-star"></i> Features</h4>
+                <ul>
+                    <li>Sales &amp; Purchase management modules</li>
+                    <li>Real-time stock tracking with alerts</li>
+                    <li>Digital payment ledgers &amp; accounts</li>
+                    <li>PDF invoice generation</li>
+                    <li>Cloud Firestore backup &amp; sync</li>
+                </ul>
+                <div class="proj-tags" style="margin-top:16px"><span>Flutter</span><span>Dart</span><span>Firebase</span><span>Cloud Firestore</span></div>
+                <a href="https://github.com/Ir786106/mandi-pro-erp" target="_blank" class="btn-primary" style="margin-top:20px;display:inline-flex">
+                    <i class="fab fa-github"></i> View on GitHub
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div id="m-itthad" class="modal-overlay">
+        <div class="modal-box glass">
+            <button class="modal-close" onclick="closeModal('m-itthad')">&times;</button>
+            <div class="modal-tag" style="--tag-color:#10b981">Flutter · Jan 2026</div>
+            <h2>Itthad Food App</h2>
+            <div class="modal-scroll">
+                <h4><i class="fas fa-star"></i> Features</h4>
+                <ul>
+                    <li>Live inventory tracking dashboard</li>
+                    <li>Firebase Realtime Database for instant sync</li>
+                    <li>Role-based authentication (Admin / Worker)</li>
+                    <li>Supabase secondary data layer</li>
+                    <li>Cross-platform (Android &amp; iOS)</li>
+                </ul>
+                <div class="proj-tags" style="margin-top:16px"><span>Flutter</span><span>Firebase</span><span>Supabase</span></div>
+                <a href="https://github.com/Ir786106/itthad_food_industries" target="_blank" class="btn-primary" style="margin-top:20px;display:inline-flex">
+                    <i class="fab fa-github"></i> View on GitHub
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div id="m-saqib" class="modal-overlay">
+        <div class="modal-box glass">
+            <button class="modal-close" onclick="closeModal('m-saqib')">&times;</button>
+            <div class="modal-tag" style="--tag-color:#8b5cf6">Flutter · POS</div>
+            <h2>Saqib Shop — POS &amp; Digital Ledger</h2>
+            <div class="modal-scroll">
+                <p>Custom Point of Sale and digital ledger mobile application tailored for retail businesses to simplify daily operations.</p>
+                <h4><i class="fas fa-star"></i> Features</h4>
+                <ul>
+                    <li>Tailored inventory tracking for retail</li>
+                    <li>Digital ledger management for daily operations</li>
+                    <li>Simplified business workflows &amp; reporting</li>
+                    <li>Offline-first architecture</li>
+                </ul>
+                <div class="proj-tags" style="margin-top:16px"><span>Flutter</span><span>Dart</span></div>
+            </div>
+        </div>
+    </div>
+
+    <div id="m-hotel" class="modal-overlay">
+        <div class="modal-box glass">
+            <button class="modal-close" onclick="closeModal('m-hotel')">&times;</button>
+            <div class="modal-tag" style="--tag-color:#06b6d4">Java · Desktop</div>
+            <h2>Hotel Management System</h2>
+            <div class="modal-scroll">
+                <h4><i class="fas fa-star"></i> Features</h4>
+                <ul>
+                    <li>Room booking &amp; availability management</li>
+                    <li>Guest profile &amp; check-in/out system</li>
+                    <li>Automated billing &amp; invoicing</li>
+                    <li>Staff management module</li>
+                    <li>80% reduction in data entry errors</li>
+                </ul>
+                <div class="proj-tags" style="margin-top:16px"><span>Java</span><span>Swing</span><span>MySQL</span></div>
+            </div>
+        </div>
+    </div>
+
+    <div id="m-quiz" class="modal-overlay">
+        <div class="modal-box glass">
+            <button class="modal-close" onclick="closeModal('m-quiz')">&times;</button>
+            <div class="modal-tag" style="--tag-color:#ef4444">JavaScript · Mar 2026</div>
+            <h2>Quiz Game</h2>
+            <div class="modal-scroll">
+                <p>Browser-based interactive quiz game built with pure vanilla JavaScript — no frameworks, no dependencies.</p>
+                <h4><i class="fas fa-star"></i> Features</h4>
+                <ul>
+                    <li>Score tracking &amp; leaderboard logic</li>
+                    <li>Timer per question with visual indicator</li>
+                    <li>Smooth animated transitions</li>
+                    <li>Fully responsive design</li>
+                </ul>
+                <div class="proj-tags" style="margin-top:16px"><span>HTML5</span><span>CSS3</span><span>JavaScript</span></div>
+                <a href="https://github.com/Ir786106/Quiz-game" target="_blank" class="btn-primary" style="margin-top:20px;display:inline-flex">
+                    <i class="fab fa-github"></i> View on GitHub
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div id="m-python" class="modal-overlay">
+        <div class="modal-box glass">
+            <button class="modal-close" onclick="closeModal('m-python')">&times;</button>
+            <div class="modal-tag" style="--tag-color:#3776AB">Python · Algorithms</div>
+            <h2>Python Logic Building</h2>
+            <div class="modal-scroll">
+                <p>Practical Python scripting collection covering business logic, algorithms, and backend fundamentals used as a foundation for AI and web backend work.</p>
+                <h4><i class="fas fa-star"></i> Covers</h4>
+                <ul>
+                    <li>BFS, DFS &amp; A* pathfinding algorithms</li>
+                    <li>Object-Oriented Python patterns</li>
+                    <li>Data structures &amp; problem solving</li>
+                    <li>Backend logic for FastAPI / Django projects</li>
+                </ul>
+                <div class="proj-tags" style="margin-top:16px"><span>Python</span><span>Algorithms</span></div>
+                <a href="https://github.com/Ir786106/python-logic-building" target="_blank" class="btn-primary" style="margin-top:20px;display:inline-flex">
+                    <i class="fab fa-github"></i> View on GitHub
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- ════════════════════════════════════════════════════════
+         §6  3D SHOWCASE
+    ════════════════════════════════════════════════════════ -->
+    <section id="showcase" class="section showcase-section">
+        <div class="container">
+            <div class="section-head text-center" data-aos="fade-up">
+                <span class="eyebrow">Interactive Experience</span>
+                <h2 class="section-title">3D Project <span class="gradient-text">Showcase</span></h2>
+                <p>Hover to orbit · Click any card to open project details</p>
+            </div>
+        </div>
+        <div class="showcase-wrap">
+            <canvas id="canvas3d"></canvas>
+            <div class="canvas-hint"><i class="fas fa-hand-pointer"></i> Hover &amp; Click to explore</div>
+            <div class="canvas-tag canvas-tag-l">9 Projects</div>
+            <div class="canvas-tag canvas-tag-r">Live 3D</div>
+        </div>
+    </section>
+
+    <!-- ════════════════════════════════════════════════════════
+         §7  AWARDS & CERTIFICATIONS
+    ════════════════════════════════════════════════════════ -->
+    <section id="awards" class="section">
+        <div class="container">
+            <div class="section-head text-center" data-aos="fade-up">
+                <span class="eyebrow">Recognition</span>
+                <h2 class="section-title">Awards & <span class="gradient-text">Certifications</span></h2>
+            </div>
+
+            <!-- Award card -->
+            <div class="award-card glass" data-aos="fade-up">
+                <div class="award-medal-wrap">
+                    <div class="award-medal">🥈</div>
+                    <div class="medal-glow"></div>
+                </div>
+                <div class="award-body">
+                    <div class="award-org"><i class="fas fa-university"></i> COMSATS Skill Development Society (CSDS)</div>
+                    <h3>Runner Up — Project Ideas Expo</h3>
+                    <p>Awarded Runner Up at the Project Ideas Expo organized by CSDS in recognition of creativity, innovation, and technical achievement.</p>
+                    <div class="award-meta-row">
+                        <span><i class="fas fa-calendar-alt"></i> May 2026</span>
+                        <span><i class="fas fa-map-marker-alt"></i> COMSATS Sahiwal</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Certifications grid -->
+            <h3 class="cert-heading" data-aos="fade-up"><i class="fas fa-certificate"></i> Certifications</h3>
+            <div class="cert-grid">
+
+                <!-- OPSWAT ICIP — NEW -->
+                <div class="cert-card glass cert-featured" data-aos="fade-up" data-aos-delay="0">
+                    <div class="cert-badge-img">
+                        <div class="opswat-badge">
+                            <i class="fas fa-shield-halved"></i>
+                            <span>ICIP</span>
+                        </div>
+                    </div>
+                    <div class="cert-info">
+                        <div class="cert-new-badge">New · June 2026</div>
+                        <h4>Introduction to Critical Infrastructure Protection</h4>
+                        <span class="cert-issuer"><i class="fas fa-building"></i> OPSWAT Academy</span>
+                        <div class="cert-meta-row">
+                            <span><i class="fas fa-calendar"></i> Issued: Jun 12, 2026</span>
+                            <span><i class="fas fa-clock"></i> Expires: Jun 12, 2027</span>
+                        </div>
+                        <div class="cert-credits">CPE Credits: 0.50</div>
+                        <div class="cert-id">ID: F8XRi2uP9g</div>
+                        <a href="https://learn.opswatacademy.com/certificate/F8XRi2uP9g"
+                           target="_blank" rel="noopener" class="cert-verify-btn">
+                            <i class="fas fa-external-link-alt"></i> Verify Certificate
+                        </a>
+                    </div>
+                    <div class="cert-verified-badge"><i class="fas fa-check-circle"></i> Verified</div>
+                </div>
+
+                <!-- Sololearn C++ -->
+                <div class="cert-card glass" data-aos="fade-up" data-aos-delay="100">
+                    <div class="cert-badge-img">
+                        <div class="solo-badge"><i class="fas fa-code"></i><span>C++</span></div>
+                    </div>
+                    <div class="cert-info">
+                        <h4>Introduction to C++</h4>
+                        <span class="cert-issuer"><i class="fas fa-graduation-cap"></i> Sololearn</span>
+                        <div class="cert-meta-row">
+                            <span><i class="fas fa-calendar"></i> Feb 2025</span>
+                        </div>
+                    </div>
+                    <div class="cert-verified-badge"><i class="fas fa-check-circle"></i> Verified</div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- ════════════════════════════════════════════════════════
+         §8  VEILGUARD BLOG
+    ════════════════════════════════════════════════════════ -->
+    <section id="blog" class="section bg-alt">
+        <div class="container">
+            <div class="section-head" data-aos="fade-up">
+                <span class="eyebrow">Cybersecurity Writing</span>
+                <h2 class="section-title">VeilGuard <span class="gradient-text">Security Journal</span></h2>
+            </div>
+
+            <div class="blog-layout">
+                <div class="blog-info" data-aos="fade-right">
+                    <div class="blog-logo-wrap">
+                        <div class="blog-logo"><i class="fas fa-shield-halved"></i></div>
+                        <div class="blog-logo-glow"></div>
+                    </div>
+                    <h3>VeilGuard Security Journal</h3>
+                    <p>Running a dedicated cybersecurity research blog covering network security, OWASP vulnerabilities, real-world CVE walkthroughs, and hands-on pentesting concepts.</p>
+                    <div class="blog-topics">
+                        <span class="blog-topic"><i class="fas fa-network-wired"></i> Network Security</span>
+                        <span class="blog-topic"><i class="fas fa-bug"></i> OWASP Top 10</span>
+                        <span class="blog-topic"><i class="fas fa-magnifying-glass"></i> CVE Walkthroughs</span>
+                        <span class="blog-topic"><i class="fas fa-terminal"></i> Pentesting</span>
+                        <span class="blog-topic"><i class="fas fa-lock"></i> Ethical Hacking</span>
+                    </div>
+                    <div class="blog-btns">
+                        <a href="https://veilguardsecjournal.blogspot.com" target="_blank" rel="noopener" class="btn-primary">
+                            <i class="fas fa-book-open"></i> Read the Blog
+                        </a>
+                        <a href="https://x.com/Irfan_CyberSec" target="_blank" rel="noopener" class="btn-outline">
+                            <i class="fab fa-twitter"></i> @Irfan_CyberSec
+                        </a>
+                    </div>
+                </div>
+
+                <div class="blog-preview" data-aos="fade-left">
+                    <div class="blog-card-preview glass">
+                        <div class="bcp-top">
+                            <i class="fas fa-rss" style="color:var(--primary)"></i>
+                            <span>Latest Articles</span>
+                        </div>
+                        <div class="bcp-items">
+                            <div class="bcp-item">
+                                <i class="fas fa-network-wired"></i>
+                                <div>
+                                    <h5>Critical Infrastructure & ICS Security</h5>
+                                    <span>OPSWAT · ICIP Certified</span>
+                                </div>
+                            </div>
+                            <div class="bcp-item">
+                                <i class="fas fa-bug"></i>
+                                <div>
+                                    <h5>OWASP Top 10 — Deep Dive</h5>
+                                    <span>Vulnerability Analysis</span>
+                                </div>
+                            </div>
+                            <div class="bcp-item">
+                                <i class="fas fa-fish"></i>
+                                <div>
+                                    <h5>Wireshark Packet Analysis</h5>
+                                    <span>Network Forensics</span>
+                                </div>
+                            </div>
+                            <div class="bcp-item">
+                                <i class="fas fa-key"></i>
+                                <div>
+                                    <h5>Ethical Hacking Concepts</h5>
+                                    <span>Penetration Testing</span>
+                                </div>
+                            </div>
+                        </div>
+                        <a href="https://veilguardsecjournal.blogspot.com" target="_blank" rel="noopener" class="bcp-cta">
+                            Visit Blog <i class="fas fa-external-link-alt"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ════════════════════════════════════════════════════════
+        §9  GALLERY
+    ════════════════════════════════════════════════════════ -->
+    <section id="gallery" class="section">
+        <div class="container">
+            <div class="section-head text-center" data-aos="fade-up">
+                <span class="eyebrow">Graphic Design</span>
+                <h2 class="section-title">Creative <span class="gradient-text">Gallery</span></h2>
+                <p>3+ years · 20+ clients · 100% satisfaction</p>
+            </div>
+            <div class="gallery-grid">
+                <div class="gal-item" onclick="openLightbox(this)" data-aos="fade-up">
+                    <img src="Images/1.jpg" alt="Coffee Brand Poster" loading="lazy">
+                    <div class="gal-overlay"><i class="fas fa-expand-alt"></i></div>
+                </div>
+                <div class="gal-item gal-tall" onclick="openLightbox(this)" data-aos="fade-up" data-aos-delay="60">
+                    <img src="Images/2.jpg" alt="Food Menu Design" loading="lazy">
+                    <div class="gal-overlay"><i class="fas fa-expand-alt"></i></div>
+                </div>
+                <div class="gal-item" onclick="openLightbox(this)" data-aos="fade-up" data-aos-delay="120">
+                    <img src="Images/3.jpg" alt="Travel Poster" loading="lazy">
+                    <div class="gal-overlay"><i class="fas fa-expand-alt"></i></div>
+                </div>
+                <div class="gal-item gal-wide" onclick="openLightbox(this)" data-aos="fade-up" data-aos-delay="180">
+                    <img src="Images/4.jpg" alt="Brand Logo Design" loading="lazy">
+                    <div class="gal-overlay"><i class="fas fa-expand-alt"></i></div>
+                </div>
+                <div class="gal-item" onclick="openLightbox(this)" data-aos="fade-up" data-aos-delay="240">
+                    <img src="Images/5.jpg" alt="Canada Study Poster" loading="lazy">
+                    <div class="gal-overlay"><i class="fas fa-expand-alt"></i></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Lightbox -->
+    <div class="lightbox" id="lightbox" onclick="if(event.target===this)closeLightbox()">
+        <button class="lb-close" onclick="closeLightbox()">&times;</button>
+        <img id="lb-img" class="lb-img" alt="">
+    </div>
+
+    <!-- ════════════════════════════════════════════════════════
+        §10  TESTIMONIALS
+    ════════════════════════════════════════════════════════ -->
+    <section id="testimonials" class="section bg-alt">
+        <div class="container">
+            <div class="section-head text-center" data-aos="fade-up">
+                <span class="eyebrow">What Clients Say</span>
+                <h2 class="section-title">Client <span class="gradient-text">Reviews</span></h2>
+                <p>Real-time reviews powered by Firebase — verified Google accounts only.</p>
+                <button class="btn-primary" onclick="openModal('modal-feedback')" style="margin-top:20px">
+                    <i class="fas fa-plus"></i> Add Your Review
+                </button>
+            </div>
+            <div class="reviews-grid" id="testimonial-container">
+                <div class="review-card glass" style="text-align:center; padding:40px;">
+                    <p><i class="fas fa-spinner fa-spin"></i> Loading reviews...</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Feedback Modal -->
+    <div id="modal-feedback" class="modal-overlay">
+        <div class="modal-box glass">
+            <button class="modal-close" onclick="closeModal('modal-feedback')">&times;</button>
+            <h2>Leave a Review</h2>
+            <div id="auth-loading" style="text-align:center;padding:24px">
+                <p><i class="fas fa-spinner fa-spin"></i> Checking login...</p>
+            </div>
+            <div id="auth-section" style="display:none;text-align:center;padding:20px">
+                <p style="color:var(--muted);margin-bottom:20px">Sign in with Google to leave a verified review.</p>
+                <button id="google-login-btn" class="btn-primary full-w" type="button">
+                    <i class="fab fa-google"></i> Sign in with Google
+                </button>
+            </div>
+            <form id="feedbackForm" style="display:none">
+                <div class="user-info-row">
+                    <img id="user-avatar" src="" alt="Avatar">
+                    <div>
+                        <h4 id="user-name-display">User</h4>
+                        <small style="color:var(--primary)"><i class="fas fa-check-circle"></i> Verified</small>
+                    </div>
+                    <button type="button" id="logout-btn">Change</button>
+                </div>
+                <div class="form-group">
+                    <label>Rating</label>
+                    <div class="star-row">
+                        <i class="fas fa-star star-btn" data-value="1"></i>
+                        <i class="fas fa-star star-btn" data-value="2"></i>
+                        <i class="fas fa-star star-btn" data-value="3"></i>
+                        <i class="fas fa-star star-btn" data-value="4"></i>
+                        <i class="fas fa-star star-btn active" data-value="5"></i>
+                    </div>
+                    <input type="hidden" id="feedback-rating" value="5">
+                </div>
+                <div class="form-group">
+                    <label for="feedback-message">Your Experience</label>
+                    <textarea id="feedback-message" rows="4" required placeholder="Tell others about working with Irfan..."></textarea>
+                </div>
+                <button type="submit" class="btn-primary full-w">Submit Review</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- ════════════════════════════════════════════════════════
+         §11  CONTACT
+    ════════════════════════════════════════════════════════ -->
+    <section id="contact" class="section">
+        <div class="container contact-grid">
+
+            <!-- LEFT -->
+            <div class="contact-info" data-aos="fade-right">
+                <span class="eyebrow">Get in Touch</span>
+                <h2 class="section-title">Let's <span class="gradient-text">Collaborate</span></h2>
+                <p>Open for internships, freelance projects, and full-time opportunities. Let's build something impactful together.</p>
+
+                <a href="mailto:muhammadirfan.infosec@gmail.com" class="contact-card glass">
+                    <div class="cc-icon"><i class="fas fa-envelope"></i></div>
+                    <div><span>Email</span><h4>muhammadirfan.infosec@gmail.com</h4></div>
+                </a>
+                <a href="tel:+923417224846" class="contact-card glass">
+                    <div class="cc-icon"><i class="fas fa-phone"></i></div>
+                    <div><span>Call / WhatsApp</span><h4>+92 341 7224846</h4></div>
+                </a>
+                <div class="contact-card glass">
+                    <div class="cc-icon"><i class="fas fa-map-marker-alt"></i></div>
+                    <div><span>Location</span><h4>Arifwala, Punjab, Pakistan</h4></div>
+                </div>
+                <div class="contact-card glass">
+                    <div class="cc-icon" style="color:#FF6600"><i class="fas fa-shield-halved"></i></div>
+                    <div><span>Security Blog</span><h4>veilguardsecjournal.blogspot.com</h4></div>
+                </div>
+
+                <a href="Images/Irfan_Resume.pdf" download="Muhammad_Irfan_Waseem_CV" class="btn-outline full-w" style="margin-top:24px">
+                    <i class="fas fa-file-pdf"></i> Download Full CV / Resume
+                </a>
+            </div>
+
+            <!-- RIGHT — form -->
+            <form id="contactForm" class="contact-form glass" data-aos="fade-left">
+                <h3>Send a Message</h3>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="name">Name</label>
+                        <input type="text" id="name" required placeholder="John Doe">
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" required placeholder="john@email.com">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="subject">Subject</label>
+                    <input type="text" id="subject" placeholder="Project inquiry, internship...">
+                </div>
+                <div class="form-group">
+                    <label for="message">Message</label>
+                    <textarea id="message" rows="5" required placeholder="Tell me about your project or opportunity..."></textarea>
+                </div>
+                <button type="submit" class="btn-primary full-w">
+                    <i class="fas fa-paper-plane"></i> Send Message
+                </button>
+            </form>
+        </div>
+    </section>
+
+    <!-- ════════════════════════════════════════════════════════
+         FOOTER
+    ════════════════════════════════════════════════════════ -->
+    <footer>
+        <div class="container footer-inner">
+            <div class="footer-left">
+                <a href="#home" class="logo">IRFAN<span class="dot">.</span></a>
+                <p>Flutter &amp; MERN Developer · AI Builder · Pakistan 🇵🇰</p>
+            </div>
+            <p class="footer-copy">&copy; 2026 Muhammad Irfan Waseem. All rights reserved.</p>
+            <div class="footer-socials">
+                <a href="https://github.com/Ir786106"                             target="_blank" rel="noopener"><i class="fab fa-github"></i></a>
+                <a href="https://linkedin.com/in/muhammad-irfan-waseem-48226b297" target="_blank" rel="noopener"><i class="fab fa-linkedin"></i></a>
+                <a href="https://x.com/Irfan_CyberSec"                            target="_blank" rel="noopener"><i class="fab fa-twitter"></i></a>
+                <a href="https://veilguardsecjournal.blogspot.com"                 target="_blank" rel="noopener"><i class="fas fa-shield-halved"></i></a>
+            </div>
+        </div>
+        <div class="footer-bottom-bar">
+            <span>✅ Open for Internships &amp; Freelance Flutter / MERN Projects</span>
+        </div>
+    </footer>
+
+    <!-- ════════════════════════════════════════════════════════
+         WEATHER WIDGET
+    ════════════════════════════════════════════════════════ -->
+    <div class="weather-widget glass" id="weatherWidget">
+        <div class="ww-main">
+            <div class="ww-icon-wrap">
+                <i class="ww-icon ww-icon-night fas fa-moon"></i>
+            </div>
+            <div>
+                <div class="ww-temp" id="wwTemp">--°C</div>
+                <div class="ww-city" id="wwCity">Loading...</div>
+            </div>
+        </div>
+        <div class="ww-detail">
+            <div id="wwCondition">--</div>
+            <div>💧 <span id="wwHumidity">--%</span></div>
+            <div>💨 <span id="wwWind">--m/s</span></div>
+        </div>
+        <div class="ww-toggle-row">
+            <button class="ww-refresh" id="wwRefresh" title="Refresh weather" onclick="fetchWeather()">
+                <i class="fas fa-sync-alt"></i>
+            </button>
+            <button class="ww-collapse" id="wwCollapse" title="Collapse">
+                <i class="fas fa-chevron-up"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- ════════════════════════════════════════════════════════
+         SCRIPTS
+    ════════════════════════════════════════════════════════ -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
+    <script type="module" src="script.js"></script>
+</body>
+</html>
