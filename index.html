@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark" data-sky-mode="night">
+<html lang="en" data-theme="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Muhammad Irfan Waseem | Flutter & MERN Developer</title>
-    <meta name="description" content="Portfolio of Muhammad Irfan Waseem — Flutter & MERN Developer, AI Integrations, Cybersecurity. CS undergraduate at COMSATS University. Building InterviewMate AI Pro & TarseelX.">
-    <meta name="keywords" content="Muhammad Irfan Waseem, Flutter Developer, MERN Stack, React Native, FastAPI, AI Developer, Cybersecurity, Pakistan, Firebase, COMSATS, InterviewMate, VeilGuard">
+    <meta name="description" content="Portfolio of Muhammad Irfan Waseem — Flutter & MERN Developer, AI Integrations, Cybersecurity. CS undergraduate at COMSATS University. Building Food Fight, TarseelX & InterviewMate AI Pro.">
+    <meta name="keywords" content="Muhammad Irfan Waseem, Flutter Developer, MERN Stack, React Native, FastAPI, AI Developer, Cybersecurity, Pakistan, Firebase, COMSATS, InterviewMate, Food Fight, VeilGuard">
     <meta name="author" content="Muhammad Irfan Waseem">
     <meta name="robots" content="index, follow">
     <meta property="og:type" content="website">
@@ -24,7 +24,7 @@
 </head>
 <body>
 
-    <!-- ══ PRELOADER ════════════════════════════════════════ -->
+    
     <div class="preloader" id="preloader">
         <div class="preloader-inner">
             <div class="pre-logo">IRFAN<span>.</span></div>
@@ -33,17 +33,23 @@
         </div>
     </div>
 
-    <!-- ══ CURSOR ════════════════════════════════════════════ -->
-    <div class="cursor-dot"></div>
-    <div class="cursor-outline"></div>
-
-    <!-- ══ BACKGROUND: ANIMATED SKY CANVAS ══════════════════ -->
-    <canvas id="sky-canvas" class="sky-canvas"></canvas>
-
-    <!-- ══ SCROLL PROGRESS BAR ═══════════════════════════════ -->
+    
     <div id="scrollProgress"></div>
 
-    <!-- ══ NAV ═══════════════════════════════════════════════ -->
+    <!-- Ambient Animated Background Layer (Dark: Cyber Luminescence | Light: Architectural Prism Matrix) -->
+    <div class="ambient-bg" aria-hidden="true">
+        <div class="ambient-pattern"></div>
+        <div class="ambient-cyber-lines"></div>
+        <div class="ambient-glows">
+            <div class="ambient-orb orb-1"></div>
+            <div class="ambient-orb orb-2"></div>
+            <div class="ambient-orb orb-3"></div>
+            <div class="ambient-orb orb-4"></div>
+        </div>
+        <canvas id="bg-canvas"></canvas>
+    </div>
+
+    
     <nav class="navbar" id="navbar">
         <div class="container nav-inner">
             <a href="#home" class="logo">IRFAN<span class="dot">.</span></a>
@@ -59,46 +65,7 @@
                 <li><a href="#contact"     class="nav-link" data-section="contact">Contact</a></li>
             </ul>
             <div class="nav-right">
-                <!-- Live Clock -->
-                <div class="live-clock" id="liveClockWrapper">
-                    <span id="clockTime">12:00</span>
-                    <span id="clockAMPM" class="clock-ampm">AM</span>
-                </div>
-
-                <!-- Sky Mode Selector -->
-                <div class="sky-mode-wrap">
-                    <button class="sky-mode-btn" id="skyModeBtn" aria-label="Sky Mode">
-                        <span class="sky-mode-icon">🌙</span>
-                        <span class="sky-mode-label" id="skyModeLabel">Night</span>
-                        <i class="fas fa-chevron-down" style="font-size:0.7rem;opacity:0.6"></i>
-                    </button>
-                    <div class="sky-mode-dropdown" id="skyModeDropdown">
-                        <button class="sky-mode-option" data-mode="dawn" title="04:00 - 06:00">
-                            <span>🌠</span> Dawn
-                        </button>
-                        <button class="sky-mode-option" data-mode="morning" title="06:00 - 10:30">
-                            <span>🌅</span> Morning
-                        </button>
-                        <button class="sky-mode-option" data-mode="afternoon" title="10:30 - 16:30">
-                            <span>☀️</span> Day
-                        </button>
-                        <button class="sky-mode-option" data-mode="evening" title="16:30 - 20:00">
-                            <span>🌇</span> Evening
-                        </button>
-                        <button class="sky-mode-option active" data-mode="night" title="20:00 - 04:00">
-                            <span>🌙</span> Night
-                        </button>
-                        <div class="sky-auto-row">
-                            <span>Auto</span>
-                            <label class="toggle-switch">
-                                <input type="checkbox" id="skyAutoToggle" checked>
-                                <span class="toggle-slider"></span>
-                            </label>
-                        </div>
-                    </div>
-                </div>
-
-                <button id="theme-toggle" class="icon-round-btn" aria-label="Toggle Theme">
+                <button id="theme-toggle" class="icon-round-btn" aria-label="Toggle Theme" title="Toggle Light / Dark Mode">
                     <i class="fas fa-sun" id="icon-sun"></i>
                     <i class="fas fa-moon" id="icon-moon"></i>
                 </button>
@@ -110,7 +77,7 @@
         </div>
     </nav>
 
-    <!-- ══ MOBILE MENU ════════════════════════════════════════ -->
+    
     <div class="mobile-menu" id="mobileMenu">
         <div class="mobile-menu-inner">
             <a href="#home"       class="m-link" data-section="home">Home</a>
@@ -125,13 +92,11 @@
         </div>
     </div>
 
-    <!-- ════════════════════════════════════════════════════════
-         §1  HERO
-    ════════════════════════════════════════════════════════ -->
+    
     <section id="home" class="hero-section">
         <div class="container hero-grid">
 
-            <!-- LEFT -->
+            
             <div class="hero-content">
                 <div class="hero-chips">
                     <span class="chip chip-green">
@@ -141,7 +106,7 @@
                         <i class="fas fa-medal"></i> CSDS Runner Up '26
                     </span>
                     <span class="chip chip-blue">
-                        <i class="fas fa-briefcase"></i> ARCH Tech Intern
+                        <i class="fas fa-briefcase"></i> Devsphere Intern (DVS-7027)
                     </span>
                 </div>
 
@@ -155,7 +120,7 @@
                 <p class="hero-sub">
                     Flutter & MERN Developer building AI-powered platforms, ERP systems,
                     and cross-platform apps. CS undergraduate at COMSATS University
-                    — currently shipping <strong>InterviewMate AI Pro</strong> &amp; <strong>TarseelX</strong>.
+                    — delivered <strong>InterviewMate AI Pro</strong>, shipping <strong>Food Fight</strong> &amp; <strong>TarseelX</strong>.
                 </p>
 
                 <div class="hero-btns">
@@ -183,34 +148,26 @@
                 </div>
             </div>
 
-            <!-- RIGHT — 3D profile card -->
+            
             <div class="hero-visual">
                 <div class="profile-scene">
                     <div class="profile-card-3d">
                         <img src="Images/Irfan.jpg" alt="Muhammad Irfan Waseem" class="profile-img">
                     </div>
-                    <!-- floating chips -->
+                    
                     <div class="fl-chip fc-1"><i class="fab fa-flutter"></i> Flutter Dev</div>
                     <div class="fl-chip fc-2"><i class="fas fa-brain"></i> AI Builder</div>
                     <div class="fl-chip fc-3"><i class="fas fa-shield-halved"></i> CyberSec</div>
                     <div class="fl-chip fc-4"><i class="fas fa-trophy"></i> Award Winner</div>
-                    <!-- glow orbs -->
+                    
                     <div class="orb orb-blue"></div>
                     <div class="orb orb-purple"></div>
                 </div>
             </div>
         </div>
-
-        <!-- Scroll indicator -->
-        <div class="scroll-hint">
-            <div class="scroll-mouse"><div class="scroll-wheel"></div></div>
-            <span>Scroll</span>
-        </div>
     </section>
 
-    <!-- ════════════════════════════════════════════════════════
-         §2  ABOUT
-    ════════════════════════════════════════════════════════ -->
+    
     <section id="about" class="section">
         <div class="container">
             <div class="section-head" data-aos="fade-up">
@@ -219,7 +176,7 @@
             </div>
 
             <div class="about-grid">
-                <!-- left — text -->
+                
                 <div class="about-card glass" data-aos="fade-right">
                     <h3>Full-Stack & Mobile Developer</h3>
                     <p>I'm <strong>Muhammad Irfan Waseem</strong>, a Computer Science undergraduate
@@ -230,7 +187,7 @@
                        <strong>MERN Stack</strong>, and <strong>React Native</strong> — while
                        maintaining a cybersecurity research blog.</p>
 
-                    <!-- Dart class style "card" -->
+                    
                     <div class="dart-card">
                         <div class="dart-header"><span class="dart-kw">class</span> <span class="dart-cls">IrfanWaseem</span> {</div>
                         <div class="dart-body">
@@ -242,7 +199,7 @@
                         <div class="dart-footer">}</div>
                     </div>
 
-                    <!-- Education timeline -->
+                    
                     <div class="edu-timeline">
                         <div class="edu-item">
                             <div class="edu-dot"></div>
@@ -262,7 +219,7 @@
                         </div>
                     </div>
 
-                    <!-- Stats row -->
+                    
                     <div class="stats-row">
                         <div class="stat"><h4>10+</h4><span>Projects</span></div>
                         <div class="stat"><h4>3+</h4><span>Yrs Design</span></div>
@@ -270,7 +227,7 @@
                         <div class="stat"><h4>🥈</h4><span>Award</span></div>
                     </div>
 
-                    <!-- Interests -->
+                    
                     <div class="interests">
                         <span class="interest-tag"><i class="fas fa-pen-nib"></i> Blogging</span>
                         <span class="interest-tag"><i class="fab fa-github"></i> Open Source</span>
@@ -280,7 +237,7 @@
                     </div>
                 </div>
 
-                <!-- right — skill boxes -->
+                
                 <div class="skill-boxes" data-aos="fade-left">
                     <div class="sk-box" data-aos="zoom-in" data-aos-delay="0">
                         <i class="fas fa-mobile-alt"></i>
@@ -317,9 +274,7 @@
         </div>
     </section>
 
-    <!-- ════════════════════════════════════════════════════════
-         §3  SKILLS
-    ════════════════════════════════════════════════════════ -->
+    
     <section id="skills" class="section bg-alt">
         <div class="container">
             <div class="section-head text-center" data-aos="fade-up">
@@ -411,9 +366,7 @@
         </div>
     </section>
 
-    <!-- ════════════════════════════════════════════════════════
-         §4  EXPERIENCE
-    ════════════════════════════════════════════════════════ -->
+    
     <section id="experience" class="section">
         <div class="container">
             <div class="section-head" data-aos="fade-up">
@@ -430,12 +383,36 @@
                     </div>
                     <div class="exp-card glass">
                         <div class="exp-header">
+                            <div class="exp-icon exp-icon-blue"><i class="fas fa-mobile-screen-button"></i></div>
+                            <div>
+                                <h3>App Development Intern</h3>
+                                <span class="exp-org">Devsphere <em>(Remote Internship and Training Program)</em></span>
+                            </div>
+                            <span class="exp-badge exp-badge-active"><i class="fas fa-circle" style="font-size:0.5rem;animation:pulseGreen 1.5s infinite"></i> In Progress</span>
+                        </div>
+                        <div class="exp-meta">
+                            <span><i class="fas fa-calendar-alt"></i> 22 August 2026 – 22 October 2026 (2 months)</span>
+                            <span><i class="fas fa-id-badge"></i> Intern ID: DVS-7027</span>
+                            <span><i class="fas fa-globe"></i> Remote</span>
+                        </div>
+                        <p>Hands-on experience in modern app development — mobile application development, UI/UX design, and frameworks including Flutter and React Native — contributing to real-world projects covering app design, performance optimization, and debugging.</p>
+                        <div class="exp-tags"><span>Flutter</span><span>React Native</span><span>Mobile Dev</span><span>UI/UX</span><span>Remote</span></div>
+                    </div>
+                </div>
+
+                <div class="exp-item" data-aos="fade-up" data-aos-delay="80">
+                    <div class="exp-connector">
+                        <div class="exp-dot"></div>
+                        <div class="exp-line"></div>
+                    </div>
+                    <div class="exp-card glass">
+                        <div class="exp-header">
                             <div class="exp-icon exp-icon-blue"><i class="fab fa-android"></i></div>
                             <div>
                                 <h3>Android App Developer Intern</h3>
                                 <span class="exp-org">ARCH Technology <em>(Remote)</em></span>
                             </div>
-                            <span class="exp-badge exp-badge-active">Completed</span>
+                            <span class="exp-badge">Completed</span>
                         </div>
                         <div class="exp-meta">
                             <span><i class="fas fa-calendar-alt"></i> April 1 – May 30, 2026 (8 Weeks)</span>
@@ -510,9 +487,7 @@
         </div>
     </section>
 
-    <!-- ════════════════════════════════════════════════════════
-         §5  PROJECTS
-    ════════════════════════════════════════════════════════ -->
+    
     <section id="projects" class="section bg-alt">
         <div class="container">
             <div class="section-head" data-aos="fade-up">
@@ -521,7 +496,7 @@
                 <p>Real software shipped for real users and businesses.</p>
             </div>
 
-            <!-- Filter -->
+            
             <div class="filter-row" data-aos="fade-up" data-aos-delay="80">
                 <button class="filter-btn active" data-filter="all">All</button>
                 <button class="filter-btn" data-filter="ai">AI / ML</button>
@@ -532,25 +507,43 @@
 
             <div class="projects-grid">
 
-                <!-- ① InterviewMate AI Pro — FEATURED -->
+                
                 <div class="proj-card glass featured-proj" data-category="ai" data-aos="fade-up">
                     <div class="proj-top">
                         <div class="proj-icon-wrap" style="--icon-color:#6366f1"><i class="fas fa-robot"></i></div>
                         <div class="proj-links">
-                            <span class="status-pill status-active"><i class="fas fa-circle"></i> Active</span>
+                            <span class="status-pill status-completed"><i class="fas fa-check-circle"></i> Completed</span>
+                            <a href="https://github.com/Ir786106" target="_blank" class="sm-btn icon-only" title="GitHub"><i class="fab fa-github"></i></a>
                             <button class="sm-btn" onclick="openModal('m-interviewmate')">Details</button>
                         </div>
                     </div>
-                    <div class="proj-new-tag">🔥 Currently Building</div>
+                    <div class="proj-new-tag">✅ Completed Project</div>
                     <h3>InterviewMate AI Pro</h3>
-                    <p>End-to-end AI-powered interview preparation platform with a 6-stage pipeline: MCQ → Written → Technical → HR → Audio → Video. Features real LLM agents, MediaPipe facial analysis, and multi-language support.</p>
+                    <p>End-to-end AI-powered interview preparation platform with a delivered 6-stage pipeline: MCQ → Written → Technical → HR → Audio → Video. Features real LLM agents, MediaPipe facial analysis, and multi-language support.</p>
                     <div class="proj-tags">
                         <span>MERN</span><span>FastAPI</span><span>Gemini&nbsp;AI</span><span>Groq</span><span>MediaPipe</span><span>React</span>
                     </div>
                 </div>
 
-                <!-- ② TarseelX -->
-                <div class="proj-card glass" data-category="mobile" data-aos="fade-up" data-aos-delay="60">
+                
+                <div class="proj-card glass" data-category="mobile web" data-aos="fade-up" data-aos-delay="40">
+                    <div class="proj-top">
+                        <div class="proj-icon-wrap" style="--icon-color:#ef4444"><i class="fas fa-utensils"></i></div>
+                        <div class="proj-links">
+                            <span class="status-pill status-active"><i class="fas fa-circle"></i> Active</span>
+                            <button class="sm-btn" onclick="openModal('m-foodfight')">Details</button>
+                        </div>
+                    </div>
+                    <div class="proj-new-tag">🚧 In Development</div>
+                    <h3>Food Fight</h3>
+                    <p>Digital ordering and multi-role restaurant management ecosystem built for Food Fight fast-food restaurant. Integrates customer &amp; rider mobile apps, admin dashboards, and live Google Maps tracking.</p>
+                    <div class="proj-tags">
+                        <span>Flutter</span><span>Firebase</span><span>Google&nbsp;Maps</span><span>FCM</span><span>Firestore</span>
+                    </div>
+                </div>
+
+                
+                <div class="proj-card glass" data-category="mobile" data-aos="fade-up" data-aos-delay="80">
                     <div class="proj-top">
                         <div class="proj-icon-wrap" style="--icon-color:#f59e0b"><i class="fas fa-truck"></i></div>
                         <div class="proj-links">
@@ -566,7 +559,7 @@
                     </div>
                 </div>
 
-                <!-- ③ Mandi Pro ERP -->
+                
                 <div class="proj-card glass" data-category="mobile" data-aos="fade-up" data-aos-delay="120">
                     <div class="proj-top">
                         <div class="proj-icon-wrap" style="--icon-color:#3b82f6"><i class="fas fa-chart-bar"></i></div>
@@ -581,7 +574,7 @@
                     <div class="proj-tags"><span>Flutter</span><span>Dart</span><span>Firebase</span><span>ERP</span></div>
                 </div>
 
-                <!-- ④ Itthad Food App -->
+                
                 <div class="proj-card glass" data-category="mobile" data-aos="fade-up" data-aos-delay="180">
                     <div class="proj-top">
                         <div class="proj-icon-wrap" style="--icon-color:#10b981"><i class="fas fa-industry"></i></div>
@@ -596,7 +589,7 @@
                     <div class="proj-tags"><span>Flutter</span><span>Firebase</span><span>Supabase</span><span>Mobile</span></div>
                 </div>
 
-                <!-- ⑤ Saqib Shop POS -->
+                
                 <div class="proj-card glass" data-category="mobile" data-aos="fade-up" data-aos-delay="240">
                     <div class="proj-top">
                         <div class="proj-icon-wrap" style="--icon-color:#8b5cf6"><i class="fas fa-cash-register"></i></div>
@@ -609,7 +602,7 @@
                     <div class="proj-tags"><span>Flutter</span><span>Dart</span><span>POS</span></div>
                 </div>
 
-                <!-- ⑥ Hotel Management -->
+                
                 <div class="proj-card glass" data-category="desktop" data-aos="fade-up" data-aos-delay="300">
                     <div class="proj-top">
                         <div class="proj-icon-wrap" style="--icon-color:#06b6d4"><i class="fas fa-hotel"></i></div>
@@ -622,7 +615,7 @@
                     <div class="proj-tags"><span>Java</span><span>Swing</span><span>MySQL</span><span>Desktop</span></div>
                 </div>
 
-                <!-- ⑦ Quiz Game -->
+                
                 <div class="proj-card glass" data-category="web" data-aos="fade-up" data-aos-delay="360">
                     <div class="proj-top">
                         <div class="proj-icon-wrap" style="--icon-color:#ef4444"><i class="fas fa-gamepad"></i></div>
@@ -637,7 +630,7 @@
                     <div class="proj-tags"><span>HTML5</span><span>CSS3</span><span>JavaScript</span></div>
                 </div>
 
-                <!-- ⑧ Python Logic Building -->
+                
                 <div class="proj-card glass" data-category="web" data-aos="fade-up" data-aos-delay="420">
                     <div class="proj-top">
                         <div class="proj-icon-wrap" style="--icon-color:#3776AB"><i class="fab fa-python"></i></div>
@@ -651,7 +644,7 @@
                     <div class="proj-tags"><span>Python</span><span>Algorithms</span><span>AI/ML</span></div>
                 </div>
 
-                <!-- ⑨ Portfolio Website -->
+                
                 <div class="proj-card glass" data-category="web" data-aos="fade-up" data-aos-delay="480">
                     <div class="proj-top">
                         <div class="proj-icon-wrap" style="--icon-color:#f59e0b"><i class="fas fa-globe"></i></div>
@@ -670,14 +663,21 @@
         </div>
     </section>
 
-    <!-- ════════════════════ PROJECT MODALS ══════════════════ -->
+    
     <div id="m-interviewmate" class="modal-overlay">
         <div class="modal-box glass">
             <button class="modal-close" onclick="closeModal('m-interviewmate')">&times;</button>
-            <div class="modal-tag" style="--tag-color:#6366f1">AI Platform · MERN · FastAPI</div>
+            <div class="modal-tag" style="--tag-color:#6366f1">AI Platform · MERN · FastAPI · Completed</div>
             <h2>InterviewMate AI Pro</h2>
             <div class="modal-scroll">
-                <p>End-to-end AI-powered interview preparation platform featuring a 6-stage pipeline:</p>
+                <h4><i class="fas fa-bullseye"></i> Problem</h4>
+                <p>Traditional technical and behavioral interview preparation is fragmented, high-friction, and lacks objective, real-time feedback. Job seekers face high rejection rates due to anxiety, unpreparedness for complex technical probing, and zero actionable guidance on body language and vocal delivery.</p>
+
+                <h4><i class="fas fa-user-gear"></i> My Role</h4>
+                <p>Full-Stack AI Engineer &amp; Lead Architect — conceived, designed, and engineered the complete end-to-end platform, from front-end user experience and FastAPI AI microservices to LLM agent orchestration and computer vision pipelines.</p>
+
+                <h4><i class="fas fa-microchip"></i> Solution &amp; Architecture</h4>
+                <p>Delivered an autonomous, multi-modal preparation engine featuring a fully functional 6-stage evaluation pipeline:</p>
                 <div class="pipeline-steps">
                     <div class="pipe-step"><span>1</span>MCQ</div>
                     <div class="pipe-arrow">→</div>
@@ -691,15 +691,58 @@
                     <div class="pipe-arrow">→</div>
                     <div class="pipe-step"><span>6</span>Video</div>
                 </div>
-                <h4><i class="fas fa-star"></i> Key Features</h4>
                 <ul>
-                    <li>Real conversational AI agents via Gemini API, Groq, OpenRouter &amp; open-source LLMs</li>
-                    <li>Genuine audio/video recording with MediaPipe facial &amp; emotion analysis</li>
-                    <li>Multi-language support including Urdu &amp; Arabic (RTL)</li>
-                    <li>Functional Admin Panel with analytics dashboard</li>
+                    <li><strong>Stage 1 (MCQ):</strong> Adaptive domain-specific multiple-choice assessments with instant validation.</li>
+                    <li><strong>Stage 2 (Written):</strong> Coding problem formulation, syntax checking, and algorithmic reasoning tests.</li>
+                    <li><strong>Stage 3 (Technical):</strong> Deep conversational technical probing powered by real-time LLM agents (Gemini &amp; Groq).</li>
+                    <li><strong>Stage 4 (HR Behavioral):</strong> Dynamic situational judgment &amp; cultural alignment simulations.</li>
+                    <li><strong>Stage 5 (Audio Delivery):</strong> Voice transcription, speaking pace, hesitation metrics, and sentiment analysis.</li>
+                    <li><strong>Stage 6 (Video &amp; Vision):</strong> Computer vision powered by MediaPipe for facial expression, eye contact, and emotion analysis.</li>
                 </ul>
-                <div class="proj-tags" style="margin-top:16px">
-                    <span>MERN</span><span>FastAPI</span><span>Gemini&nbsp;API</span><span>Groq</span><span>OpenRouter</span><span>MediaPipe</span>
+
+                <h4><i class="fas fa-trophy"></i> Final Result &amp; Outcome</h4>
+                <p>Delivered a production-ready, multi-language AI interview system with support for English, Urdu, and Arabic (RTL). Features comprehensive candidate analytics reports, instant score breakdowns per interview stage, and a full-featured administrative control panel for recruiters and mentors.</p>
+
+                <h4><i class="fas fa-layer-group"></i> Tech Stack</h4>
+                <div class="proj-tags" style="margin-top:8px">
+                    <span>MERN Stack</span><span>React.js</span><span>FastAPI</span><span>Python</span><span>Gemini API</span><span>Groq</span><span>OpenRouter</span><span>MediaPipe</span><span>MongoDB</span><span>WebRTC</span>
+                </div>
+
+                <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:24px">
+                    <a href="https://github.com/Ir786106" target="_blank" class="btn-primary" style="display:inline-flex">
+                        <i class="fab fa-github"></i> View on GitHub
+                    </a>
+                    <a href="https://ir786106.github.io/Muhammad_Irfan_Waseem_Portfolio/" target="_blank" class="btn-primary" style="background:rgba(99,102,241,0.2);border:1px solid rgba(99,102,241,0.4);display:inline-flex" title="Live Preview">
+                        <i class="fas fa-external-link-alt"></i> View Live
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    
+    <div id="m-foodfight" class="modal-overlay">
+        <div class="modal-box glass">
+            <button class="modal-close" onclick="closeModal('m-foodfight')">&times;</button>
+            <div class="modal-tag" style="--tag-color:#ef4444">Flutter · Firebase · Google Maps · In Development</div>
+            <h2>Food Fight — Digital Ordering &amp; Management System</h2>
+            <div class="modal-scroll">
+                <h4><i class="fas fa-bullseye"></i> Problem</h4>
+                <p>Food Fight, an active fast-food brand, required a unified digital infrastructure to replace manual telephone ordering and costly third-party aggregators. The restaurant needed automated order dispatch, real-time rider tracking, branch inventory management, and multi-tier operational control across management and kitchen staff.</p>
+
+                <h4><i class="fas fa-star"></i> Features</h4>
+                <ul>
+                    <li><strong>5-Role Architecture:</strong> Dedicated workflows for Super Admin, Branch Admin, Kitchen Staff, Delivery Rider, and Customer.</li>
+                    <li><strong>Customer Ordering App:</strong> Interactive visual menu, meal customization, cart management, instant checkout, and real-time order status tracking.</li>
+                    <li><strong>Delivery Rider App:</strong> Live order broadcast, one-touch acceptance, and turn-by-turn navigation via Google Maps Platform.</li>
+                    <li><strong>Kitchen Staff Portal:</strong> Real-time KDS (Kitchen Display System) with instant status transitions (Preparing, Ready for Pickup, Dispatched).</li>
+                    <li><strong>Admin &amp; Super-Admin Dashboards:</strong> Branch-level analytics, sales reports, inventory stock control, staff assignment, and multi-store oversight.</li>
+                    <li><strong>Real-Time Sync &amp; Alerts:</strong> Powered by Firebase Cloud Messaging (FCM) for low-latency notifications across all five user roles.</li>
+                </ul>
+
+                <h4><i class="fas fa-layer-group"></i> Tech Stack</h4>
+                <div class="proj-tags" style="margin-top:8px">
+                    <span>Flutter</span><span>Dart</span><span>Firebase Auth</span><span>Cloud Firestore</span><span>Cloud Messaging (FCM)</span><span>Firebase Storage</span><span>Google Maps API</span><span>Geolocator</span>
                 </div>
             </div>
         </div>
@@ -854,9 +897,7 @@
         </div>
     </div>
 
-    <!-- ════════════════════════════════════════════════════════
-         §6  3D SHOWCASE
-    ════════════════════════════════════════════════════════ -->
+    
     <section id="showcase" class="section showcase-section">
         <div class="container">
             <div class="section-head text-center" data-aos="fade-up">
@@ -868,14 +909,12 @@
         <div class="showcase-wrap">
             <canvas id="canvas3d"></canvas>
             <div class="canvas-hint"><i class="fas fa-hand-pointer"></i> Hover &amp; Click to explore</div>
-            <div class="canvas-tag canvas-tag-l">9 Projects</div>
+            <div class="canvas-tag canvas-tag-l">10 Projects</div>
             <div class="canvas-tag canvas-tag-r">Live 3D</div>
         </div>
     </section>
 
-    <!-- ════════════════════════════════════════════════════════
-         §7  AWARDS & CERTIFICATIONS
-    ════════════════════════════════════════════════════════ -->
+    
     <section id="awards" class="section">
         <div class="container">
             <div class="section-head text-center" data-aos="fade-up">
@@ -883,7 +922,7 @@
                 <h2 class="section-title">Awards & <span class="gradient-text">Certifications</span></h2>
             </div>
 
-            <!-- Award card -->
+            
             <div class="award-card glass" data-aos="fade-up">
                 <div class="award-medal-wrap">
                     <div class="award-medal">🥈</div>
@@ -900,11 +939,11 @@
                 </div>
             </div>
 
-            <!-- Certifications grid -->
+            
             <h3 class="cert-heading" data-aos="fade-up"><i class="fas fa-certificate"></i> Certifications</h3>
             <div class="cert-grid">
 
-                <!-- OPSWAT ICIP — NEW -->
+                
                 <div class="cert-card glass cert-featured" data-aos="fade-up" data-aos-delay="0">
                     <div class="cert-badge-img">
                         <div class="opswat-badge">
@@ -930,7 +969,7 @@
                     <div class="cert-verified-badge"><i class="fas fa-check-circle"></i> Verified</div>
                 </div>
 
-                <!-- Sololearn C++ -->
+                
                 <div class="cert-card glass" data-aos="fade-up" data-aos-delay="100">
                     <div class="cert-badge-img">
                         <div class="solo-badge"><i class="fas fa-code"></i><span>C++</span></div>
@@ -945,13 +984,102 @@
                     <div class="cert-verified-badge"><i class="fas fa-check-circle"></i> Verified</div>
                 </div>
 
+                
+                <div class="cert-card glass" data-aos="fade-up" data-aos-delay="150">
+                    <div class="cert-badge-img">
+                        <div class="nexa-badge">
+                            <i class="fas fa-shield-halved"></i>
+                            <span>NEXA</span>
+                        </div>
+                    </div>
+                    <div class="cert-info">
+                        <div class="cert-new-badge">Certificate of Achievement</div>
+                        <h4>Foundation of Cyber Security Course</h4>
+                        <span class="cert-issuer"><i class="fas fa-building"></i> Lahore Nexa IT</span>
+                        <div class="cert-meta-row">
+                            <span><i class="fas fa-chalkboard-user"></i> Instructor: Miss Hadisa</span>
+                            <span><i class="fas fa-user-tie"></i> CEO: Miss Areeba Imtiaz</span>
+                        </div>
+                        <a href="Images/cert-cybersecurity-nexa.jpg" target="_blank" rel="noopener" class="cert-verify-btn" onclick="openLightbox('Images/cert-cybersecurity-nexa.jpg'); return false;">
+                            <i class="fas fa-file-image"></i> View Certificate
+                        </a>
+                    </div>
+                    <div class="cert-verified-badge"><i class="fas fa-check-circle"></i> Verified</div>
+                </div>
+
+                
+                <div class="cert-card glass" data-aos="fade-up" data-aos-delay="200">
+                    <div class="cert-badge-img">
+                        <div class="nexa-badge">
+                            <i class="fas fa-brain"></i>
+                            <span>AI</span>
+                        </div>
+                    </div>
+                    <div class="cert-info">
+                        <div class="cert-new-badge">Certificate of Appreciation</div>
+                        <h4>Artificial Intelligence Workshop</h4>
+                        <span class="cert-issuer"><i class="fas fa-building"></i> Lahore Nexa IT</span>
+                        <div class="cert-meta-row">
+                            <span><i class="fas fa-calendar"></i> Issued: 22 June 2026</span>
+                            <span><i class="fas fa-user-tie"></i> CEO: Ms. Areeba Imtiaz</span>
+                        </div>
+                        <a href="Images/cert-ai-workshop-22june.jpg" target="_blank" rel="noopener" class="cert-verify-btn" onclick="openLightbox('Images/cert-ai-workshop-22june.jpg'); return false;">
+                            <i class="fas fa-file-image"></i> View Certificate
+                        </a>
+                    </div>
+                    <div class="cert-verified-badge"><i class="fas fa-check-circle"></i> Verified</div>
+                </div>
+
+                
+                <div class="cert-card glass" data-aos="fade-up" data-aos-delay="250">
+                    <div class="cert-badge-img">
+                        <div class="nexa-badge">
+                            <i class="fas fa-robot"></i>
+                            <span>NEXA</span>
+                        </div>
+                    </div>
+                    <div class="cert-info">
+                        <div class="cert-new-badge">Certificate of Achievement</div>
+                        <h4>AI Artificial Intelligence Workshop</h4>
+                        <span class="cert-issuer"><i class="fas fa-building"></i> Lahore Nexa IT</span>
+                        <div class="cert-meta-row">
+                            <span><i class="fas fa-calendar"></i> Issued: 06 June 2026</span>
+                            <span><i class="fas fa-user-tie"></i> CEO: Ms. Areeba Imtiaz</span>
+                        </div>
+                        <a href="Images/cert-ai-workshop-06june.jpg" target="_blank" rel="noopener" class="cert-verify-btn" onclick="openLightbox('Images/cert-ai-workshop-06june.jpg'); return false;">
+                            <i class="fas fa-file-image"></i> View Certificate
+                        </a>
+                    </div>
+                    <div class="cert-verified-badge"><i class="fas fa-check-circle"></i> Verified</div>
+                </div>
+
+                
+                <div class="cert-card glass" data-aos="fade-up" data-aos-delay="300">
+                    <div class="cert-badge-img">
+                        <div class="nexa-badge">
+                            <i class="fas fa-briefcase"></i>
+                            <span>NEXA</span>
+                        </div>
+                    </div>
+                    <div class="cert-info">
+                        <div class="cert-new-badge">Certificate of Achievement</div>
+                        <h4>Client Hunting Workshop</h4>
+                        <span class="cert-issuer"><i class="fas fa-building"></i> Lahore Nexa IT</span>
+                        <div class="cert-meta-row">
+                            <span><i class="fas fa-calendar"></i> Issued: 13 June 2026</span>
+                            <span><i class="fas fa-user-tie"></i> CEO: Ms. Areeba Imtiaz</span>
+                        </div>
+                        <a href="Images/cert-client-hunting.jpg" target="_blank" rel="noopener" class="cert-verify-btn" onclick="openLightbox('Images/cert-client-hunting.jpg'); return false;">
+                            <i class="fas fa-file-image"></i> View Certificate
+                        </a>
+                    </div>
+                    <div class="cert-verified-badge"><i class="fas fa-check-circle"></i> Verified</div>
+                </div>
+
             </div>
         </div>
     </section>
 
-    <!-- ════════════════════════════════════════════════════════
-         §8  VEILGUARD BLOG
-    ════════════════════════════════════════════════════════ -->
     <section id="blog" class="section bg-alt">
         <div class="container">
             <div class="section-head" data-aos="fade-up">
@@ -1029,9 +1157,6 @@
         </div>
     </section>
 
-    <!-- ════════════════════════════════════════════════════════
-        §9  GALLERY
-    ════════════════════════════════════════════════════════ -->
     <section id="gallery" class="section">
         <div class="container">
             <div class="section-head text-center" data-aos="fade-up">
@@ -1060,19 +1185,23 @@
                     <img src="Images/5.jpg" alt="Canada Study Poster" loading="lazy">
                     <div class="gal-overlay"><i class="fas fa-expand-alt"></i></div>
                 </div>
+                <div class="gal-item" onclick="openLightbox(this)" data-aos="fade-up" data-aos-delay="300">
+                    <img src="Images/7.png" alt="Banana Smoothie Product Ad Poster" loading="lazy">
+                    <div class="gal-overlay"><i class="fas fa-expand-alt"></i></div>
+                </div>
+                <div class="gal-item" onclick="openLightbox(this)" data-aos="fade-up" data-aos-delay="360">
+                    <img src="Images/6.png" alt="World First Aid Day Awareness Poster" loading="lazy">
+                    <div class="gal-overlay"><i class="fas fa-expand-alt"></i></div>
+                </div>
             </div>
         </div>
     </section>
 
-    <!-- Lightbox -->
     <div class="lightbox" id="lightbox" onclick="if(event.target===this)closeLightbox()">
         <button class="lb-close" onclick="closeLightbox()">&times;</button>
         <img id="lb-img" class="lb-img" alt="">
     </div>
 
-    <!-- ════════════════════════════════════════════════════════
-        §10  TESTIMONIALS
-    ════════════════════════════════════════════════════════ -->
     <section id="testimonials" class="section bg-alt">
         <div class="container">
             <div class="section-head text-center" data-aos="fade-up">
@@ -1091,7 +1220,6 @@
         </div>
     </section>
 
-    <!-- Feedback Modal -->
     <div id="modal-feedback" class="modal-overlay">
         <div class="modal-box glass">
             <button class="modal-close" onclick="closeModal('modal-feedback')">&times;</button>
@@ -1134,13 +1262,9 @@
         </div>
     </div>
 
-    <!-- ════════════════════════════════════════════════════════
-         §11  CONTACT
-    ════════════════════════════════════════════════════════ -->
     <section id="contact" class="section">
         <div class="container contact-grid">
 
-            <!-- LEFT -->
             <div class="contact-info" data-aos="fade-right">
                 <span class="eyebrow">Get in Touch</span>
                 <h2 class="section-title">Let's <span class="gradient-text">Collaborate</span></h2>
@@ -1168,7 +1292,6 @@
                 </a>
             </div>
 
-            <!-- RIGHT — form -->
             <form id="contactForm" class="contact-form glass" data-aos="fade-left">
                 <h3>Send a Message</h3>
                 <div class="form-row">
@@ -1196,9 +1319,6 @@
         </div>
     </section>
 
-    <!-- ════════════════════════════════════════════════════════
-         FOOTER
-    ════════════════════════════════════════════════════════ -->
     <footer>
         <div class="container footer-inner">
             <div class="footer-left">
@@ -1218,37 +1338,6 @@
         </div>
     </footer>
 
-    <!-- ════════════════════════════════════════════════════════
-         WEATHER WIDGET
-    ════════════════════════════════════════════════════════ -->
-    <div class="weather-widget glass" id="weatherWidget">
-        <div class="ww-main">
-            <div class="ww-icon-wrap">
-                <i class="ww-icon ww-icon-night fas fa-moon"></i>
-            </div>
-            <div>
-                <div class="ww-temp" id="wwTemp">--°C</div>
-                <div class="ww-city" id="wwCity">Loading...</div>
-            </div>
-        </div>
-        <div class="ww-detail">
-            <div id="wwCondition">--</div>
-            <div>💧 <span id="wwHumidity">--%</span></div>
-            <div>💨 <span id="wwWind">--m/s</span></div>
-        </div>
-        <div class="ww-toggle-row">
-            <button class="ww-refresh" id="wwRefresh" title="Refresh weather" onclick="fetchWeather()">
-                <i class="fas fa-sync-alt"></i>
-            </button>
-            <button class="ww-collapse" id="wwCollapse" title="Collapse">
-                <i class="fas fa-chevron-up"></i>
-            </button>
-        </div>
-    </div>
-
-    <!-- ════════════════════════════════════════════════════════
-         SCRIPTS
-    ════════════════════════════════════════════════════════ -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
