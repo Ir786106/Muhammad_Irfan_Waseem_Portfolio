@@ -70,27 +70,45 @@
                     <i class="fas fa-moon" id="icon-moon"></i>
                 </button>
                 <a href="#contact" class="btn-primary nav-cta">Let's Talk <i class="fas fa-arrow-right"></i></a>
-                <button class="hamburger" id="hamburger" aria-label="Menu">
+                <button class="hamburger" id="hamburger" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="mobileMenu">
                     <span></span><span></span><span></span>
                 </button>
             </div>
         </div>
     </nav>
 
-    
-    <div class="mobile-menu" id="mobileMenu">
-        <div class="mobile-menu-inner">
-            <a href="#home"       class="m-link" data-section="home">Home</a>
-            <a href="#about"      class="m-link" data-section="about">About</a>
-            <a href="#skills"     class="m-link" data-section="skills">Skills</a>
-            <a href="#experience" class="m-link" data-section="experience">Experience</a>
-            <a href="#projects"   class="m-link" data-section="projects">Projects</a>
-            <a href="#showcase"   class="m-link" data-section="showcase">3D Showcase</a>
-            <a href="#awards"     class="m-link" data-section="awards">Awards</a>
-            <a href="#blog"       class="m-link" data-section="blog">Blog</a>
-            <a href="#contact"    class="m-link" data-section="contact">Contact</a>
+    <!-- Mobile Navigation Backdrop -->
+    <div class="mobile-backdrop" id="mobileBackdrop" aria-hidden="true"></div>
+
+    <!-- Mobile Navigation Drawer -->
+    <aside class="mobile-menu" id="mobileMenu" role="dialog" aria-modal="true" aria-label="Mobile Navigation Drawer" aria-hidden="true">
+        <div class="mobile-menu-header">
+            <a href="#home" class="logo mobile-drawer-logo" aria-label="Muhammad Irfan Waseem Portfolio">IRFAN<span class="dot">.</span></a>
+            <button class="mobile-close-btn" id="mobileMenuClose" aria-label="Close navigation menu" title="Close Menu">
+                <i class="fas fa-times"></i>
+            </button>
         </div>
-    </div>
+        <nav class="mobile-menu-inner" id="mobileMenuInner" aria-label="Mobile Menu Links">
+            <a href="#home"       class="m-link" data-section="home"><i class="fas fa-house m-icon"></i><span>Home</span></a>
+            <a href="#about"      class="m-link" data-section="about"><i class="fas fa-user m-icon"></i><span>About</span></a>
+            <a href="#skills"     class="m-link" data-section="skills"><i class="fas fa-code m-icon"></i><span>Skills</span></a>
+            <a href="#experience" class="m-link" data-section="experience"><i class="fas fa-briefcase m-icon"></i><span>Experience</span></a>
+            <a href="#projects"   class="m-link" data-section="projects"><i class="fas fa-layer-group m-icon"></i><span>Projects</span></a>
+            <a href="#showcase"   class="m-link" data-section="showcase"><i class="fas fa-cube m-icon"></i><span>3D Showcase</span></a>
+            <a href="#awards"     class="m-link" data-section="awards"><i class="fas fa-award m-icon"></i><span>Awards</span></a>
+            <a href="#blog"       class="m-link" data-section="blog"><i class="fas fa-newspaper m-icon"></i><span>Blog</span></a>
+            <a href="#contact"    class="m-link" data-section="contact"><i class="fas fa-paper-plane m-icon"></i><span>Contact</span></a>
+        </nav>
+        <div class="mobile-menu-footer">
+            <a href="#contact" class="btn-primary mobile-cta-btn">Let's Talk <i class="fas fa-arrow-right"></i></a>
+            <div class="mobile-social-row">
+                <a href="https://github.com/Ir786106" target="_blank" rel="noopener" class="soc-btn" title="GitHub" aria-label="GitHub"><i class="fab fa-github"></i></a>
+                <a href="https://linkedin.com/in/muhammad-irfan-wasee-48226b297" target="_blank" rel="noopener" class="soc-btn" title="LinkedIn" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                <a href="https://x.com/Irfan_CyberSec" target="_blank" rel="noopener" class="soc-btn" title="Twitter" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                <a href="mailto:muhammadirfan.infosec@gmail.com" class="soc-btn" title="Email" aria-label="Email"><i class="fas fa-envelope"></i></a>
+            </div>
+        </div>
+    </aside>
 
     
     <section id="home" class="hero-section">
