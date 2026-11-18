@@ -15,7 +15,8 @@ export const projects = [
         ],
         "links": {
             "repo": "https://github.com/Ir786106/food-fight-app",
-            "apk": "https://github.com/Ir786106/food-fight-app/releases/latest"
+            "apk": "https://github.com/Ir786106/food-fight-app/releases/latest",
+            "architecture": "https://github.com/Ir786106/food-fight-app/blob/main/docs/images/food-fight-architecture.png"
         },
         "images": []
     },
@@ -24,17 +25,18 @@ export const projects = [
         "title": "Mandi Pro ERP",
         "category": "mobile",
         "status": "Public repository",
-        "problem": "Grain-market businesses keep stock and transaction records.",
+        "problem": "Grain traders record purchases, sales and customer balances in separate registers.",
         "role": "Developed mobile inventory and ledger screens.",
-        "result": "The public Flutter project brings these records into one workflow.",
-        "description": "Inventory and ledger workflows for grain markets.",
+        "result": "Traders can review stock, customer ledgers and cash flow, and generate PDF invoices.",
+        "description": "A Flutter app for grain traders to record purchases and sales and keep customer ledgers.",
         "tags": [
             "Flutter",
             "Dart",
             "Firebase"
         ],
         "links": {
-            "repo": "https://github.com/Ir786106/mandi-pro-erp"
+            "repo": "https://github.com/Ir786106/mandi-pro-erp",
+            "implementation": "https://github.com/Ir786106/mandi-pro-erp/blob/aa6d9c20c679eeb2bc0220ec7f2f6705102646bb/lib/controllers/inventory_controller.dart"
         },
         "images": []
     },
@@ -43,16 +45,17 @@ export const projects = [
         "title": "Ittehad Food Industries",
         "category": "mobile",
         "status": "Public repository",
-        "problem": "Stock and orders need a shared record.",
+        "problem": "Rice processors need to track paddy procurement, batches and finished stock through to sale.",
         "role": "Built a mobile inventory interface and connected it to Firebase.",
-        "result": "The app tracks stock and order activity.",
-        "description": "A mobile stock and order tracker for food inventory.",
+        "result": "The mobile app connects supplier, factory, logistics and customer workflows.",
+        "description": "A Flutter supply-chain app for rice procurement, processing and distribution.",
         "tags": [
             "Flutter",
             "Firebase"
         ],
         "links": {
-            "repo": "https://github.com/Ir786106/itthad_food_industries"
+            "repo": "https://github.com/Ir786106/itthad_food_industries",
+            "implementation": "https://github.com/Ir786106/itthad_food_industries/blob/1e34c0a0ede9cfb76d7c34ae6bb8609f5cf0a12e/lib/app_routes.dart"
         },
         "images": []
     },
@@ -75,22 +78,42 @@ export const projects = [
     },
     {
         "id": "quiz",
-        "title": "Quiz Game",
+        "title": "EduQuest Quiz Game",
         "category": "web",
-        "status": "Public repository",
-        "problem": "Browser quiz sessions need question sequencing and scoring.",
-        "role": "Implemented the quiz flow in JavaScript.",
-        "result": "Players can answer timed questions and see their score.",
-        "description": "A timed quiz that runs in the browser.",
+        "status": "Playable demo",
+        "problem": "Learners need different ways to practise the same subject.",
+        "role": "Built the browser interface for selecting a subject and game mode.",
+        "result": "Visitors can explore the subject picker and start a mathematics game as a guest.",
+        "description": "A browser learning game with subject paths, multiple-choice quizzes and timed challenges.",
         "tags": [
             "JavaScript",
             "HTML",
             "CSS"
         ],
         "links": {
-            "repo": "https://github.com/Ir786106/Quiz-game"
+            "repo": "https://github.com/Ir786106/Quiz-game",
+            "demo": "https://ir786106.github.io/Quiz-game/quiz-game/index.html"
         },
-        "images": []
+        "images": [
+            {
+                "src": "Images/projects/eduquest-home.webp",
+                "alt": "EduQuest guest home screen with the Start Learning action",
+                "width": 1280,
+                "height": 800
+            },
+            {
+                "src": "Images/projects/eduquest-subjects.webp",
+                "alt": "Subject picker with mathematics, programming and language practice",
+                "width": 1280,
+                "height": 800
+            },
+            {
+                "src": "Images/projects/eduquest-modes.webp",
+                "alt": "Mathematics game modes including quizzes, matching and timed challenges",
+                "width": 1280,
+                "height": 800
+            }
+        ]
     },
     {
         "id": "python",

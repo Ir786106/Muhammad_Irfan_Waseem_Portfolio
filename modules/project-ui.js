@@ -54,7 +54,7 @@ export function openProject(id, trigger = document.activeElement) {
     }
     if (project.images.length) body.append(screenshotGallery(project));
     const links = element('div', 'project-actions');
-    for (const [key, label] of [['repo', 'Source code'], ['demo', 'Live demo'], ['apk', 'Android release'], ['store', 'Play Store']]) {
+    for (const [key, label] of [['repo', 'Source code'], ['demo', 'Live demo'], ['apk', 'Android release'], ['store', 'Play Store'], ['architecture', 'Architecture diagram'], ['implementation', 'Explore the Dart code']]) {
         if (!project.links[key]) continue;
         const link = element('a', 'sm-btn', label);
         link.href = project.links[key];
