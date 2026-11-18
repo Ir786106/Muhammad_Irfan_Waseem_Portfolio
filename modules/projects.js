@@ -127,6 +127,25 @@ export const projects = [
         "links": {
             "repo": "https://github.com/Ir786106/Muhammad_Irfan_Waseem_Portfolio"
         },
-        "images": []
+        "images": [
+            {
+                "src": "Images/projects/portfolio-home.webp",
+                "alt": "Desktop home page in the dark theme",
+                "width": 1280,
+                "height": 800
+            },
+            {
+                "src": "Images/projects/portfolio-projects.webp",
+                "alt": "Featured project cards and category filters",
+                "width": 1280,
+                "height": 800
+            },
+            {
+                "src": "Images/projects/portfolio-mobile.webp",
+                "alt": "Mobile home page in the light theme",
+                "width": 390,
+                "height": 844
+            }
+        ]
     }
 ];

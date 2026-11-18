@@ -105,5 +105,7 @@ export function initProjects() {
     dialog.addEventListener('click', event => {
         if (event.target === dialog) dialog.close();
     });
-    dialog.addEventListener('close', () => opener?.focus());
+    dialog.addEventListener('close', () => {
+        if (document.activeElement === document.body && !document.querySelector('dialog[open]')) opener?.focus();
+    });
 }

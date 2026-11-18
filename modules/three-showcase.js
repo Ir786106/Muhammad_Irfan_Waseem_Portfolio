@@ -261,9 +261,6 @@ export function init3D() {
             const idx = cards.findIndex(c => c.mesh === hits[0].object);
             if (idx >= 0) {
                 openProject(cards[idx].proj.id, document.querySelector('.showcase-return'));
-                if (typeof gsap !== 'undefined')
-                    gsap.to(cards[idx].mesh.scale, { x:1.15, y:1.15, z:1.15, duration:.15,
-                        yoyo:true, repeat:1 });
             }
         }
     });
@@ -357,30 +354,3 @@ export function init3D() {
     });
     ro.observe(canvas.parentElement);
 }
-
-document.querySelectorAll('a[href^="#"]').forEach(a => {
-    a.addEventListener('click', (e) => {
-        const id  = a.getAttribute('href').slice(1);
-        const el  = document.getElementById(id);
-        if (!el) return;
-        e.preventDefault();
-        const top = el.getBoundingClientRect().top + window.scrollY - 76;
-        window.scrollTo({ top, behavior: 'smooth' });
-    });
-});
-
-document.querySelectorAll('.logo').forEach(el => {
-    el.addEventListener('click', (e) => {
-        e.preventDefault();
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-    });
-});
-
-const lbStyle = document.createElement('style');
-lbStyle.textContent = `
-.lightbox.active{display:flex!important}
-.modal-overlay.active{display:flex!important}
-`;
-document.head.appendChild(lbStyle);
-
-console.log('🚀 Portfolio script v3.0 loaded — Muhammad Irfan Waseem');

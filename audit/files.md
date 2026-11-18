@@ -1,0 +1,85 @@
+# Files relative to the original snapshot
+
+## Added
+
+- `Images/1.webp`
+- `Images/2.webp`
+- `Images/3.webp`
+- `Images/4.webp`
+- `Images/5.webp`
+- `Images/6.webp`
+- `Images/7.webp`
+- `Images/Muhammad_Irfan_Waseem_CV.docx`
+- `Images/Muhammad_Irfan_Waseem_CV.pdf`
+- `Images/cert-ai-workshop-06june.webp`
+- `Images/cert-ai-workshop-22june.webp`
+- `Images/cert-client-hunting.webp`
+- `Images/cert-cybersecurity-nexa.webp`
+- `Images/icons.svg`
+- `Images/portrait-small.webp`
+- `Images/projects/portfolio-home.webp`
+- `Images/projects/portfolio-mobile.webp`
+- `Images/projects/portfolio-projects.webp`
+- `Images/share-card.jpg`
+- `audit/files.md`
+- `audit/hosting.md`
+- `audit/lighthouse.json`
+- `audit/owner-input.md`
+- `audit/phase-0.md`
+- `firestore.indexes.json`
+- `firestore.rules`
+- `modules/animations.js`
+- `modules/contact.js`
+- `modules/firebase.js`
+- `modules/modals.js`
+- `modules/nav.js`
+- `modules/profile.js`
+- `modules/project-ui.js`
+- `modules/projects.js`
+- `modules/reviews.js`
+- `modules/theme.js`
+- `modules/three-showcase.js`
+- `robots.txt`
+- `sitemap.xml`
+- `tests/browser.cjs`
+- `tests/firestore.mjs`
+- `tests/links.mjs`
+- `vendor/firebase-10.12.2/LICENSE.txt`
+- `vendor/firebase-10.12.2/firebase-app-check.js`
+- `vendor/firebase-10.12.2/firebase-app.js`
+- `vendor/firebase-10.12.2/firebase-auth.js`
+- `vendor/firebase-10.12.2/firebase-firestore-lite.js`
+- `vendor/font-awesome/LICENSE.txt`
+- `vendor/three/three.min.js`
+
+## Changed
+
+- `404.html`
+- `Images/Irfan.webp`
+- `README.md`
+- `firebase.json`
+- `index.html`
+- `script.js`
+- `style.css`
+
+## Deleted
+
+- `Images/1.jpg`
+- `Images/2.jpg`
+- `Images/2Irfan.jpg`
+- `Images/2favicon.svg`
+- `Images/3.jpg`
+- `Images/4.jpg`
+- `Images/5.jpg`
+- `Images/6.png`
+- `Images/7.png`
+- `Images/Irfan.jpg`
+- `Images/Irfan_Resume.pdf`
+- `Images/LinkedIn/2.jpg`
+- `Images/LinkedIn/3.jpg`
+- `Images/LinkedIn/4.jpg`
+- `Images/LinkedIn/5.jpg`
+- `Images/cert-ai-workshop-06june.jpg`
+- `Images/cert-ai-workshop-22june.jpg`
+- `Images/cert-client-hunting.jpg`
+- `Images/cert-cybersecurity-nexa.jpg`

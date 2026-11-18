@@ -11,6 +11,12 @@ const config = {
     measurementId:     "G-FX3Q38PZT6"
 };
 const app = initializeApp(config);
+// Set this public key after registering the website in Firebase App Check.
+const enterpriseSiteKey = '';
+if (enterpriseSiteKey) {
+    const { initializeAppCheck, ReCaptchaEnterpriseProvider } = await import('../vendor/firebase-10.12.2/firebase-app-check.js');
+    initializeAppCheck(app, {provider: new ReCaptchaEnterpriseProvider(enterpriseSiteKey), isTokenAutoRefreshEnabled: true});
+}
 const db = getFirestore(app);
 const section = document.getElementById('testimonials');
 const status = document.getElementById('review-status');
@@ -61,12 +67,12 @@ export async function enableReviewForm() {
         form.hidden = !user;
         if (user) document.getElementById('review-user').textContent = user.displayName;
     });
-    login.onclick = async () => {
+    login.addEventListener('click', async () => {
         try { await signInWithPopup(auth, new GoogleAuthProvider()); }
         catch { status.textContent = 'Google sign-in did not finish. Please try again.'; }
-    };
-    document.getElementById('logout-btn').onclick = () => signOut(auth);
-    form.onsubmit = async event => {
+    });
+    document.getElementById('logout-btn').addEventListener('click', () => signOut(auth));
+    form.addEventListener('submit', async event => {
         event.preventDefault();
         const user = auth.currentUser;
         const message = form.elements.message.value.trim();
@@ -79,5 +85,5 @@ export async function enableReviewForm() {
             form.reset();
         } catch { status.textContent = 'Could not submit. Each Google account can submit once.'; }
         finally { button.disabled = false; }
-    };
+    });
 }

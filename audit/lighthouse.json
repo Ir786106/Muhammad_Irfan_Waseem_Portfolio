@@ -1,0 +1,53 @@
+{
+  "before": {
+    "version": "13.5.0",
+    "method": "simulate",
+    "formFactor": "mobile",
+    "throttling": {
+      "rttMs": 150,
+      "throughputKbps": 1638.4,
+      "requestLatencyMs": 562.5,
+      "downloadThroughputKbps": 1474.5600000000002,
+      "uploadThroughputKbps": 675,
+      "cpuSlowdownMultiplier": 4
+    },
+    "scores": {
+      "performance": 39,
+      "accessibility": 87,
+      "best-practices": 100,
+      "seo": 100
+    },
+    "lcpMs": 4372,
+    "cls": 0.0009120897155255194,
+    "transferBytes": 1309761,
+    "runtimeError": null,
+    "warnings": [
+      "The page loaded too slowly to finish within the time limit. Results may be incomplete.",
+      "The tested device appears to have a slower CPU than  Lighthouse expects. This can negatively affect your performance score. Learn more about [calibrating an appropriate CPU slowdown multiplier](https://github.com/GoogleChrome/lighthouse/blob/main/docs/throttling.md#cpu-throttling)."
+    ]
+  },
+  "after": {
+    "version": "13.5.0",
+    "method": "simulate",
+    "formFactor": "mobile",
+    "throttling": {
+      "rttMs": 150,
+      "throughputKbps": 1638.4,
+      "requestLatencyMs": 562.5,
+      "downloadThroughputKbps": 1474.5600000000002,
+      "uploadThroughputKbps": 675,
+      "cpuSlowdownMultiplier": 4
+    },
+    "scores": {
+      "performance": 97,
+      "accessibility": 100,
+      "best-practices": 100,
+      "seo": 100
+    },
+    "lcpMs": 2413,
+    "cls": 0,
+    "transferBytes": 208977,
+    "runtimeError": null,
+    "warnings": []
+  }
+}
