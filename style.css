@@ -1328,3 +1328,19 @@ footer,
 .project-actions {display:flex;gap:.75rem;flex-wrap:wrap;margin-top:1rem}
 .project-gallery img {max-width:100%;height:auto;max-height:45vh;object-fit:contain}
 .modal-scroll h3 {margin-top:1rem}.modal-box h2 {padding-right:2rem}
+
+.glyph{height:1em;width:1.1em;fill:currentColor;vertical-align:-.125em}
+:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
+.skip{position:fixed;top:-5em;left:1rem;z-index:20000;padding:.5em 1em;background:var(--bg);color:var(--text)}.skip:focus{top:1rem}
+.gal-item{width:100%;padding:0}.nav-links{gap:clamp(.45rem,1.1vw,1.3rem)}
+#modal-feedback,#lightbox{margin:auto;border:1px solid var(--border);border-radius:16px;background:var(--bg);color:var(--text);max-width:94vw;max-height:92vh}
+#lightbox{padding:1rem}#lb-img{width:auto;height:auto;max-height:75vh}
+#modal-feedback label{display:block;margin:1rem 0}#modal-feedback textarea{display:block;width:100%}
+.showcase-wrap{display:none}.orbit-ready .showcase-wrap{display:block}
+:root{--faint:#9daac0;--primary:#a5adff}
+[data-theme="light"]{--faint:#465773;--accent:#03677d}
+.btn-primary,.filter-btn.active,.filter-btn:hover,.stab.active{background:#4941b8;color:white}
+@media(max-width:767px),(prefers-reduced-motion:reduce){.orbit-ready .showcase-wrap{display:none}}
+@media(max-width:480px){.projects-grid{grid-template-columns:minmax(0,1fr)}}
+
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{animation:none!important;transition:none!important}}
