@@ -1319,3 +1319,5 @@ footer,
   transform: none !important;
   visibility: visible !important;
 }
+
+[hidden]{display:none!important}

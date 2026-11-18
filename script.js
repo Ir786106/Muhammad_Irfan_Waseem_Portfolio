@@ -1,40 +1,16 @@
-
-
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-import {
-    getFirestore, collection, addDoc, getDocs,
-    query, orderBy, limit, where, updateDoc, doc
-} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
-import { getAnalytics }  from "https://www.gstatic.com/firebasejs/10.12.2/firebase-analytics.js";
-import {
-    getAuth, signInWithPopup, GoogleAuthProvider,
-    onAuthStateChanged, signOut
-} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-
-const firebaseConfig = {
-    apiKey:            "AIzaSyAJsGuQRpzpfWHszomeg0q_dtUZkeBh0Go",
-    authDomain:        "irfan-portfolio-ae62a.firebaseapp.com",
-    projectId:         "irfan-portfolio-ae62a",
-    storageBucket:     "irfan-portfolio-ae62a.firebasestorage.app",
-    messagingSenderId: "220875740206",
-    appId:             "1:220875740206:web:4dc00c10fa86784b063bbf",
-    measurementId:     "G-FX3Q38PZT6"
-};
-const FORMSPREE = "https://formspree.io/f/xnnevkrd";
-
-let db, auth;
-let currentUser = null;
-
-try {
-    const app = initializeApp(firebaseConfig);
-    db   = getFirestore(app);
-    auth = getAuth(app);
-    getAnalytics(app);
-    console.log("✅ Firebase connected");
-} catch (e) {
-    console.warn("⚠️ Firebase failed:", e);
-}
-
+import './modules/contact.js';
+const reviewModule = () => import('./modules/firebase.js');
+new IntersectionObserver(([entry], observer) => {
+    if (!entry.isIntersecting) return;
+    observer.disconnect();
+    reviewModule().then(module => module.loadReviews()).catch(() => {});
+}, {rootMargin:'300px'}).observe(document.getElementById('contact'));
+document.querySelectorAll('[data-review-open]').forEach(btn => btn.addEventListener('click', () => {
+    window.openModal('modal-feedback');
+    reviewModule().then(module => module.enableReviewForm()).catch(() => {
+        document.getElementById('review-status').textContent = 'Reviews are temporarily unavailable.';
+    });
+}));
 window.addEventListener('scroll', () => {
     const scrolled = window.scrollY / (document.body.scrollHeight - window.innerHeight);
     const progressBar = document.getElementById('scrollProgress');
@@ -67,7 +43,7 @@ function afterLoad() {
     initAOS();
     initAnimations();
     initActiveNav();
-    fetchTestimonials();
+
     setTimeout(init3D, 350);
 }
 
@@ -170,7 +146,7 @@ function initAnimations() {
     }
 }
     
-    if (window.innerWidth > 600) {
+    if (typeof gsap !== 'undefined' && window.innerWidth > 600) {
         gsap.utils.toArray('.section-title').forEach(el => {
             gsap.from(el, {
                 opacity: 0, x: -25, duration: 0.8, ease: 'power3.out',
@@ -820,213 +796,6 @@ function closeLightboxInternal() {
     setTimeout(() => { lb.style.display = 'none'; document.body.style.overflow = ''; }, 300);
 }
 window.closeLightbox = closeLightboxInternal;
-
-const authLoading    = document.getElementById('auth-loading');
-const authSection    = document.getElementById('auth-section');
-const feedbackFormEl = document.getElementById('feedbackForm');
-const loginBtn       = document.getElementById('google-login-btn');
-const logoutBtn      = document.getElementById('logout-btn');
-
-if (auth) {
-    onAuthStateChanged(auth, (user) => {
-        if (authLoading) authLoading.style.display = 'none';
-        if (user) { currentUser = user; showFeedbackUI(user); }
-        else       { currentUser = null; showLoginUI(); }
-    });
-}
-
-function showFeedbackUI(user) {
-    if (authSection)    authSection.style.display    = 'none';
-    if (feedbackFormEl) feedbackFormEl.style.display = 'block';
-    const nameEl = document.getElementById('user-name-display');
-    const imgEl  = document.getElementById('user-avatar');
-    if (nameEl) nameEl.innerText = user.displayName;
-    if (imgEl)  imgEl.src        = user.photoURL || '';
-}
-
-function showLoginUI() {
-    if (feedbackFormEl) feedbackFormEl.style.display = 'none';
-    if (authSection)    authSection.style.display    = 'block';
-}
-
-if (loginBtn) {
-    loginBtn.addEventListener('click', async () => {
-        try {
-            await signInWithPopup(auth, new GoogleAuthProvider());
-            showToast('Welcome! 👋', 'success');
-        } catch (err) {
-            console.error(err);
-            showToast('Login failed. Please try again.', 'error');
-        }
-    });
-}
-
-if (logoutBtn) {
-    logoutBtn.addEventListener('click', () =>
-        signOut(auth).then(() => showToast('Logged out.', 'success'))
-    );
-}
-
-const starBtns    = document.querySelectorAll('.star-btn');
-const ratingInput = document.getElementById('feedback-rating');
-
-starBtns.forEach(star => {
-    star.addEventListener('click', () => {
-        const val = parseInt(star.dataset.value);
-        if (ratingInput) ratingInput.value = val;
-        starBtns.forEach(s => s.classList.toggle('active', parseInt(s.dataset.value) <= val));
-    });
-    star.addEventListener('mouseover', () => {
-        const val = parseInt(star.dataset.value);
-        starBtns.forEach(s => s.classList.toggle('active', parseInt(s.dataset.value) <= val));
-    });
-});
-document.querySelector('.star-row')?.addEventListener('mouseleave', () => {
-    const current = parseInt(ratingInput?.value || 5);
-    starBtns.forEach(s => s.classList.toggle('active', parseInt(s.dataset.value) <= current));
-});
-
-const feedbackForm = document.getElementById('feedbackForm');
-if (feedbackForm) {
-    feedbackForm.addEventListener('submit', async (e) => {
-        e.preventDefault();
-        if (!currentUser) { showToast('Please sign in first.', 'error'); return; }
-
-        const btn  = e.target.querySelector('button[type="submit"]');
-        const orig = btn.innerText;
-        btn.innerText = 'Processing...'; btn.disabled = true;
-
-        try {
-            const q    = query(collection(db, 'testimonials'),
-                               where('uid', '==', currentUser.uid),
-                               orderBy('date', 'desc'), limit(1));
-            const snap = await getDocs(q);
-            let shouldUpdate = false, updateId = null;
-
-            if (!snap.empty) {
-                const last = snap.docs[0].data();
-                if (last.date) {
-                    const diffH = (new Date() - last.date.toDate()) / 3600000;
-                    if (diffH < 24 && confirm('Update your existing review from the last 24 hours?')) {
-                        shouldUpdate = true;
-                        updateId = snap.docs[0].id;
-                    }
-                }
-            }
-
-            const msg    = document.getElementById('feedback-message').value;
-            const rating = parseInt(ratingInput?.value || 5);
-
-            if (shouldUpdate && updateId) {
-                await updateDoc(doc(db, 'testimonials', updateId), { message: msg, rating, date: new Date() });
-                showToast('Review updated! ✅', 'success');
-            } else {
-                await addDoc(collection(db, 'testimonials'), {
-                    uid:   currentUser.uid,
-                    name:  currentUser.displayName,
-                    photo: currentUser.photoURL,
-                    message: msg, rating, date: new Date()
-                });
-                showToast('Review submitted! Thank you 🎉', 'success');
-            }
-
-            e.target.reset();
-            ratingInput.value = 5;
-            starBtns.forEach((s, i) => s.classList.toggle('active', i === 4));
-            window.closeModal('modal-feedback');
-            fetchTestimonials();
-        } catch (err) {
-            console.error(err);
-            showToast('Error submitting review.', 'error');
-        } finally {
-            btn.innerText = orig; btn.disabled = false;
-        }
-    });
-}
-
-const contactForm = document.getElementById('contactForm');
-if (contactForm) {
-    contactForm.addEventListener('submit', async (e) => {
-        e.preventDefault();
-        const btn  = e.target.querySelector('button[type="submit"]');
-        const orig = btn.innerText;
-        btn.innerText = 'Sending...'; btn.disabled = true;
-
-        const name    = document.getElementById('name').value;
-        const email   = document.getElementById('email').value;
-        const subject = document.getElementById('subject')?.value || '';
-        const message = document.getElementById('message').value;
-
-        try {
-            if (db) {
-                addDoc(collection(db, 'contacts'), {
-                    name, email, subject, message, date: new Date()
-                });
-            }
-
-            const res = await fetch(FORMSPREE, {
-                method:  'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body:    JSON.stringify({ name, email, subject, message })
-            });
-
-            if (res.ok) {
-                showToast("Message sent! I'll get back to you soon 📩", 'success');
-                e.target.reset();
-            } else {
-                showToast('Could not send. Email me directly.', 'error');
-            }
-        } catch {
-            showToast('Something went wrong. Try again.', 'error');
-        } finally {
-            btn.innerText = orig; btn.disabled = false;
-        }
-    });
-}
-
-async function fetchTestimonials() {
-    const container = document.getElementById('testimonial-container');
-    if (!db || !container) return;
-
-    try {
-        const q    = query(collection(db, 'testimonials'), orderBy('date', 'desc'), limit(6));
-        const snap = await getDocs(q);
-
-        if (snap.empty) {
-            container.innerHTML = `
-                <div class="review-card glass" style="grid-column:1/-1;text-align:center;padding:50px 20px">
-                    <p style="color:var(--muted);font-size:1.1rem">
-                        No reviews yet. Be the first! ⭐
-                    </p>
-                </div>`;
-            return;
-        }
-
-        container.innerHTML = '';
-        snap.forEach(d => {
-            const data = d.data();
-            const filled = '★'.repeat(data.rating || 5);
-            const empty  = '☆'.repeat(5 - (data.rating || 5));
-            container.innerHTML += `
-                <div class="review-card glass">
-                    <div class="stars">${filled}${empty}</div>
-                    <p>"${data.message}"</p>
-                    <h5>${data.name}</h5>
-                </div>`;
-        });
-    } catch (err) {
-        console.error('Testimonials error:', err);
-    }
-}
-
-function showToast(msg, type = 'success') {
-    const t = document.createElement('div');
-    t.className        = `toast-notification ${type}`;
-    t.innerText        = msg;
-    t.style.background = type === 'success' ? '#10b981' : '#ef4444';
-    document.body.appendChild(t);
-    setTimeout(() => t.remove(), 3200);
-}
 
 function init3D() {
     const canvas = document.getElementById('canvas3d');

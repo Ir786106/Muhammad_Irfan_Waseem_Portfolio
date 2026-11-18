@@ -1,0 +1,31 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /testimonials/{id} {
+      allow read: if resource.data.approved == true;
+      allow create: if request.auth != null
+        && request.auth.token.firebase.sign_in_provider == 'google.com'
+        && id == request.auth.uid
+        && request.resource.data.keys().hasOnly(['uid','name','message','rating','photo','approved','date'])
+        && request.resource.data.uid == request.auth.uid
+        && request.resource.data.approved == false
+        && request.resource.data.message is string
+        && request.resource.data.message.size() > 0
+        && request.resource.data.message.size() <= 500
+        && request.resource.data.name is string
+        && request.resource.data.name.size() > 0
+        && request.resource.data.name.size() <= 80
+        && request.resource.data.rating is int
+        && request.resource.data.rating >= 1
+        && request.resource.data.rating <= 5
+        && request.resource.data.date == request.time
+        && request.resource.data.photo is string
+        && request.resource.data.photo.size() <= 1024;
+      allow update, delete: if false;
+    }
+    // Contact submissions are handled by Formspree alone.
+    match /contacts/{id} {
+      allow read, write: if false;
+    }
+  }
+}
