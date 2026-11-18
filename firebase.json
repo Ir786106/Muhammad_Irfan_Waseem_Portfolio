@@ -4,19 +4,9 @@
     "indexes": "firestore.indexes.json"
   },
   "hosting": {
-    "public": ".",
+    "public": "release/site",
     "ignore": [
-      "firebase.json",
-      "**/.*",
-      "**/node_modules/**",
-      "README.md",
-      "LICENSE",
-      "serve.js",
-      "firestore.*",
-      "audit/**",
-      "tests/**",
-      "tools/**",
-      "*.log"
+      "**/.*"
     ],
     "headers": [
       {
@@ -67,6 +57,9 @@
           }
         ]
       }
+    ],
+    "predeploy": [
+      "node tools/package-site.cjs"
     ]
   },
   "emulators": {

@@ -10,7 +10,7 @@ const assert = require('node:assert/strict');
                 const errors = [];
                 page.on('pageerror', error => errors.push(error.message));
                 await page.route('https://**/*', route => route.abort());
-                await page.goto('http://127.0.0.1:8080/');
+                await page.goto(process.env.PORTFOLIO_TEST_URL || 'http://127.0.0.1:8080/');
                 assert.equal(await page.locator('html').getAttribute('data-theme'),colorScheme);
                 assert.equal(await page.locator('.proj-card').count(),(await import('../modules/projects.js')).projects.length);
                 assert.ok(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth));
