@@ -1,3 +1,6 @@
+import './modules/profile.js';
+import { initProjects } from './modules/project-ui.js';
+initProjects();
 import './modules/contact.js';
 const reviewModule = () => import('./modules/firebase.js');
 new IntersectionObserver(([entry], observer) => {
@@ -7,6 +10,719 @@ new IntersectionObserver(([entry], observer) => {
 }, {rootMargin:'300px'}).observe(document.getElementById('contact'));
 document.querySelectorAll('[data-review-open]').forEach(btn => btn.addEventListener('click', () => {
     window.openModal('modal-feedback');
+    reviewModule().then(module => module.enableReviewForm()).catch(() => {
+        document.getElementById('review-status').textContent = 'Reviews are temporarily unavailable.';
+    });
+}));
+window.addEventListener('scroll', () => {
+    const scrolled = window.scrollY / (document.body.scrollHeight - window.innerHeight);
+    const progressBar = document.getElementById('scrollProgress');
+    if (progressBar) progressBar.style.transform = `scaleX(${scrolled})`;
+}, { passive: true });
+
+function hidePreloader() {
+    const pre = document.getElementById('preloader');
+    afterLoad();
+    if (!pre) return;
+    if (typeof gsap !== 'undefined') {
+        gsap.to(pre, {
+            opacity: 0, duration: 0.35,
+            onComplete: () => {
+                pre.style.display = 'none';
+            }
+        });
+    } else {
+        pre.style.display = 'none';
+    }
+}
+
+window.addEventListener('load', hidePreloader);
+
+function afterLoad() {
+    initThemeManager();
+    initAmbientBackground();
+    initBackgroundCanvas();
+    initTyped();
+    initAOS();
+    initAnimations();
+    initActiveNav();
+
+    setTimeout(init3D, 350);
+}
+
+function initTyped() {
+    const el = document.getElementById('typedText');
+    if (!el) return;
+
+    const phrases = [
+        'Intelligent Solutions.',
+        'Flutter Apps.',
+        'MERN Platforms.',
+        'AI Integrations.',
+        'Real Products.',
+        'ERP Systems.',
+    ];
+
+    let pIdx = 0, cIdx = 0, deleting = false;
+
+    function tick() {
+        const current = phrases[pIdx];
+
+        if (deleting) {
+            el.textContent = current.substring(0, cIdx - 1);
+            cIdx--;
+        } else {
+            el.textContent = current.substring(0, cIdx + 1);
+            cIdx++;
+        }
+
+        let speed = deleting ? 50 : 80;
+
+        if (!deleting && cIdx === current.length) {
+            speed = 1800;
+            deleting = true;
+        } else if (deleting && cIdx === 0) {
+            deleting = false;
+            pIdx = (pIdx + 1) % phrases.length;
+            speed = 300;
+        }
+
+        setTimeout(tick, speed);
+    }
+    tick();
+}
+
+function initAOS() {
+    const els = document.querySelectorAll('[data-aos]');
+    if (!els.length) return;
+
+    
+    els.forEach(el => {
+        const rect = el.getBoundingClientRect();
+        const inViewport = rect.top < window.innerHeight && rect.bottom > 0;
+        if (inViewport) {
+            const delay = parseInt(el.dataset.aosDelay || 0);
+            setTimeout(() => el.classList.add('aos-animate'), delay + 100);
+        }
+    });
+
+    
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+                const delay = parseInt(entry.target.dataset.aosDelay || 0);
+                setTimeout(() => entry.target.classList.add('aos-animate'), delay);
+                observer.unobserve(entry.target);
+            }
+        });
+    }, { rootMargin: '0px 0px -40px 0px', threshold: 0.05 });
+
+    els.forEach(el => {
+        if (!el.classList.contains('aos-animate')) {
+            observer.observe(el);
+        }
+    });
+}
+
+function initAnimations() {
+    if (typeof gsap === 'undefined') return;
+    if (typeof ScrollTrigger !== 'undefined') gsap.registerPlugin(ScrollTrigger);
+
+    
+    gsap.set([
+        '.hero-chips', '.hero-title', '.hero-sub',
+        '.hero-btns', '.hero-socials', '.stack-pills',
+        '.profile-card-3d', '.fl-chip', '.hero-content', '.hero-visual'
+    ], { opacity: 1, y: 0, x: 0, scale: 1, visibility: 'visible', clearProps: 'transform' });
+
+    
+    if (window.innerWidth > 900) {
+        gsap.timeline({ delay: 0.1 })
+            .from('.hero-chips',      { opacity: 0, y: 18, duration: 0.5, stagger: 0.1 })
+            .from('.hero-title',      { opacity: 0, y: 35, duration: 0.8, ease: 'power3.out' }, '-=0.2')
+            .from('.hero-sub',        { opacity: 0, y: 18, duration: 0.6 }, '-=0.4')
+            .from('.hero-btns',       { opacity: 0, y: 14, duration: 0.5 }, '-=0.3')
+            .from('.hero-socials',    { opacity: 0, y: 12, duration: 0.5 }, '-=0.3')
+            .from('.stack-pills',     { opacity: 0, y: 10, duration: 0.4 }, '-=0.3')
+            .from('.profile-card-3d', { opacity: 0, scale: 0.88, duration: 1, ease: 'elastic.out(1,0.5)' }, '-=0.9')
+            .from('.fl-chip',         { opacity: 0, scale: 0, stagger: 0.12, duration: 0.4, ease: 'back.out(2)' }, '-=0.5');
+    }
+}
+    
+    if (typeof gsap !== 'undefined' && window.innerWidth > 600) {
+        gsap.utils.toArray('.section-title').forEach(el => {
+            gsap.from(el, {
+                opacity: 0, x: -25, duration: 0.8, ease: 'power3.out',
+                scrollTrigger: { trigger: el, start: 'top 88%', once: true }
+            });
+        });
+    }
+
+let themeManagerBound = false;
+function initThemeManager() {
+    const htmlEl = document.documentElement;
+    const themeBtn = document.getElementById('theme-toggle');
+    const systemMedia = window.matchMedia('(prefers-color-scheme: dark)');
+
+    function getSavedTheme() {
+        return localStorage.getItem('portfolio-theme');
+    }
+
+    function applyTheme(theme) {
+        htmlEl.setAttribute('data-theme', theme);
+        const isDark = theme === 'dark';
+        if (themeBtn) {
+            themeBtn.setAttribute('title', isDark ? 'Switch to Light Mode' : 'Switch to Dark Mode');
+            themeBtn.setAttribute('aria-label', isDark ? 'Switch to Light Mode' : 'Switch to Dark Mode');
+        }
+    }
+
+    const saved = getSavedTheme();
+    if (saved === 'light' || saved === 'dark') {
+        applyTheme(saved);
+    } else {
+        applyTheme(systemMedia.matches ? 'dark' : 'light');
+    }
+
+    
+    systemMedia.addEventListener('change', (e) => {
+        if (!getSavedTheme()) {
+            applyTheme(e.matches ? 'dark' : 'light');
+        }
+    });
+
+    if (themeBtn && !themeManagerBound) {
+        themeManagerBound = true;
+        themeBtn.addEventListener('click', () => {
+            const current = htmlEl.getAttribute('data-theme') === 'dark' ? 'dark' : 'light';
+            const next = current === 'dark' ? 'light' : 'dark';
+            localStorage.setItem('portfolio-theme', next);
+            applyTheme(next);
+
+            if (typeof gsap !== 'undefined') {
+                gsap.fromTo(themeBtn,
+                    { scale: 0.8, rotate: -45 },
+                    { scale: 1, rotate: 0, duration: 0.35, ease: 'back.out(2)' }
+                );
+            }
+        });
+    }
+}
+initThemeManager();
+
+function initAmbientBackground() {
+    const glowWrap = document.querySelector('.ambient-glows');
+    if (!glowWrap) return;
+    let targetX = 0, targetY = 0, currentX = 0, currentY = 0;
+    let ticking = false;
+
+    window.addEventListener('mousemove', (e) => {
+        const cx = window.innerWidth / 2;
+        const cy = window.innerHeight / 2;
+        targetX = (e.clientX - cx) * 0.025;
+        targetY = (e.clientY - cy) * 0.025;
+
+        if (!ticking) {
+            ticking = true;
+            requestAnimationFrame(() => {
+                currentX += (targetX - currentX) * 0.08;
+                currentY += (targetY - currentY) * 0.08;
+                glowWrap.style.transform = `translate3d(${currentX.toFixed(2)}px, ${currentY.toFixed(2)}px, 0)`;
+                ticking = false;
+            });
+        }
+    }, { passive: true });
+}
+
+/* ==========================================================================
+   THEME-AWARE DYNAMIC BACKGROUND CANVAS
+   - Dark Mode: Tech/Cybersecurity Constellation & Neural Node Matrix
+   - Light Mode: Harmonic Architectural Waves & Floating Pastel Bokeh
+   - Performance: 40 FPS cap, Visibility API pause, reduced-motion, mobile scaling
+   ========================================================================== */
+function initBackgroundCanvas() {
+    const canvas = document.getElementById('bg-canvas');
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+
+    let width = 0, height = 0;
+    let animId = null;
+    let isRunning = false;
+    let lastTime = 0;
+    const TARGET_FPS = 40;
+    const FRAME_INTERVAL = 1000 / TARGET_FPS;
+
+    // Accessibility check: prefers-reduced-motion
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+    // Theme blend tracking: 0 = Dark, 1 = Light
+    function isCurrentDark() {
+        return document.documentElement.getAttribute('data-theme') === 'dark';
+    }
+    let themeBlend = isCurrentDark() ? 0 : 1;
+    let targetThemeBlend = themeBlend;
+
+    // Responsive setup with capped DPR
+    function resize() {
+        const dpr = Math.min(window.devicePixelRatio || 1, 1.5);
+        width = window.innerWidth;
+        height = window.innerHeight;
+        canvas.width = Math.floor(width * dpr);
+        canvas.height = Math.floor(height * dpr);
+        canvas.style.width = width + 'px';
+        canvas.style.height = height + 'px';
+        ctx.setTransform(1, 0, 0, 1, 0, 0);
+        ctx.scale(dpr, dpr);
+        initEntities();
+    }
+
+    // Passive interactive cursor tracking
+    const mouse = { x: -1000, y: -1000, targetX: -1000, targetY: -1000 };
+    window.addEventListener('mousemove', (e) => {
+        mouse.targetX = e.clientX;
+        mouse.targetY = e.clientY;
+    }, { passive: true });
+    window.addEventListener('mouseleave', () => {
+        mouse.targetX = -1000;
+        mouse.targetY = -1000;
+    });
+
+    // 1. Dark Mode: Cybersecurity Neural Nodes & Connecting Links
+    let darkNodes = [];
+    const DARK_PALETTE = ['#6366f1', '#06b6d4', '#818cf8', '#a855f7', '#10b981'];
+
+    // 2. Light Mode: Floating Soft Pastel Bokeh Discs
+    let lightBokeh = [];
+    const LIGHT_PALETTE = [
+        'rgba(56, 189, 248, 0.16)', // sky azure
+        'rgba(129, 140, 248, 0.15)', // soft lavender
+        'rgba(251, 146, 60, 0.12)',  // gentle peach
+        'rgba(52, 211, 153, 0.14)'   // mint emerald
+    ];
+
+    function initEntities() {
+        const isMobile = width < 768;
+
+        // Dark mode nodes
+        const darkCount = isMobile ? 22 : 46;
+        darkNodes = [];
+        for (let i = 0; i < darkCount; i++) {
+            darkNodes.push({
+                x: Math.random() * width,
+                y: Math.random() * height,
+                vx: (Math.random() - 0.5) * 0.35,
+                vy: (Math.random() - 0.5) * 0.35,
+                radius: Math.random() * 1.8 + 1.2,
+                color: DARK_PALETTE[Math.floor(Math.random() * DARK_PALETTE.length)],
+                pulse: Math.random() * Math.PI * 2,
+                pulseSpeed: 0.02 + Math.random() * 0.025
+            });
+        }
+
+        // Light mode bokeh
+        const lightCount = isMobile ? 8 : 16;
+        lightBokeh = [];
+        for (let i = 0; i < lightCount; i++) {
+            lightBokeh.push({
+                x: Math.random() * width,
+                y: Math.random() * height,
+                vx: (Math.random() - 0.5) * 0.2,
+                vy: -(0.18 + Math.random() * 0.28),
+                radius: Math.random() * 30 + 18,
+                color: LIGHT_PALETTE[Math.floor(Math.random() * LIGHT_PALETTE.length)],
+                sway: Math.random() * Math.PI * 2,
+                swaySpeed: 0.015 + Math.random() * 0.015
+            });
+        }
+    }
+
+    // Render Dark Mode Cybersecurity Constellation
+    function renderDarkMode(alpha, time) {
+        if (alpha <= 0.005) return;
+        ctx.save();
+        ctx.globalAlpha = alpha;
+
+        const connectDist = width < 768 ? 90 : 125;
+        const connectDistSq = connectDist * connectDist;
+
+        // Draw connecting cyber wires
+        ctx.lineWidth = 1;
+        for (let i = 0; i < darkNodes.length; i++) {
+            for (let j = i + 1; j < darkNodes.length; j++) {
+                const dx = darkNodes[i].x - darkNodes[j].x;
+                const dy = darkNodes[i].y - darkNodes[j].y;
+                const distSq = dx * dx + dy * dy;
+
+                if (distSq < connectDistSq) {
+                    const dist = Math.sqrt(distSq);
+                    const lineAlpha = (1 - dist / connectDist) * 0.22 * alpha;
+                    ctx.strokeStyle = `rgba(99, 102, 241, ${lineAlpha.toFixed(3)})`;
+                    ctx.beginPath();
+                    ctx.moveTo(darkNodes[i].x, darkNodes[i].y);
+                    ctx.lineTo(darkNodes[j].x, darkNodes[j].y);
+                    ctx.stroke();
+                }
+            }
+        }
+
+        // Draw nodes with cyber glow
+        for (let i = 0; i < darkNodes.length; i++) {
+            const node = darkNodes[i];
+
+            // Smooth position update
+            node.x += node.vx;
+            node.y += node.vy;
+
+            // Bounce off edges
+            if (node.x < 0 || node.x > width) node.vx *= -1;
+            if (node.y < 0 || node.y > height) node.vy *= -1;
+
+            // Interactive mouse repulsion
+            const mdx = node.x - mouse.x;
+            const mdy = node.y - mouse.y;
+            const mDist = Math.sqrt(mdx * mdx + mdy * mdy);
+            if (mDist < 120 && mDist > 0) {
+                const force = (1 - mDist / 120) * 1.5;
+                node.x += (mdx / mDist) * force;
+                node.y += (mdy / mDist) * force;
+            }
+
+            node.pulse += node.pulseSpeed;
+            const currentR = node.radius + Math.sin(node.pulse) * 0.6;
+
+            ctx.beginPath();
+            ctx.arc(node.x, node.y, Math.max(0.5, currentR), 0, Math.PI * 2);
+            ctx.fillStyle = node.color;
+            ctx.shadowColor = node.color;
+            ctx.shadowBlur = 8;
+            ctx.fill();
+            ctx.shadowBlur = 0;
+        }
+
+        ctx.restore();
+    }
+
+    // Render Light Mode Harmonic Wave Contours & Pastel Bokeh
+    function renderLightMode(alpha, time) {
+        if (alpha <= 0.005) return;
+        ctx.save();
+        ctx.globalAlpha = alpha;
+
+        // 1. Soft layered architectural sine ribbon waves
+        const waves = [
+            { yBase: height * 0.48, amp: 24, freq: 0.0028, speed: 0.0006, color: 'rgba(56, 189, 248, 0.11)', width: 1.5 },
+            { yBase: height * 0.66, amp: 30, freq: 0.0022, speed: -0.0005, color: 'rgba(129, 140, 248, 0.09)', width: 2 },
+            { yBase: height * 0.82, amp: 20, freq: 0.0035, speed: 0.0008, color: 'rgba(251, 146, 60, 0.07)', width: 1.5 }
+        ];
+
+        waves.forEach(w => {
+            ctx.strokeStyle = w.color;
+            ctx.lineWidth = w.width;
+            ctx.beginPath();
+
+            const step = width < 768 ? 16 : 8;
+            for (let x = 0; x <= width + step; x += step) {
+                const y = w.yBase + Math.sin(x * w.freq + time * w.speed) * w.amp
+                                + Math.cos(x * w.freq * 0.6 + time * w.speed * 0.7) * (w.amp * 0.4);
+                if (x === 0) ctx.moveTo(x, y);
+                else ctx.lineTo(x, y);
+            }
+            ctx.stroke();
+        });
+
+        // 2. Floating soft pastel bokeh discs
+        for (let i = 0; i < lightBokeh.length; i++) {
+            const b = lightBokeh[i];
+            b.y += b.vy;
+            b.sway += b.swaySpeed;
+            b.x += Math.sin(b.sway) * 0.35;
+
+            // Recycle when floated off the top
+            if (b.y < -b.radius * 2) {
+                b.y = height + b.radius;
+                b.x = Math.random() * width;
+            }
+
+            // Radial soft gradient
+            const grad = ctx.createRadialGradient(b.x, b.y, 0, b.x, b.y, b.radius);
+            grad.addColorStop(0, b.color);
+            grad.addColorStop(1, 'transparent');
+
+            ctx.beginPath();
+            ctx.arc(b.x, b.y, b.radius, 0, Math.PI * 2);
+            ctx.fillStyle = grad;
+            ctx.fill();
+        }
+
+        ctx.restore();
+    }
+
+    // Main animation step with 40 FPS cap
+    function frame(now) {
+        if (!isRunning) return;
+
+        const delta = now - lastTime;
+        if (delta >= FRAME_INTERVAL) {
+            lastTime = now - (delta % FRAME_INTERVAL);
+
+            // Smooth mouse interpolation
+            mouse.x += (mouse.targetX - mouse.x) * 0.1;
+            mouse.y += (mouse.targetY - mouse.y) * 0.1;
+
+            // Theme smooth interpolation (blend between 0=Dark and 1=Light)
+            targetThemeBlend = isCurrentDark() ? 0 : 1;
+            themeBlend += (targetThemeBlend - themeBlend) * 0.08;
+
+            ctx.clearRect(0, 0, width, height);
+
+            // Render both modes with complementary cross-fade opacities
+            renderDarkMode(1 - themeBlend, now);
+            renderLightMode(themeBlend, now);
+        }
+
+        animId = requestAnimationFrame(frame);
+    }
+
+    function startLoop() {
+        if (!isRunning && !prefersReducedMotion.matches) {
+            isRunning = true;
+            lastTime = performance.now();
+            animId = requestAnimationFrame(frame);
+        }
+    }
+
+    function stopLoop() {
+        if (isRunning) {
+            isRunning = false;
+            if (animId) cancelAnimationFrame(animId);
+        }
+    }
+
+    // Page Visibility API - pause completely when tab inactive
+    document.addEventListener('visibilitychange', () => {
+        if (document.hidden) stopLoop();
+        else startLoop();
+    });
+
+    // Handle Resize with debounce
+    let resizeTimer = null;
+    window.addEventListener('resize', () => {
+        clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(() => {
+            resize();
+            if (prefersReducedMotion.matches) {
+                renderStaticSnapshot();
+            }
+        }, 150);
+    }, { passive: true });
+
+    // Accessibility: static snapshot when prefers-reduced-motion is active
+    function renderStaticSnapshot() {
+        stopLoop();
+        ctx.clearRect(0, 0, width, height);
+        targetThemeBlend = isCurrentDark() ? 0 : 1;
+        themeBlend = targetThemeBlend;
+        renderDarkMode(1 - themeBlend, 0);
+        renderLightMode(themeBlend, 0);
+    }
+
+    // Theme toggle observer: smooth transition trigger
+    const themeObserver = new MutationObserver(() => {
+        targetThemeBlend = isCurrentDark() ? 0 : 1;
+        if (prefersReducedMotion.matches) {
+            renderStaticSnapshot();
+        }
+    });
+    themeObserver.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+
+    // Initialize
+    resize();
+    if (prefersReducedMotion.matches) {
+        renderStaticSnapshot();
+    } else {
+        startLoop();
+    }
+}
+
+window.addEventListener('scroll', () => {
+    if (navbar) navbar.classList.toggle('scrolled', window.scrollY > 40);
+}, { passive: true });
+
+const navScrollStyle = document.createElement('style');
+navScrollStyle.textContent = `
+.navbar.scrolled{
+  height:62px;
+  background:rgba(3,7,17,.97)!important;
+  box-shadow:0 4px 30px rgba(0,0,0,.4);
+}
+[data-theme="light"] .navbar.scrolled{background:rgba(240,244,255,.98)!important}
+`;
+document.head.appendChild(navScrollStyle);
+
+function initActiveNav() {
+    const links    = document.querySelectorAll('.nav-link, .m-link');
+    const sections = document.querySelectorAll('section[id]');
+
+    const io = new IntersectionObserver((entries) => {
+        entries.forEach(e => {
+            if (e.isIntersecting) {
+                links.forEach(l => {
+                    const match = l.getAttribute('href') === `#${e.target.id}`;
+                    l.classList.toggle('active-link', match);
+                });
+            }
+        });
+    }, { rootMargin: '-40% 0px -52% 0px' });
+
+    sections.forEach(s => io.observe(s));
+}
+
+/* ==========================================================================
+   MOBILE NAVIGATION DRAWER CONTROLLER
+   ========================================================================== */
+const hamburger       = document.getElementById('hamburger');
+const mobileMenu      = document.getElementById('mobileMenu');
+const mobileBackdrop  = document.getElementById('mobileBackdrop');
+const mobileMenuClose = document.getElementById('mobileMenuClose');
+let lastFocusedElement = null;
+
+function openMobileDrawer() {
+    if (!mobileMenu) return;
+    lastFocusedElement = document.activeElement;
+    
+    mobileMenu.classList.add('open');
+    mobileMenu.setAttribute('aria-hidden', 'false');
+    
+    if (mobileBackdrop) {
+        mobileBackdrop.classList.add('open');
+        mobileBackdrop.setAttribute('aria-hidden', 'false');
+    }
+    
+    if (hamburger) {
+        hamburger.classList.add('open');
+        hamburger.setAttribute('aria-expanded', 'true');
+    }
+    
+    document.body.style.overflow = 'hidden';
+    
+    if (mobileMenuClose) {
+        setTimeout(() => mobileMenuClose.focus(), 80);
+    }
+}
+
+function closeMobileDrawer() {
+    if (!mobileMenu) return;
+    
+    mobileMenu.classList.remove('open');
+    mobileMenu.setAttribute('aria-hidden', 'true');
+    
+    if (mobileBackdrop) {
+        mobileBackdrop.classList.remove('open');
+        mobileBackdrop.setAttribute('aria-hidden', 'true');
+    }
+    
+    if (hamburger) {
+        hamburger.classList.remove('open');
+        hamburger.setAttribute('aria-expanded', 'false');
+    }
+    
+    document.body.style.overflow = '';
+    
+    if (lastFocusedElement && typeof lastFocusedElement.focus === 'function') {
+        lastFocusedElement.focus();
+    } else if (hamburger) {
+        hamburger.focus();
+    }
+}
+
+if (hamburger && mobileMenu) {
+    hamburger.setAttribute('aria-expanded', 'false');
+    hamburger.setAttribute('aria-controls', 'mobileMenu');
+    
+    hamburger.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const isOpen = mobileMenu.classList.contains('open');
+        if (isOpen) {
+            closeMobileDrawer();
+        } else {
+            openMobileDrawer();
+        }
+    });
+
+    if (mobileMenuClose) {
+        mobileMenuClose.addEventListener('click', (e) => {
+            e.stopPropagation();
+            closeMobileDrawer();
+        });
+    }
+
+    if (mobileBackdrop) {
+        mobileBackdrop.addEventListener('click', () => {
+            closeMobileDrawer();
+        });
+    }
+
+    document.querySelectorAll('.m-link, .mobile-cta-btn, .mobile-drawer-logo').forEach(l => {
+        l.addEventListener('click', () => {
+            closeMobileDrawer();
+        });
+    });
+
+    document.addEventListener('click', (e) => {
+        if (mobileMenu.classList.contains('open') &&
+            !mobileMenu.contains(e.target) &&
+            !hamburger.contains(e.target)) {
+            closeMobileDrawer();
+        }
+    });
+
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && mobileMenu.classList.contains('open')) {
+            closeMobileDrawer();
+        }
+    });
+
+    // Keyboard focus trap inside mobile drawer
+    mobileMenu.addEventListener('keydown', (e) => {
+        if (e.key !== 'Tab') return;
+        const focusable = mobileMenu.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
+        if (!focusable.length) return;
+        const first = focusable[0];
+        const last = focusable[focusable.length - 1];
+
+        if (e.shiftKey) {
+            if (document.activeElement === first) {
+                last.focus();
+                e.preventDefault();
+            }
+        } else {
+            if (document.activeElement === last) {
+                first.focus();
+                e.preventDefault();
+            }
+        }
+    });
+
+    window.addEventListener('resize', () => {
+        if (window.innerWidth > 900 && mobileMenu.classList.contains('open')) {
+            closeMobileDrawer();
+        }
+    }, { passive: true });
+}
+
+document.querySelectorAll('.stab').forEach(btn => {
+    btn.addEventListener('click', () => {
+        document.querySelectorAll('.stab').forEach(b => b.classList.remove('active'));
+        document.querySelectorAll('.skills-panel').forEach(p => p.classList.remove('active'));
+
+        btn.classList.add('active');
+        const panel = document.getElementById(`tab-${btn.dataset.tab}`);
+        if (panel) panel.classList.add('active');
+    });
+});
+
+window.openModal('modal-feedback');
     reviewModule().then(module => module.enableReviewForm()).catch(() => {
         document.getElementById('review-status').textContent = 'Reviews are temporarily unavailable.';
     });

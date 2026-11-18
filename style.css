@@ -1321,3 +1321,10 @@ footer,
 }
 
 [hidden]{display:none!important}
+
+#project-dialog {padding:0;border:0;margin:auto;background:transparent;color:var(--text);width:min(620px,94vw);max-height:92vh}
+#project-dialog::backdrop, dialog::backdrop {background:rgba(0,0,0,.78)}
+#project-dialog .modal-box {background:var(--bg-card);width:100%}
+.project-actions {display:flex;gap:.75rem;flex-wrap:wrap;margin-top:1rem}
+.project-gallery img {max-width:100%;height:auto;max-height:45vh;object-fit:contain}
+.modal-scroll h3 {margin-top:1rem}.modal-box h2 {padding-right:2rem}
