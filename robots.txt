@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://irfan-portfolio-ae62a.web.app/sitemap.xml
