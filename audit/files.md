@@ -17,6 +17,9 @@
 - `Images/cert-cybersecurity-nexa.webp`
 - `Images/icons.svg`
 - `Images/portrait-small.webp`
+- `Images/projects/eduquest-home.webp`
+- `Images/projects/eduquest-modes.webp`
+- `Images/projects/eduquest-subjects.webp`
 - `Images/projects/portfolio-home.webp`
 - `Images/projects/portfolio-mobile.webp`
 - `Images/projects/portfolio-projects.webp`
@@ -24,8 +27,10 @@
 - `audit/files.md`
 - `audit/hosting.md`
 - `audit/lighthouse.json`
+- `audit/lighthouse-revalidation.json`
 - `audit/owner-input.md`
 - `audit/phase-0.md`
+- `audit/revalidation.md`
 - `firestore.indexes.json`
 - `firestore.rules`
 - `modules/animations.js`
@@ -44,6 +49,8 @@
 - `tests/browser.cjs`
 - `tests/firestore.mjs`
 - `tests/links.mjs`
+- `tests/static.cjs`
+- `tools/package-site.cjs`
 - `vendor/firebase-10.12.2/LICENSE.txt`
 - `vendor/firebase-10.12.2/firebase-app-check.js`
 - `vendor/firebase-10.12.2/firebase-app.js`
@@ -54,6 +61,7 @@
 
 ## Changed
 
+- `.gitignore`
 - `404.html`
 - `Images/Irfan.webp`
 - `README.md`

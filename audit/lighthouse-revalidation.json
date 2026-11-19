@@ -1,0 +1,26 @@
+{
+  "date": "2026-11-19",
+  "version": "13.6.0",
+  "url": "http://127.0.0.1:8080/",
+  "method": "simulate",
+  "formFactor": "mobile",
+  "throttling": {
+    "rttMs": 150,
+    "throughputKbps": 1638.4,
+    "requestLatencyMs": 562.5,
+    "downloadThroughputKbps": 1474.5600000000002,
+    "uploadThroughputKbps": 675,
+    "cpuSlowdownMultiplier": 4
+  },
+  "scores": {
+    "performance": 90,
+    "accessibility": 100,
+    "best-practices": 100,
+    "seo": 100,
+    "agentic-browsing": 100
+  },
+  "lcpMs": 2424.2631788599474,
+  "cls": 0,
+  "transferBytes": 210631,
+  "warnings": []
+}
