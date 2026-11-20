@@ -1,5 +1,19 @@
 # Revalidation — 19 November 2026
 
+## 20 November 2026 priority refresh
+
+- Verified public contact defaults from the GitHub profile README and portfolio configuration: LinkedIn `https://www.linkedin.com/in/muhammad-irfan-waseem-48226b297/` and email `muhammadirfan.infosec@gmail.com`.
+- Promoted Food Fight, Ittehad Food Industries and the Personal Portfolio as the evidence-backed featured set.
+- No public MillX ERP repository was found under the verified GitHub account, so MillX is not presented as a completed or distinct application.
+- Ittehad remains presented as a working public source repository for a rice-industry ERP. It is not described as MillX ERP.
+- Downloaded genuine Food Fight repository cover and onboarding assets and genuine Ittehad onboarding assets. These are labelled as repository assets, not application screenshots.
+- Food Fight's repository documentation states that application screenshots are currently unavailable.
+- Ittehad's repository does not contain a dedicated application-screenshot gallery in the audited tree.
+- Missing screenshot locations: add privacy-safe PNG/JPEG captures to `docs/screenshots/` in `food-fight-app`; add a `docs/screenshots/` directory to `itthad_food_industries` if approved captures become available.
+- No live demo was invented for Food Fight or Ittehad. EduQuest's verified GitHub Pages demo remains the only verified portfolio demo.
+- Testimonials remain hidden unless at least three reviews have both `approved` and `publicationPermission` flags enabled.
+- Client identities and private repositories remain excluded.
+
 The requested phase commits already existed when this request arrived. This pass preserved those changes, reran checks and refreshed the delivery inventory. No production deployment or cloud configuration change was made.
 
 ## Phase history

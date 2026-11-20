@@ -126,7 +126,8 @@ function applyProjectFilters() {
 }
 
 export function initProjects() {
-    grid.replaceChildren(...projects.map(projectCard));
+    const orderedProjects = projects.slice().sort((a, b) => Number(b.featured) - Number(a.featured));
+    grid.replaceChildren(...orderedProjects.map(projectCard));
     const filterButtons = document.querySelectorAll('.filter-btn');
     for (const button of filterButtons) {
         const filter = button.dataset.filter;

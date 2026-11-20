@@ -28,7 +28,10 @@ export const projects = [
             "architecture": "https://github.com/Ir786106/food-fight-app/blob/main/docs/images/food-fight-architecture.png"
         },
         "images": [
-            {"src": "assets/projects/food-fight/cover.svg", "alt": "Concept illustration of the Food Fight ordering, checkout and delivery app", "width": 1280, "height": 720, "label": "Product Artwork"}
+            {"src": "assets/projects/food-fight/cover.webp", "alt": "Food Fight repository cover artwork", "width": 1280, "height": 405, "label": "Repository Asset"},
+            {"src": "assets/projects/food-fight/menu-combos.webp", "alt": "Genuine Food Fight menu-combinations onboarding artwork", "width": 1280, "height": 956, "label": "Repository Asset"},
+            {"src": "assets/projects/food-fight/live-tracking.webp", "alt": "Genuine Food Fight live-tracking onboarding artwork", "width": 1280, "height": 956, "label": "Repository Asset"},
+            {"src": "assets/projects/food-fight/fast-delivery.webp", "alt": "Genuine Food Fight fast-delivery onboarding artwork", "width": 1280, "height": 956, "label": "Repository Asset"}
         ]
     },
     {
@@ -36,7 +39,7 @@ export const projects = [
         "title": "Mandi Pro ERP",
         "category": "mobile erp",
         "status": "Working source repository",
-        "featured": true,
+        "featured": false,
         "problem": "Grain-market businesses need digital records for stock, trade and finance.",
         "role": "Built a cross-platform Flutter ERP interface backed by Firebase.",
         "result": "The public repository includes stock, purchase, sales, party ledger, role and reporting workflows.",
@@ -51,7 +54,7 @@ export const projects = [
         "title": "TeamSync SaaS",
         "category": "web ai",
         "status": "Working prototype",
-        "featured": true,
+        "featured": false,
         "problem": "Teams need workspace isolation, assigned tasks and project visibility.",
         "role": "Developed the MERN and TypeScript project structure and product workflows.",
         "result": "The repository provides authentication, workspaces, projects, tasks, roles and filtering.",
@@ -66,7 +69,7 @@ export const projects = [
         "title": "HireReady PK / AI Interview Pro",
         "category": "web ai",
         "status": "Phase 1 in development",
-        "featured": true,
+        "featured": false,
         "problem": "Pakistani candidates need guided practice for technical and behavioral interviews.",
         "role": "Built the monorepo foundation for assessments and AI-assisted interview preparation.",
         "result": "The public repository currently documents the Phase 1 foundation; planned video and ML stages remain roadmap items.",
@@ -89,14 +92,18 @@ export const projects = [
         "tags": ["Flutter", "Firebase", "Supply Chain"],
         "features": ["Paddy procurement and supplier records", "Factory processing and rice inventory", "Role-based logistics and sales reporting"],
         "links": {"repo": "https://github.com/Ir786106/itthad_food_industries"},
-        "images": [{"src": "assets/projects/ittehad-food/cover.svg", "alt": "Concept illustration of rice procurement, processing and distribution", "width": 1280, "height": 720, "label": "Product Artwork"}]
+        "images": [
+            {"src": "assets/projects/ittehad-food/onboard-1.webp", "alt": "Genuine Ittehad Food Industries onboarding artwork", "width": 1280, "height": 960, "label": "Repository Asset"},
+            {"src": "assets/projects/ittehad-food/onboard-2.webp", "alt": "Genuine Ittehad Food Industries onboarding artwork", "width": 1280, "height": 853, "label": "Repository Asset"},
+            {"src": "assets/projects/ittehad-food/onboard-3.webp", "alt": "Genuine Ittehad Food Industries onboarding artwork", "width": 1280, "height": 853, "label": "Repository Asset"}
+        ]
     },
     {
         "id": "saqib",
         "title": "Saqib Shop",
         "category": "mobile erp",
         "status": "Working source repository",
-        "featured": true,
+        "featured": false,
         "problem": "Small retailers need digital cash records, inventory and sales workflows.",
         "role": "Built a Flutter POS and digital ledger with Firebase synchronization.",
         "result": "The public repository describes digital khata, party records, sales and reporting modules.",
@@ -111,7 +118,7 @@ export const projects = [
         "title": "Developer Portfolio",
         "category": "web",
         "status": "Published website",
-        "featured": false,
+        "featured": true,
         "problem": "Recruiters need an accessible overview of mobile work.",
         "role": "Built this static site with HTML, CSS and JavaScript.",
         "result": "Visitors can explore projects, download a résumé and get in touch.",

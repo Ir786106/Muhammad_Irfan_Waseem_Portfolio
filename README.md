@@ -4,6 +4,12 @@ Vanilla HTML, CSS and ES modules for a mobile development portfolio with dark an
 
 Public contact: muhammadirfan.infosec@gmail.com · [LinkedIn](https://www.linkedin.com/in/muhammad-irfan-waseem-48226b297/). The one-page résumé is available in PDF and Word under Images.
 
+## Verified project priority
+
+The showcase prioritizes Food Fight, Ittehad Food Industries and this portfolio repository. Food Fight is linked to verified v1.8.0 stable APK and Windows assets and separate v1.8.2 Build 19 preview assets. Ittehad's public repository is presented as a working rice-industry source repository, not as a separately verified MillX ERP release.
+
+Genuine repository artwork is stored under `assets/projects/food-fight/` and `assets/projects/ittehad-food/`. Food Fight's repository states that application screenshots are not currently available; 3–5 privacy-safe application screenshots can later be added to `docs/screenshots/` there. Ittehad's onboarding images are genuine repository assets, not application screenshots.
+
 ## How to add a project
 
 Add one object to modules/projects.js with a unique id, title, category, status, description, problem, role, result and tags. Leave unknown links out of links. For a screenshot carousel, add three to five approved WebP files and enter their src, alt, width and height in images. Use repo, demo, store or apk for public destinations. Optional architecture and implementation links can point to a published diagram or a specific source file. Check the filter, project dialog, gallery controls and showcase after adding the entry.
