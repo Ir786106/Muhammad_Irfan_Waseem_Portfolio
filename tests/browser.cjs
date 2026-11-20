@@ -14,6 +14,18 @@ const assert = require('node:assert/strict');
                 assert.equal(await page.locator('html').getAttribute('data-theme'),colorScheme);
                 assert.equal(await page.locator('.proj-card').count(),(await import('../modules/projects.js')).projects.length);
                 assert.ok(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth));
+                assert.equal(await page.locator('.proj-card h3').first().textContent(), 'Food Fight');
+                assert.equal(await page.locator('#testimonials').isVisible(), false);
+                assert.ok(await page.evaluate(() => [...document.querySelectorAll('a[href^="#"]')].every(a => a.hash.length < 2 || document.getElementById(a.hash.slice(1)))));
+                await page.locator('#theme-toggle').click();
+                assert.equal(await page.locator('html').getAttribute('data-theme'),colorScheme === 'light' ? 'dark' : 'light');
+                await page.locator('#theme-toggle').click();
+                if (await page.locator('#hamburger').isVisible()) {
+                    await page.locator('#hamburger').click();
+                    assert.equal(await page.locator('#hamburger').getAttribute('aria-expanded'), 'true');
+                    await page.keyboard.press('Escape');
+                    assert.equal(await page.locator('#hamburger').getAttribute('aria-expanded'), 'false');
+                }
                 const trigger = page.locator('.proj-card button').first();
                 await trigger.focus();
                 await page.keyboard.press('Enter');
@@ -37,6 +49,10 @@ const assert = require('node:assert/strict');
                 await page.keyboard.press('Escape');
                 await page.locator('dialog[open]').waitFor({state:'detached'});
                 assert.deepEqual(errors, []);
+                const response = await page.goto('http://127.0.0.1:8080/missing-test-page');
+                assert.equal(response.status(), 404);
+                assert.equal(await page.locator('h1').textContent(), '404');
+                assert.ok(await page.getByRole('link', {name:'Back to Home'}).isVisible());
                 console.log(width, colorScheme, 'passed');
                 await page.close();
             }

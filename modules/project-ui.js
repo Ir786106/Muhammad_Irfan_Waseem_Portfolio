@@ -5,6 +5,8 @@ const dialog = document.getElementById('project-dialog');
 const title = document.getElementById('project-title');
 const body = document.getElementById('project-story');
 let opener;
+let activeFilter = 'all';
+let activeSearch = '';
 
 function element(tag, className, text) {
     const node = document.createElement(tag);
@@ -52,9 +54,29 @@ export function openProject(id, trigger = document.activeElement) {
     for (const [label, copy] of [['Problem', project.problem], ['My role', project.role], ['Result', project.result]]) {
         body.append(element('h3', '', label), element('p', '', copy));
     }
+    if (project.features?.length) {
+        body.append(element('h3', '', 'Implemented features'));
+        const featureList = element('ul');
+        for (const feature of project.features) featureList.append(element('li', '', feature));
+        body.append(featureList);
+    }
     if (project.images.length) body.append(screenshotGallery(project));
     const links = element('div', 'project-actions');
-    for (const [key, label] of [['repo', 'Source code'], ['demo', 'Live demo'], ['apk', 'Android release'], ['store', 'Play Store'], ['architecture', 'Architecture diagram'], ['implementation', 'Explore the Dart code']]) {
+    for (const [key, label] of [
+        ['repo', 'View source code'],
+        ['demo', 'Live demo'],
+        ['apk', 'Download Android APK'],
+        ['windows', 'Download Windows installer'],
+        ['stable', 'View stable release'],
+        ['previewApk', 'Preview APK'],
+        ['previewWindows', 'Preview Windows installer'],
+        ['preview', 'View preview release'],
+        ['checksum', 'View checksum'],
+        ['releaseHistory', 'View release history'],
+        ['store', 'Play Store'],
+        ['architecture', 'Architecture diagram'],
+        ['implementation', 'Explore the Dart code']
+    ]) {
         if (!project.links[key]) continue;
         const link = element('a', 'sm-btn', label);
         link.href = project.links[key];
@@ -70,7 +92,18 @@ export function openProject(id, trigger = document.activeElement) {
 
 function projectCard(project) {
     const card = element('article', 'proj-card glass');
+    if (project.featured) card.classList.add('featured-proj');
     card.dataset.category = project.category;
+    card.dataset.search = `${project.title} ${project.description} ${project.tags.join(' ')} ${project.status}`.toLowerCase();
+    if (project.images.length) {
+        const image = element('img', 'proj-cover');
+        image.src = project.images[0].src;
+        image.alt = project.images[0].alt;
+        image.loading = 'lazy';
+        image.width = project.images[0].width;
+        image.height = project.images[0].height;
+        card.append(image);
+    }
     const top = element('div', 'proj-top');
     top.append(element('span', 'proj-date', project.status));
     const details = element('button', 'sm-btn', 'Details');
@@ -84,6 +117,14 @@ function projectCard(project) {
     return card;
 }
 
+function applyProjectFilters() {
+    for (const card of grid.children) {
+        const matchesFilter = activeFilter === 'all' || card.dataset.category.split(' ').includes(activeFilter);
+        const matchesSearch = !activeSearch || card.dataset.search.includes(activeSearch);
+        card.hidden = !(matchesFilter && matchesSearch);
+    }
+}
+
 export function initProjects() {
     grid.replaceChildren(...projects.map(projectCard));
     const filterButtons = document.querySelectorAll('.filter-btn');
@@ -92,13 +133,19 @@ export function initProjects() {
         button.hidden = filter !== 'all' && !projects.some(p => p.category.split(' ').includes(filter));
         button.setAttribute('aria-pressed', String(filter === 'all'));
         button.addEventListener('click', () => {
+            activeFilter = filter;
             for (const other of filterButtons) {
                 other.classList.toggle('active', other === button);
                 other.setAttribute('aria-pressed', String(other === button));
             }
-            for (const card of grid.children) {
-                card.hidden = filter !== 'all' && !card.dataset.category.split(' ').includes(filter);
-            }
+            applyProjectFilters();
+        });
+    }
+    const search = document.getElementById('project-search');
+    if (search) {
+        search.addEventListener('input', () => {
+            activeSearch = search.value.trim().toLowerCase();
+            applyProjectFilters();
         });
     }
     dialog.querySelector('[data-close]').addEventListener('click', () => dialog.close());

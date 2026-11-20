@@ -330,9 +330,15 @@
                 <button class="filter-btn active" data-filter="all">All</button>
                 <button class="filter-btn" data-filter="ai">AI / ML</button>
                 <button class="filter-btn" data-filter="mobile">Mobile</button>
+                <button class="filter-btn" data-filter="erp">ERP</button>
                 <button class="filter-btn" data-filter="web">Web</button>
-                <button class="filter-btn" data-filter="desktop">Desktop</button>
+                <button class="filter-btn" data-filter="education">Learning</button>
+                <button class="filter-btn" data-filter="open-source">Open Source</button>
             </div>
+            <label class="project-search-wrap" for="project-search">
+                <span class="sr-only">Search projects</span>
+                <input id="project-search" type="search" placeholder="Search projects or technologies" autocomplete="off">
+            </label>
 
             <div class="projects-grid"></div></div>
     </section>
@@ -410,7 +416,24 @@
                 <h2 class="section-title">VeilGuard <span class="gradient-text">Security Journal</span></h2>
             </div>
 
-            <article class="about-card glass"><p>I write about networking and security alongside my mobile development work.</p><a href="https://veilguardsecjournal.blogspot.com/2026/09/networking-basics-types-topologies-guide.html">Computer Networking Basics: Types, Working, and Topologies Explained</a><br><a href="https://veilguardsecjournal.blogspot.com/">Read VeilGuard Security Journal →</a></article></div>
+            <div class="blog-grid">
+                <article class="about-card glass">
+                    <h3>Computer Networking Basics: Types, Working, and Topologies Explained</h3>
+                    <p>A beginner-friendly introduction to networks, network types, topologies, protocols and the physical connections that connect devices.</p>
+                    <a href="https://veilguardsecjournal.blogspot.com/2026/09/networking-basics-types-topologies-guide.html" target="_blank" rel="noopener noreferrer">Read article →</a>
+                </article>
+                <article class="about-card glass">
+                    <h3>The Blueprint of Cyber Defense: A Comprehensive Guide to CISSP Security</h3>
+                    <p>An overview of cybersecurity foundations, CISSP security domains, threat actors and common attack targets.</p>
+                    <a href="https://veilguardsecjournal.blogspot.com/2026/06/the-blueprint-of-cyber-defense.html" target="_blank" rel="noopener noreferrer">Read article →</a>
+                </article>
+                <article class="about-card glass">
+                    <h3>My Cybersecurity Journey</h3>
+                    <p>My introduction to studying application security while combining a background in mobile application development with a security-focused mindset.</p>
+                    <a href="https://veilguardsecjournal.blogspot.com/2026/06/my-cybersecurity-journey.html" target="_blank" rel="noopener noreferrer">Read article →</a>
+                </article>
+            </div>
+            <p class="action-spaced"><a href="https://veilguardsecjournal.blogspot.com/" target="_blank" rel="noopener noreferrer">Read VeilGuard Security Journal →</a></p></div>
     </section>
 
     <section id="gallery" class="section">
@@ -470,7 +493,7 @@
         </div>
     </section>
 
-    <dialog id="modal-feedback" aria-labelledby="review-title" aria-modal="true"><div class="modal-box glass"><button class="modal-close" aria-label="Close review form">×</button><h2 id="review-title">Leave a review</h2><button class="btn-primary" id="google-login-btn">Sign in with Google</button><form id="feedbackForm" hidden><p id="review-user"></p><button id="logout-btn" type="button">Change account</button><label>Rating <select name="rating"><option>5</option><option>4</option><option>3</option><option>2</option><option>1</option></select></label><label>Your review<textarea name="message" maxlength="500" required></textarea></label><button class="btn-primary" type="submit">Submit for review</button></form><p id="review-status" role="status"></p></div></dialog><section id="contact" class="section">
+    <dialog id="modal-feedback" aria-labelledby="review-title" aria-modal="true"><div class="modal-box glass"><button class="modal-close" aria-label="Close review form">×</button><h2 id="review-title">Leave a review</h2><button class="btn-primary" id="google-login-btn">Sign in with Google</button><form id="feedbackForm" hidden><p id="review-user"></p><button id="logout-btn" type="button">Change account</button><label>Rating <select name="rating"><option>5</option><option>4</option><option>3</option><option>2</option><option>1</option></select></label><label>Your review<textarea name="message" maxlength="500" required></textarea></label><label class="review-consent"><input type="checkbox" name="consentToPublish" required> I give permission to publish my name, profile photo, rating and review on this portfolio after moderation.</label><button class="btn-primary" type="submit">Submit for review</button></form><p id="review-status" role="status"></p></div></dialog><section id="contact" class="section">
         <div class="container contact-grid">
 
             <div class="contact-info">

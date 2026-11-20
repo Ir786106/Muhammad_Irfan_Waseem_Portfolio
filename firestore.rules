@@ -2,13 +2,15 @@ rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
     match /testimonials/{id} {
-      allow read: if resource.data.approved == true;
+      allow read: if resource.data.approved == true && resource.data.publicationPermission == true;
       allow create: if request.auth != null
         && request.auth.token.firebase.sign_in_provider == 'google.com'
         && id == request.auth.uid
-        && request.resource.data.keys().hasOnly(['uid','name','message','rating','photo','approved','date'])
+        && request.resource.data.keys().hasOnly(['uid','name','message','rating','photo','approved','publicationPermission','consentToPublish','date'])
         && request.resource.data.uid == request.auth.uid
         && request.resource.data.approved == false
+        && request.resource.data.publicationPermission == false
+        && request.resource.data.consentToPublish == true
         && request.resource.data.message is string
         && request.resource.data.message.size() > 0
         && request.resource.data.message.size() <= 500

@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="720" viewBox="0 0 1280 720"><rect width="1280" height="720" rx="32" fill="#132d2d"/><g transform="translate(78 86)"><rect width="1124" height="548" rx="28" fill="#f7f4ea" stroke="#708f72"/>
+<text x="46" y="72" fill="#183a34" font-family="Arial" font-size="28" font-weight="700">Ittehad Food Industries</text>
+<g transform="translate(46 112)"><rect width="1000" height="390" rx="18" fill="#fff"/><path d="M88 300H912" stroke="#aab7a5" stroke-width="5"/><g fill="#dceacb" stroke="#809b72" stroke-width="3"><circle cx="170" cy="300" r="58"/><circle cx="400" cy="300" r="58"/><circle cx="630" cy="300" r="58"/><circle cx="860" cy="300" r="58"/></g>
+<g fill="#183a34" font-family="Arial" font-size="16" font-weight="700" text-anchor="middle"><text x="170" y="210">Paddy</text><text x="400" y="210">Processing</text><text x="630" y="210">Rice inventory</text><text x="860" y="210">Distribution</text></g>
+<path d="M228 300h112M458 300h112M688 300h112" stroke="#487458" stroke-width="8" stroke-dasharray="12 10"/></g></g></svg>

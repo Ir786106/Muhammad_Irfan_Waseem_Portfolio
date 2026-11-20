@@ -29,7 +29,9 @@ function avatar(value) {
 }
 
 export async function loadReviews() {
-    const snapshot = await getDocs(query(collection(db, 'testimonials'), where('approved', '==', true), orderBy('date', 'desc'), limit(6)));
+    const snapshot = await getDocs(query(collection(db, 'testimonials'), where('approved', '==', true), where('publicationPermission', '==', true), orderBy('date', 'desc'), limit(6)));
+    section.hidden = true;
+    document.querySelectorAll('[data-review-nav]').forEach(link => link.hidden = true);
     if (snapshot.size < 3) return;
     const container = document.getElementById('testimonial-container');
     container.replaceChildren();
@@ -76,11 +78,11 @@ export async function enableReviewForm() {
         event.preventDefault();
         const user = auth.currentUser;
         const message = form.elements.message.value.trim();
-        if (!user || !message) return;
+        if (!user || !message || !form.reportValidity() || !form.elements.consentToPublish.checked) return;
         const button = form.querySelector('[type=submit]');
         button.disabled = true;
         try {
-            await setDoc(doc(db, 'testimonials', user.uid), { uid: user.uid, name: (user.displayName || 'Reviewer').slice(0, 80), message, photo: avatar(user.photoURL), rating: Number(form.elements.rating.value), approved: false, date: serverTimestamp() });
+            await setDoc(doc(db, 'testimonials', user.uid), { uid: user.uid, name: (user.displayName || 'Reviewer').slice(0, 80), message, photo: avatar(user.photoURL), rating: Number(form.elements.rating.value), approved: false, publicationPermission: false, consentToPublish: true, date: serverTimestamp() });
             status.textContent = 'Thank you. Your review is awaiting moderation.';
             form.reset();
         } catch { status.textContent = 'Could not submit. Each Google account can submit once.'; }

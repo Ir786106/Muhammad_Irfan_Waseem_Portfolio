@@ -8,7 +8,7 @@ Public contact: muhammadirfan.infosec@gmail.com · [LinkedIn](https://www.linked
 
 Add one object to modules/projects.js with a unique id, title, category, status, description, problem, role, result and tags. Leave unknown links out of links. For a screenshot carousel, add three to five approved WebP files and enter their src, alt, width and height in images. Use repo, demo, store or apk for public destinations. Optional architecture and implementation links can point to a published diagram or a specific source file. Check the filter, project dialog, gallery controls and showcase after adding the entry.
 
-The contact form uses Formspree. Reviews require Google sign-in and owner moderation. Three approved reviews reveal the public section. See [deployment notes](audit/hosting.md) for rules tests and console settings. The original review is in [Phase 0](audit/phase-0.md).
+The contact form uses Formspree. Reviews require Google sign-in and owner moderation. Three genuine reviews with owner approval and confirmed publication permission reveal the public section. New submissions collect explicit consent and remain private until both moderation flags are set. See [deployment notes](audit/hosting.md) for rules tests and console settings. The original review is in [Phase 0](audit/phase-0.md).
 
 ## Preview and package a release
 

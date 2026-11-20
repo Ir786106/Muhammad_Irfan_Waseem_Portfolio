@@ -19,7 +19,7 @@ for (const popup of [lightbox, document.getElementById('modal-feedback')]) {
 for (const dialog of document.querySelectorAll('dialog')) {
     dialog.addEventListener('keydown', event => {
         if (event.key !== 'Tab') return;
-        const items = [...dialog.querySelectorAll('button, a[href], select, textarea')].filter(
+        const items = [...dialog.querySelectorAll('button, a[href], input, select, textarea')].filter(
             item => !item.disabled && item.getClientRects().length
         );
         if (!items.length) return;
