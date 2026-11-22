@@ -42,7 +42,7 @@ To run Playwright browser tests locally, install dependencies with `npm install`
 
 ---
 
-# Muhammad Irfan Waseem · Flutter Developer
+## Previous version: original Flutter portfolio and case-study foundation
 
 Vanilla HTML, CSS and ES modules for a mobile development portfolio with dark and light themes, original editorial styling, and ten searchable project case-study pages. Run `node serve.js` and open http://localhost:8080. Both Firebase Hosting and GitHub Pages can serve these files. Project detail routes live in `projects/<id>/` and are generated from `modules/projects.js`.
 
