@@ -1,41 +1,45 @@
 # Reference audit — November 22, 2026
 
-Sources: eleven ZIP files supplied by the owner, plus seven videos in one ZIP. Archive inventories and license filenames were inspected without executing third-party code. The pre-existing reference inspection notes in the master prompt supplied stack and interaction summaries. Selected patterns were **re-implemented originally**; no third-party source, artwork, fonts, personal images, or 3D models were imported.
+## Availability and evidence limits
 
-| ZIP | Supplied stack/type | License in archive | Relevant idea | Decision / risk |
-|---|---|---|---|---|
-| vincentdenil-site-main | Experimental creative website | All rights reserved | Minimal editorial layout, strong work presentation | Inspiration only. Copy nothing. |
-| ChanMeng666-main | GitHub profile and evidence/CV build tooling | GPL-3.0 | Evidence-backed storytelling | Inspiration only; incompatible copying/reuse requires a separate license analysis. |
-| lokendra.tech-main | Creative web and 3D/dither interactions | No top-level license found | Controlled visual texture, premium project panels | Inspiration only; do not import assets. |
-| claude-app-portfolio-template-main | Astro conversational portfolio | MIT | Guided navigation and explanatory Q&A | Omit imitation chatbot; static case studies offer more credible depth. |
-| portfolio-website-template-main | Astro static portfolio | MIT | SEO-friendly project routes and concise case studies | **Selected**: static, linkable project pages; implemented independently. |
-| folioweave-main | Next.js multi-theme portfolio | MIT | Case-study structure, accessible galleries, tests | **Selected**: editorial layouts and media labels, without framework migration. |
-| Kukzze-main | GitHub profile SVG graphics | MIT | Technical personal brand | **Selected**: restrained wordmark styling; no borrowed identity assets. |
-| personal-website-customize-your-own-master | Vite/React, GSAP design | MIT | Polished transitions, reusable components | **Selected**: understated hover and reveal styling; no heavy dependency. |
-| malikrajat.github.io-main | Static Bootstrap personal site | MIT | Clear résumé information hierarchy | **Selected**: evidence-first content structure. |
-| Hemansh-X797-main | GitHub profile metrics/SVG | MIT | Developer credibility | Omit fake skill radar and unverified numerical metrics. |
-| husanbek-coder.uz-3d-web-app-main | Next.js, Three.js/Spline site | No top-level license found | Immersive hero | Omit heavy 3D models; preserve existing conditional orbit scene. |
+The reference archives and video archive described in the request were not present in the workspace tree. No matching filenames or `references/` directory were found. The stack, feature, and license details below come **only from the user's pasted descriptions**; no archive contents, license files, scripts, artwork, or video frames were independently inspected. Treat all reported licenses as unverified until the files are supplied. No third-party reference files were extracted or executed.
 
-## Seven video motion references
-
-The videos were provided as visual **motion references**, not licensed web media. Descriptions map the visible design direction recorded in the supplied master prompt / prior video review, not a claimed code implementation.
-
-| Video (time suffix) | Theme | Implementation decision |
+| Requested file | Availability | Prompt-reported stack/license and subject (not independently verified) |
 |---|---|---|
-| 3.22.54 PM | Dark 3D cinematic introduction | Borrow dramatic page hierarchy but keep portfolio usable. |
-| 3.22.55 PM | Atmospheric, character-driven hero | Reject third-party character art. Preserve authorized portrait. |
-| 3.23.21 PM | Game-like 3D scenery / motion | Reject WebGL-heavy environment for mobile performance. |
-| 3.23.22 PM | Cursor-tracking interactions | Keep native cursor; hover affordances without tracking/accessibility cost. |
-| 3.23.23 PM | Developer UI / animated text | Use original headline and editorial hierarchy. |
-| 3.23.23 PM (1) | Oversized type, near-black theme | Selected for modern headline typography and reduced clutter. |
-| 3.23.30 PM | Editorial transitions and projects | Selected for independent, scrollable, linkable case studies. |
+| `vincentdenil-site-main(1).zip` | Not found | Experimental showcase; prompt reports All rights reserved. |
+| `ChanMeng666-main(1).zip` | Not found | Profile/CV storytelling; prompt reports GPLv3. |
+| `lokendra.tech-main(1).zip` | Not found | Creative web/3D; prompt reports no license file. |
+| `claude-app-portfolio-template-main(1).zip` | Not found | Astro conversational portfolio; prompt reports MIT. |
+| `portfolio-website-template-main(1).zip` | Not found | Astro static portfolio; prompt reports MIT. |
+| `folioweave-main(1).zip` | Not found | Next.js portfolio; prompt reports MIT. |
+| `Kukzze-main(1).zip` | Not found | GitHub profile graphics; prompt reports MIT. |
+| `personal-website-customize-your-own-master(1).zip` | Not found | Vite/React site; prompt reports MIT. |
+| `malikrajat.github.io-main(1).zip` | Not found | Static Bootstrap résumé site; prompt reports MIT. |
+| `Hemansh-X797-main(1).zip` | Not found | GitHub profile graphics; prompt reports MIT. |
+| `husanbek-coder.uz-3d-web-app-main(1).zip` | Not found | Next.js/Three.js site; prompt reports no license file. |
+| `WhatsApp Unknown 2026-11-22 at 3.49.52 PM.zip` | Not found | Prompt describes seven vertical MP4 motion references listed below. |
+
+## Video descriptions supplied in the prompt
+
+These are descriptions from the user's text, not observations from video playback. They are inspiration only; no footage or third-party visual assets were used.
+
+| Video filename | Prompt-described direction | Safe implementation decision |
+|---|---|---|
+| `WhatsApp Video 2026-11-22 at 3.22.54 PM.mp4` | Dark 3D and bold hero text | Keep the cinematic hierarchy, avoid copied models or footage. |
+| `WhatsApp Video 2026-11-22 at 3.22.55 PM.mp4` | Atmospheric hero and character art | Use only the owner's existing portrait; no third-party character art. |
+| `WhatsApp Video 2026-11-22 at 3.23.21 PM.mp4` | Game-like 3D scenery and camera motion | Avoid heavyweight autoplay/WebGL scenery. |
+| `WhatsApp Video 2026-11-22 at 3.23.22 PM.mp4` | Cursor-tracking interactions | Preserve native pointer and keyboard/touch parity. |
+| `WhatsApp Video 2026-11-22 at 3.23.23 PM.mp4` | Dark developer UI and animated typography | Use the site's original editorial headline and restrained motion. |
+| `WhatsApp Video 2026-11-22 at 3.23.23 PM (1).mp4` | Minimal black layout and oversized type | Retain legible, reduced-clutter typography in both themes. |
+| `WhatsApp Video 2026-11-22 at 3.23.30 PM.mp4` | Editorial typography and project transitions | Keep standalone, scrollable, linkable case studies. |
 
 ## Decision matrix
 
-- **KEEP** original HTML/CSS/ES modules, Firebase security, Formspree/Google sign-in integration, active project data, profile links and résumé.
-- **ENHANCE** visual tokens, hero hierarchy, work summaries, mobile legibility and accessibility.
-- **IMPLEMENT** ten static case-study routes, real media labels, next/previous navigation, theme persistence and route tests.
-- **FIX** missing `assets/` directory in the release packager, deep-route local serving and clean GitHub Pages artifact publishing.
-- **OMIT for now** framework migration, AI chatbot, third-party hero art, third-party video playback, synthetic awards/testimonials and large 3D imports.
+| Decision | Current portfolio direction |
+|---|---|
+| **KEEP** | Static HTML/CSS/ES modules, current project source data, public CV, profile links, Formspree contact flow, and consent/moderation-gated Firebase reviews. |
+| **ENHANCE** | Editorial hierarchy, theme styling, project evidence labels, responsive layouts, keyboard interactions, and automated browser coverage. |
+| **IMPLEMENTED** | Ten generated static case-study routes, privacy and standalone 404 pages, public-only release packaging, and local preview allowlisting. |
+| **OMIT** | Framework migration without demonstrated need, imitation chatbot, unverified metrics/testimonials, copied third-party art, autoplay video, and default heavy 3D. |
 
-If an asset was licensed MIT and is used directly in a future update, preserve its copyright/notice. This release reuses none of the 11 templates' source assets.
+No reference ZIP code or artwork was imported. If any reference is later supplied and reused, inspect its actual license and preserve required notices before considering reuse.

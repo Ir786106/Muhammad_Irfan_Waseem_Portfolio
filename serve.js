@@ -18,6 +18,24 @@ function isPublicRoute(urlPath) {
     if (pieces.length === 1) return PUBLIC_ROOT_FILES.has(pieces[0]);
     return PUBLIC_FOLDERS.has(pieces[0]) && !pieces.some(piece => piece === '..');
 }
+function sendNotFound(res) {
+    const notFoundPath = path.join(PUBLIC_DIR, '404.html');
+    fs.stat(notFoundPath, (err, stats) => {
+        if (err || !stats.isFile()) {
+            res.writeHead(404, {'Content-Type':'text/plain; charset=utf-8'});
+            res.end('Not found');
+            return;
+        }
+        const realFile = fs.realpathSync(notFoundPath);
+        if (!realFile.startsWith(PUBLIC_DIR + path.sep)) {
+            res.writeHead(404, {'Content-Type':'text/plain; charset=utf-8'});
+            res.end('Not found');
+            return;
+        }
+        res.writeHead(404, {'Content-Type':'text/html; charset=utf-8'});
+        fs.createReadStream(realFile).pipe(res);
+    });
+}
 
 const MIME_TYPES = {
     '.html': 'text/html; charset=utf-8',
@@ -45,8 +63,7 @@ const server = http.createServer((req, res) => {
     if (reqUrl.includes('\0') || reqUrl.split('/').includes('..')) { res.writeHead(400); res.end('Invalid path'); return; }
     if (reqUrl.endsWith('/')) reqUrl += 'index.html';
     if (!isPublicRoute(reqUrl)) {
-        res.writeHead(404, {'Content-Type':'text/plain; charset=utf-8'});
-        res.end('Not found');
+        sendNotFound(res);
         return;
     }
     const filePath = path.resolve(PUBLIC_DIR, '.' + reqUrl);
@@ -54,14 +71,7 @@ const server = http.createServer((req, res) => {
 
     fs.stat(filePath, (err, stats) => {
         if (err || !stats.isFile()) {
-            const notFoundPath = path.join(PUBLIC_DIR, '404.html');
-            if (fs.existsSync(notFoundPath)) {
-                res.writeHead(404, { 'Content-Type': 'text/html; charset=utf-8' });
-                fs.createReadStream(notFoundPath).pipe(res);
-            } else {
-                res.writeHead(404, { 'Content-Type': 'text/plain' });
-                res.end('404 Not Found');
-            }
+            sendNotFound(res);
             return;
         }
 

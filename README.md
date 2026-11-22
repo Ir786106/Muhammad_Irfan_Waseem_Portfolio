@@ -22,7 +22,7 @@ This repository contains the **actual source code** for the updated portfolio, n
 - Fixed deploy packaging to include `editorial.css`, source-backed static case studies, `assets/projects/` artwork, and other public assets.
 - Preserved existing Formspree contact integration, Firebase sign-in/review moderation, public CV, project releases, and GitHub Pages/Firebase hosting infrastructure.
 
-**Limits:** Cross-device browser screenshots could not be run in the current restricted environment; do not treat this source as verified live production. Run the included browser tests locally before publishing. External Formspree delivery and Firebase moderation have not been exercised against the live service in this upgrade. There is no GitHub push or live deployment from this environment.
+**Limits:** Chromium browser checks now pass at eight viewport widths (320–1920 px), in both themes and with reduced motion; this is not a substitute for manual screenshots, cross-browser/physical-device, screen-reader, or Lighthouse testing. External Formspree delivery and production Firebase moderation have not been exercised. No production deployment has been performed.
 
 ## Local setup and release
 

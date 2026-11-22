@@ -5,7 +5,7 @@ const BASE_URL = process.env.PORTFOLIO_TEST_URL || 'http://127.0.0.1:8080/';
 (async () => {
     const browser = await chromium.launch({executablePath:process.env.CHROME_PATH, headless:true});
     try {
-        for (const width of [320, 768, 1440]) {
+        for (const width of [320, 360, 390, 430, 768, 1024, 1440, 1920]) {
             for (const colorScheme of ['light','dark']) {
                 const page = await browser.newPage({viewport:{width,height:900},colorScheme,reducedMotion:'reduce'});
                 const errors = [];
@@ -61,7 +61,7 @@ const BASE_URL = process.env.PORTFOLIO_TEST_URL || 'http://127.0.0.1:8080/';
                 assert.equal(await page.locator('html').getAttribute('data-theme'), colorScheme === 'light' ? 'dark' : 'light');
                 const response = await page.goto(new URL('missing-test-page', BASE_URL).href);
                 assert.equal(response.status(), 404);
-                assert.equal(await page.locator('h1').textContent(), '404');
+                assert.equal(await page.locator('h1').textContent(), 'This page has moved.');
                 assert.ok(await page.getByRole('link', {name:'Back to Home'}).isVisible());
                 console.log(width, colorScheme, 'passed');
                 await page.close();
