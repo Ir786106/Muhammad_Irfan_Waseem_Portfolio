@@ -10,3 +10,13 @@
 @media(prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important;transition:none!important;animation:none!important}}
 
 @media(prefers-color-scheme:light){:root:not([data-theme]){color-scheme:light;--ink:#142234;--muted:#536476;--canvas:#f6f8fa;--panel:#fff;--stroke:#d4dee5;--aqua:#067e88;--aqua-bg:rgba(6,126,136,.08)}}
+
+/* Privacy information page */
+.privacy-main{max-width:900px;padding-block:clamp(4rem,9vw,8rem)}
+.privacy-main h1{font-size:clamp(3.2rem,8vw,6rem);line-height:1.05;letter-spacing:-.075em;margin:1.2rem 0 1.6rem}
+.privacy-lede{font-size:clamp(1.05rem,1.8vw,1.28rem);color:var(--muted);max-width:65ch;margin-bottom:3rem}
+.privacy-main section{border-top:1px solid var(--stroke);padding:2rem 0}
+.privacy-main h2{font-size:clamp(1.3rem,2.4vw,1.85rem);letter-spacing:-.035em;margin:.25rem 0 1rem}
+.privacy-main section p{max-width:75ch;color:var(--muted);margin:.75rem 0;line-height:1.8}
+.privacy-main section a{text-decoration:underline;text-underline-offset:.2em;color:var(--aqua)}
+.privacy-main code{font-family:ui-monospace,monospace;font-size:.94em}

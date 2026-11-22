@@ -232,3 +232,8 @@ footer{background:var(--bg-alt-sec)}
  .skills-tabs{display:flex;flex-wrap:nowrap;overflow-x:auto;scrollbar-width:thin}
  .stab{flex:0 0 auto;white-space:nowrap}
 }
+
+/* Privacy link remains readable in both site themes. */
+.footer-bottom-bar{display:flex;align-items:center;justify-content:space-between;gap:.75rem;flex-wrap:wrap}
+.footer-privacy{font-weight:700;color:var(--text);text-decoration:underline;text-underline-offset:.25em}
+.footer-privacy:hover{color:var(--primary)}

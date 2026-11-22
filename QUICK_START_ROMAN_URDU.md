@@ -24,3 +24,10 @@
 Recommended: feature branch par push karke PR review karein. Phir `main` mein merge karein. Existing `.github/workflows/pages.yml` public-only website files deploy karti hai. Alternative: deployable ZIP ke contents hosting root mein upload karein.
 
 Important: Is environment mein actual GitHub push, live email delivery, Google sign-in, Firebase moderation aur full browser QA nahi hue. Local checks pass hain, lekin deployment se pehle live tests zaroor karein.
+
+
+## v4.0 final changes
+
+Is release mein `privacy.html` add hai, 404 page ko standalone banaya gaya hai, aur `serve.js` local preview mein `.git` aur private development files ko expose nahin karta. Website ZIP mein public files hain.
+
+**Important:** Browser visual testing aur live Formspree/Firebase integrations ka production test locally karna zaroori hai. GitHub Pages par deploy karne se pehle build verify karein.

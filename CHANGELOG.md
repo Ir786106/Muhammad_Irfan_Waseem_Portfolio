@@ -1,3 +1,12 @@
+## v4.0 — November 22, 2026
+
+- Added a static, accessible privacy and data-handling information page.
+- Replaced external-dependency 404 page with a reliable standalone page.
+- Restricted the local HTTP preview server to public files only.
+- Improved no-JavaScript project navigation and public sitemap coverage.
+- Preserved v3 design and source-backed projects; latest code and release artifacts are packaged separately.
+- Browser-based visual QA and live provider integrations still require verification on a real browser/account.
+
 # Portfolio Change Log
 
 ## v3.0 — Complete editorial portfolio update (2026-11-22)

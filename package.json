@@ -1,12 +1,12 @@
 {
   "name": "irfan-portfolio",
-  "version": "3.0.0",
+  "version": "4.0.0",
   "private": true,
-  "description": "Accessible editorial developer portfolio with responsive flagship work and static case studies",
+  "description": "Accessible editorial developer portfolio with verified project case studies, privacy information and hardened static preview",
   "scripts": {
     "dev": "node serve.js",
     "generate": "node tools/generate-case-studies.mjs",
-    "test": "node tests/static.cjs && node tests/case-studies.cjs && node tests/editorial.cjs",
+    "test": "node tests/static.cjs && node tests/case-studies.cjs && node tests/editorial.cjs && node tests/public-pages.cjs",
     "test:browser": "node tests/browser.cjs",
     "package:site": "node tools/package-site.cjs"
   },

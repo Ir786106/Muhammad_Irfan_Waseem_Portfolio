@@ -1,8 +1,16 @@
-# Muhammad Irfan Waseem — Developer Portfolio (v3.0)
+# Muhammad Irfan Waseem — Developer Portfolio (v4.0)
 
 This repository contains the **actual source code** for the updated portfolio, not a mockup. It is a static HTML/CSS/ES module site with a refined cinematic/editorial landing page, genuine portrait from the supplied original portfolio, source-backed project records, ten generated case-study pages, and accessible interactive controls. The design is original and does not copy the code, images, videos or distinctive branding from the reference templates.
 
-## What changed in v3.0
+## What changed in v4.0 (building on v3)
+
+- Added clear `privacy.html` information for Formspree contact submissions, Google/Firebase reviews, browser theme storage, and data requests.
+- Rebuilt the 404 page for independent GitHub Pages/Firebase compatibility and better mobile presentation.
+- Hardened `serve.js` so local previews do not serve private repository files or development-only documents.
+- Added no-JavaScript links to five real project case studies, and added privacy to sitemap and public packaging.
+- Preserved v3 features and existing owner media and links.
+
+## Previous v3.0 redesign
 
 - Completely redesigned homepage hero: original responsive photo/workflow composition, clearer positioning, direct GitHub/LinkedIn/résumé/contact links and responsive mobile behavior.
 - Editorial **Selected Work** area that uses a single `modules/projects.js` source of truth for Food Fight, Ittehad and TeamSync; direct links to full case studies.

@@ -60,7 +60,7 @@ ${(project.features?.length ?? 0) ? `<section class="case-content case-shell"><d
 ${gallery ? `<section class="case-content case-shell"><div class="case-section-heading"><span class="case-number">03 / PROJECT MEDIA</span><h2>A closer <em>look.</em></h2></div><p class="case-media-note">Repository images, interface screenshots, and conceptual artwork are labeled separately; illustrations are not presented as app screenshots.</p><div class="case-media-grid">${gallery}</div></section>` : ''}
 <section class="case-content case-shell"><div class="case-section-heading"><span class="case-number">${gallery ? '04' : '03'} / EVIDENCE & LINKS</span><h2>Go beyond <em>the visuals.</em></h2></div><div class="case-links">${links || '<p>No publicly verified links have been provided for this project.</p>'}</div></section>
 <section class="case-next case-shell" aria-label="More projects"><div><span class="case-number">NEXT PROJECT</span><a href="../${slug(next.id)}/">${escape(next.title)} <span aria-hidden="true">↗</span></a></div><div><span class="case-number">PREVIOUS</span><a href="../${slug(previous.id)}/">${escape(previous.title)} <span aria-hidden="true">↗</span></a></div></section>
-</main><footer class="case-footer"><div class="case-shell"><span>© ${new Date().getUTCFullYear()} Muhammad Irfan Waseem</span><a href="../../index.html#contact">Have a project? Let's talk ↗</a></div></footer>
+</main><footer class="case-footer"><div class="case-shell"><span>© ${new Date().getUTCFullYear()} Muhammad Irfan Waseem</span><a href="../../index.html#contact">Have a project? Let's talk ↗</a><a href="../../privacy.html">Privacy &amp; data use</a></div></footer>
 </body></html>\n`;
 }
 const ids = new Set();
@@ -71,6 +71,6 @@ for (const [index, project] of projects.entries()) {
   await mkdir(target, {recursive:true});
   await writeFile(new URL('index.html',target), projectPage(project, index), 'utf8');
 }
-const sitemap = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${[baseUrl, ...projects.map(p => `${baseUrl}projects/${slug(p.id)}/`)].map(loc=>`  <url><loc>${escape(loc)}</loc></url>`).join('\n')}\n</urlset>\n`;
+const sitemap = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${[baseUrl, `${baseUrl}privacy.html`, ...projects.map(p => `${baseUrl}projects/${slug(p.id)}/`)].map(loc=>`  <url><loc>${escape(loc)}</loc></url>`).join('\n')}\n</urlset>\n`;
 await writeFile(new URL('../sitemap.xml', import.meta.url), sitemap, 'utf8');
 console.log(`Generated ${projects.length} case-study pages and sitemap.xml`);
