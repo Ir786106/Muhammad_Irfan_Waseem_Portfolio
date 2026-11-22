@@ -6,5 +6,7 @@ import './modules/animations.js';
 import './modules/contact.js';
 import './modules/reviews.js';
 import { initProjects } from './modules/project-ui.js';
+import { initFeatured } from './modules/featured.js';
 
 initProjects();
+initFeatured();

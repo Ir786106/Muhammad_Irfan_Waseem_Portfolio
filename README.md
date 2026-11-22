@@ -1,3 +1,47 @@
+# Muhammad Irfan Waseem — Developer Portfolio (v3.0)
+
+This repository contains the **actual source code** for the updated portfolio, not a mockup. It is a static HTML/CSS/ES module site with a refined cinematic/editorial landing page, genuine portrait from the supplied original portfolio, source-backed project records, ten generated case-study pages, and accessible interactive controls. The design is original and does not copy the code, images, videos or distinctive branding from the reference templates.
+
+## What changed in v3.0
+
+- Completely redesigned homepage hero: original responsive photo/workflow composition, clearer positioning, direct GitHub/LinkedIn/résumé/contact links and responsive mobile behavior.
+- Editorial **Selected Work** area that uses a single `modules/projects.js` source of truth for Food Fight, Ittehad and TeamSync; direct links to full case studies.
+- New **How I build** process section and more consistent dark/light theme with accessible contrast and keyboard focus styles.
+- Reduced desktop/mobile navigation to six high-value sections while keeping gallery, certifications, writing, reviews and optional orbit accessible by scrolling/links.
+- Improved project search and filtering with visible result count and a helpful empty state.
+- Skills use ARIA tab semantics with left/right/Home/End keyboard support.
+- 3D orbit is **opt-in**, never an automatic heavy WebGL load; functional static case-study links remain available on all devices and reduced-motion setups.
+- Fixed deploy packaging to include `editorial.css`, source-backed static case studies, `assets/projects/` artwork, and other public assets.
+- Preserved existing Formspree contact integration, Firebase sign-in/review moderation, public CV, project releases, and GitHub Pages/Firebase hosting infrastructure.
+
+**Limits:** Cross-device browser screenshots could not be run in the current restricted environment; do not treat this source as verified live production. Run the included browser tests locally before publishing. External Formspree delivery and Firebase moderation have not been exercised against the live service in this upgrade. There is no GitHub push or live deployment from this environment.
+
+## Local setup and release
+
+```bash
+node tools/generate-case-studies.mjs
+npm test
+node serve.js
+# visit http://127.0.0.1:8080/
+
+# After reviewing and committing the public source files:
+node tools/package-site.cjs
+# deploy release/site (or use the GitHub Pages workflow on main)
+```
+
+To run Playwright browser tests locally, install dependencies with `npm install`, start the development server, and then run `npm run test:browser`. On Windows, set `CHROME_PATH` to your installed Chrome/Chromium executable if necessary.
+
+## Update portfolio content
+
+- Projects: `modules/projects.js` (one source of truth; rerun `node tools/generate-case-studies.mjs`).
+- Public email and LinkedIn: `modules/profile.js`, with a matching update to verified metadata and any static hero links.
+- Theme and page composition: `editorial.css` (new design), `premium.css`, `style.css` (legacy components), `case-studies.css`.
+- Main public media: `Images/` (owner portrait and résumé), `assets/projects/` (repository art).
+- Contact provider: existing form `action` in `index.html` and `modules/contact.js`.
+- Reviews: `modules/firebase.js`, `modules/reviews.js`, `firestore.rules`. Test rule updates with Firebase emulator before deploying.
+
+---
+
 # Muhammad Irfan Waseem · Flutter Developer
 
 Vanilla HTML, CSS and ES modules for a mobile development portfolio with dark and light themes, original editorial styling, and ten searchable project case-study pages. Run `node serve.js` and open http://localhost:8080. Both Firebase Hosting and GitHub Pages can serve these files. Project detail routes live in `projects/<id>/` and are generated from `modules/projects.js`.

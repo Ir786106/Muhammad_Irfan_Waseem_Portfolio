@@ -33,6 +33,7 @@ jobs:
         run: |
           node tests/static.cjs
           node tests/case-studies.cjs
+          node tests/editorial.cjs
           git diff --exit-code -- projects sitemap.xml
       - name: Generate a verified public-only build
         run: node tools/package-site.cjs

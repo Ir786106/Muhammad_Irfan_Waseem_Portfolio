@@ -124,11 +124,17 @@ function projectCard(project) {
 }
 
 function applyProjectFilters() {
+    let visible = 0;
     for (const card of grid.children) {
         const matchesFilter = activeFilter === 'all' || card.dataset.category.split(' ').includes(activeFilter);
         const matchesSearch = !activeSearch || card.dataset.search.includes(activeSearch);
         card.hidden = !(matchesFilter && matchesSearch);
+        if (!card.hidden) visible++;
     }
+    const summary = document.getElementById('project-results');
+    const empty = document.getElementById('project-empty');
+    if (summary) summary.textContent = `${visible} of ${projects.length} projects shown`;
+    if (empty) empty.hidden = visible !== 0;
 }
 
 export function initProjects() {
@@ -155,6 +161,7 @@ export function initProjects() {
             applyProjectFilters();
         });
     }
+    applyProjectFilters();
     dialog.querySelector('[data-close]').addEventListener('click', () => dialog.close());
     dialog.addEventListener('click', event => {
         if (event.target === dialog) dialog.close();

@@ -16,3 +16,8 @@ The **public artifact** is generated in `release/site/`, and an independent `rel
 Firebase Hosting uses `release/site` per `firebase.json`; deploy only after testing the live Google sign-in, reviews moderation, contacts and CSP/security headers. Any changes to Firebase hosting or Auth domains must be approved and separately checked before enabling production.
 
 To publish: review changes → commit on feature branch → push branch → open PR → run CI and browser review → merge after approval. This file is **not** evidence that any live URL was deployed or updated.
+
+
+## v3.0 release note
+
+Run `npm test` to include the new editorial structure checks. `editorial.css` and `modules/featured.js` are bundled in `release/site` by the versioned packaging script. The `main` Pages deployment workflow checks the new editorial assertions. Once the feature branch is reviewed and merged, the existing GitHub Pages action can deploy the public-only artifact; verify actual site availability, resource paths, accessible navigation, contact delivery and review moderation afterward.

@@ -1,20 +1,30 @@
-# QA report — portfolio refresh
+# QA report — complete portfolio redesign v3.0 (2026-11-22)
 
-## Checks performed on 2026-11-22
+## Checks performed
 
-- `node tests/static.cjs` — **PASS** (image dimensions, inline script policy, no inline HTML handlers, safe links, CSP hash).
-- `node tests/case-studies.cjs` — **PASS** (10 generated routes, sitemap, every referenced local media item, theme CSS, route packaging).
-- `node --check` on edited JavaScript modules — **PASS**.
-- Python `tinycss2` parse of `style.css`, `premium.css`, and `case-studies.css` — **PASS**, 0 top-level parse errors (448 + 44 + 77 CSS rules).
-- HTML extraction via BeautifulSoup — **PASS**, one `<h1>` per page and no missing local linked stylesheet, images or scripts.
-- HTTP smoke GET against `node serve.js` — **PASS**, root, Food Fight, TeamSync, cover WebP and case-study stylesheet returned 200 with expected media types.
-- GitHub API release records — `v1.8.0` stable and `preview-1.8.2+19` release assets verified as listed (actual downloads not executed).
-- Browser Playwright execution attempted with `/usr/bin/chromium` — **BLOCKED BY ENVIRONMENT** with `net::ERR_BLOCKED_BY_ADMINISTRATOR` for both HTTP localhost and file URLs. This is not a successful browser regression test; it must be rerun on a local developer machine or CI runner that permits browser navigation.
+- `npm test` — PASS: static security, résumé link, image sizes, Firebase CSP hash, case-study generator/assets/sitemap, editorial components, focused navigation, search/result feedback, ARIA tabs, opt-in 3D structure and packaging.
+- `node --check` on all changed JavaScript modules — PASS.
+- HTML integrity: duplicate IDs, H1 count, local image/script/style references, fragment links — verified separately in release script.
+- CSS syntax: checked with tinycss2 in release validation.
+- Local HTTP smoke: homepage, 10 case-study routes and representative local assets — checked with curl.
+- Browser regression: Chromium in this environment blocks navigation with `net::ERR_BLOCKED_BY_ADMINISTRATOR`. This is NOT a passing visual/browser test.
+- Live Formspree submission, Google sign-in, Firestore owner moderation and Google indexing: NOT VERIFIED. Existing integrations and rules are preserved.
+- GitHub push, PR merge and live deployment: NOT PERFORMED.
 
-No Lighthouse scores, automatic accessibility scores, Firebase emulator claims or live deployment claims were fabricated. Target test widths for the browser suite are 320, 768 and 1440 pixels in dark/light and reduced-motion. Edge cases 360/390/430/1024px remain manual recommendations.
+## Release additions
 
-## Known boundaries
+1. New editorial hero featuring the original portfolio portrait and CSS-built workflow composition.
+2. Data-driven selected work (Food Fight, Ittehad, TeamSync), including direct links to in-depth case studies.
+3. New four-step development approach, refined theme and accessible focus states.
+4. Six-link responsive navigation and searchable 10-project library with result counts.
+5. Keyboard ARIA technology tabs and optional, explicitly launched 3D orbit with usable static alternative.
+6. Updated package/CI includes all public project artwork and v3 files.
 
-- Browser console for third-party Firebase and Formspree integrations may show network errors when offline; these are not evidence of successful external delivery.
-- Browser screenshots in test report are local only; no publication or live-domain check implied.
-- Full WCAG 2.2 AA or Lighthouse 90+ cannot be claimed without actual independent audits of every representative page and interaction.
+## Owner / production sign-off
+
+1. On local Windows Chrome, test 320/360/390/430/768/1024/1440px, both themes and reduced motion; run `npm run test:browser`.
+2. Run Lighthouse; record REAL performance/accessibility/SEO scores. No numerical scores are asserted here.
+3. Complete an authorized real Formspree contact submission and test failure state.
+4. Test Firebase Google sign-in, Firestore rules and consent-gated moderation using a test identity/emulators.
+5. Recheck current LinkedIn access, CV details, certifications, project claims, and publication permissions.
+6. Verify live GitHub Pages deep links, mobile menu and public APK/Windows release downloads after deployment.

@@ -260,7 +260,7 @@ export function init3D() {
         if (hits.length > 0) {
             const idx = cards.findIndex(c => c.mesh === hits[0].object);
             if (idx >= 0) {
-                openProject(cards[idx].proj.id, document.querySelector('.showcase-return'));
+                openProject(cards[idx].proj.id, document.getElementById('enable-orbit'));
             }
         }
     });
@@ -287,7 +287,7 @@ export function init3D() {
         const hits = raycaster.intersectObjects(cards.map(c => c.mesh));
         if (hits.length > 0) {
             const idx = cards.findIndex(c => c.mesh === hits[0].object);
-            if (idx >= 0) openProject(cards[idx].proj.id, document.querySelector('.showcase-return'));
+            if (idx >= 0) openProject(cards[idx].proj.id, document.getElementById('enable-orbit'));
         }
     }, { passive: true });
 
