@@ -2,7 +2,7 @@ const http = require('http');
 const fs = require('fs');
 const path = require('path');
 
-const PORT = 8080;
+const PORT = Number(process.env.PORT || 8080);
 const PUBLIC_DIR = __dirname;
 
 const MIME_TYPES = {
@@ -25,11 +25,13 @@ const MIME_TYPES = {
 };
 
 const server = http.createServer((req, res) => {
-    let reqUrl = decodeURI(req.url.split('?')[0]);
-    if (reqUrl === '/') reqUrl = '/index.html';
-
-    const safeSuffix = path.normalize(reqUrl).replace(/^(\.\.[\/\\])+/, '');
-    const filePath = path.join(PUBLIC_DIR, safeSuffix);
+    let reqUrl;
+    try { reqUrl = decodeURIComponent(new URL(req.url, 'http://localhost').pathname); }
+    catch { res.writeHead(400); res.end('Invalid URL'); return; }
+    if (reqUrl.includes('\0') || reqUrl.split('/').includes('..')) { res.writeHead(400); res.end('Invalid path'); return; }
+    if (reqUrl.endsWith('/')) reqUrl += 'index.html';
+    const filePath = path.resolve(PUBLIC_DIR, '.' + reqUrl);
+    if (!filePath.startsWith(PUBLIC_DIR + path.sep)) { res.writeHead(403); res.end('Forbidden'); return; }
 
     fs.stat(filePath, (err, stats) => {
         if (err || !stats.isFile()) {

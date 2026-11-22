@@ -1,0 +1,55 @@
+/* Original, layered premium design refinements; preserves the original site logic. */
+:root[data-theme="dark"]{
+  --bg:#071018;--bg-card:rgba(12,26,37,.82);--bg-alt-sec:rgba(10,24,34,.65);
+  --text:#f5f8fa;--muted:#a5b6c5;--faint:#91a5b6;
+  --primary:#82e4e1;--accent:#70bbf3;--primary-dim:rgba(130,228,225,.12);
+  --primary-glow:rgba(69,172,179,.22);--border:rgba(180,230,239,.12);
+  --border-hover:rgba(130,228,225,.48)
+}
+:root[data-theme="light"]{
+  --bg:#f6f8fa;--bg-card:rgba(255,255,255,.92);--bg-alt-sec:rgba(229,238,242,.68);
+  --text:#152638;--muted:#4c6371;--faint:#4d6473;
+  --primary:#067e88;--accent:#175b92;--primary-dim:rgba(6,126,136,.1);
+  --primary-glow:rgba(6,126,136,.1);--border:rgba(30,65,82,.14);
+  --border-hover:rgba(6,126,136,.55)
+}
+body{font-family:"Segoe UI",Inter,system-ui,-apple-system,sans-serif}
+h1,h2,h3,h4,h5,.logo{font-family:Inter,"Segoe UI",system-ui,sans-serif}
+.container{max-width:1270px}
+.navbar{background:color-mix(in srgb,var(--bg) 91%,transparent);border-color:var(--border)}
+[data-theme="light"] .navbar{background:color-mix(in srgb,var(--bg) 91%,transparent)}
+.logo{font-weight:900;letter-spacing:-.07em}
+.gradient-text{background-image:linear-gradient(115deg,var(--primary) 0%,var(--accent) 85%)}
+.hero-section{background:radial-gradient(ellipse at 80% 35%,rgba(19,127,144,.1),transparent 50%);padding-block:calc(var(--nav-h) + 45px) 80px}
+.hero-grid{grid-template-columns:1.13fr .87fr;gap:clamp(2rem,5vw,5rem)}
+.hero-content{position:relative}.hero-intro{font-size:.75rem;letter-spacing:.12em;padding:.55rem 1.05rem}
+.hero-title{font-size:clamp(2.65rem,5.45vw,5.8rem);line-height:1.03;letter-spacing:-.065em;text-wrap:balance;max-width:14ch}
+.hero-sub{max-width:56ch;font-size:clamp(1rem,1.4vw,1.12rem);line-height:1.7}
+.hero-proof{color:var(--muted);font-size:.82rem;margin:0 0 1.4rem;line-height:1.55}
+.hero-proof strong{color:var(--text);font-weight:600}.hero-proof-line{display:inline-block;width:19px;height:2px;background:var(--primary);vertical-align:middle;margin-right:.45rem}
+.btn-primary{background:var(--primary);color:var(--bg)!important;box-shadow:0 12px 30px var(--primary-glow);font-weight:750}
+.btn-primary:hover{box-shadow:0 18px 34px var(--primary-glow)}
+.btn-outline{border-color:var(--border-hover)}
+.profile-card-3d{transform:rotateY(-5deg) rotateX(2deg);border-radius:30px;box-shadow:0 25px 65px rgba(0,0,0,.27),0 0 0 1px var(--border)}
+.profile-card-3d:hover{box-shadow:0 30px 80px rgba(0,0,0,.32)}
+.profile-scene:after{content:"SELECTED DEVELOPER WORK / 2026";position:absolute;right:-1.5rem;bottom:-1.5rem;font-size:.6rem;letter-spacing:.24em;color:var(--muted);writing-mode:vertical-rl}
+.section-title{letter-spacing:-.06em;text-wrap:balance}
+.section{padding-block:clamp(4.5rem,8vw,7.5rem)}
+.section-head{margin-bottom:clamp(2.25rem,4vw,4rem)}
+.glass{box-shadow:none;border-color:var(--border);backdrop-filter:blur(12px)}
+.glass:hover{box-shadow:0 20px 55px rgba(0,0,0,.1)}
+.proj-card{border-radius:22px;overflow:hidden}
+.proj-card h3{font-size:1.34rem;letter-spacing:-.04em}
+.proj-card .proj-cover{object-fit:cover;transition:transform .45s ease}
+.proj-card:hover .proj-cover{transform:scale(1.025)}
+.project-study-link{margin-top:1.15rem;padding-top:.95rem;border-top:1px solid var(--border);font-weight:760;color:var(--primary);font-size:.89rem;display:flex;align-items:center;justify-content:space-between}
+.project-study-link:after{content:"↗";font-size:1.25rem;transition:transform .18s}
+.project-study-link:hover:after{transform:translate(3px,-3px)}
+.project-study-link:hover{text-decoration:underline;text-underline-offset:.35em}
+.proj-date{color:var(--muted)}
+.filter-btn.active,.filter-btn:hover,.stab.active{background:var(--primary);color:var(--bg)!important}
+#project-dialog .project-actions a:first-child{background:var(--primary);color:var(--bg);border-color:var(--primary)}
+@media(max-width:1050px){.hero-title{font-size:clamp(2.55rem,5.5vw,4.3rem)}}
+@media(max-width:767px){.hero-section{padding-top:calc(var(--nav-h) + 36px);padding-bottom:3rem}.hero-title{max-width:15ch;margin-inline:auto}.hero-sub{margin-inline:auto}.hero-proof{text-align:center}.profile-scene:after{display:none}.hero-grid{gap:2rem}}
+@media(max-width:450px){.hero-title{font-size:clamp(2.45rem,11vw,3.25rem)}.hero-intro{letter-spacing:.08em}}
+@media(prefers-reduced-motion:reduce){.proj-card .proj-cover{transition:none}}

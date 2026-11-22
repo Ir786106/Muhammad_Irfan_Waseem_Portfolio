@@ -1,6 +1,6 @@
 # Muhammad Irfan Waseem · Flutter Developer
 
-Vanilla HTML, CSS and ES modules for a mobile development portfolio with dark and light themes. Run `node serve.js` and open http://localhost:8080. Both Firebase Hosting and GitHub Pages can serve these files.
+Vanilla HTML, CSS and ES modules for a mobile development portfolio with dark and light themes, original editorial styling, and ten searchable project case-study pages. Run `node serve.js` and open http://localhost:8080. Both Firebase Hosting and GitHub Pages can serve these files. Project detail routes live in `projects/<id>/` and are generated from `modules/projects.js`.
 
 Public contact: muhammadirfan.infosec@gmail.com · [LinkedIn](https://www.linkedin.com/in/muhammad-irfan-waseem-48226b297/). The one-page résumé is available in PDF and Word under Images.
 
@@ -21,3 +21,32 @@ The contact form uses Formspree. Reviews require Google sign-in and owner modera
 After committing site changes, run `node tools/package-site.cjs` from the checkout. It uses Node and Git to produce `release/site/` for Firebase Hosting and `release/portfolio.zip` for GitHub Pages. Both contain only the committed public entry points, images, modules and vendored libraries. The generated output is ignored by Git.
 
 Run `firebase emulators:start --only hosting --project demo-portfolio` to preview the packaged files. The browser still uses the public Firebase and Formspree configuration, so use the separate Firestore rules tests for moderation checks. After deployment check the security and cache response headers on the live host. The local Hosting emulator used in release verification omitted those response headers.
+
+## Premium portfolio refresh (2026-11-22)
+
+- `theme-init.js` applies dark/light preference before first paint; `premium.css` refines the homepage hero, layout and project CTAs without replacing the existing site logic.
+- `tools/generate-case-studies.mjs` generates ten static accessible `projects/<id>/index.html` pages, including accurate labels and evidence links, and updates the sitemap. Run it after changing project records.
+- `case-studies.css` / `case-studies.js` implement standalone route styling and shared theme preference with no runtime framework.
+- `node tests/static.cjs` and `node tests/case-studies.cjs` verify essential security/route behavior. `node tests/browser.cjs` requires Playwright and a Chrome executable; start `node serve.js` first.
+- `node tools/package-site.cjs` must run from a **clean committed** public source and includes all `assets/`, generated projects, styles, modules, images and vendor files. GitHub Pages CI uploads `release/site`, not the source directory.
+- Reference, baseline, content, design, QA and deployment records are under `docs/`. Do not use borrowed videos or template imagery as production assets.
+
+### Quick start
+
+```bash
+# Node.js 22 recommended
+node tools/generate-case-studies.mjs
+node serve.js                       # http://127.0.0.1:8080
+node tests/static.cjs
+node tests/case-studies.cjs
+
+# Optional browser tests: npm install; set CHROME_PATH to installed Chrome/Chromium
+# PowerShell example: $env:CHROME_PATH = 'C:\Program Files\Google\Chrome\Application\chrome.exe'
+# Run a separate terminal with the local server first, then:
+npm run test:browser
+
+# After committing all public changes (packager builds exclusively from Git HEAD):
+node tools/package-site.cjs
+```
+
+When port 8080 is taken, start with `PORT=18300 node serve.js` on Linux/macOS or `$env:PORT=18300; node serve.js` in PowerShell; set `PORTFOLIO_TEST_URL=http://127.0.0.1:18300/` for the browser suite.

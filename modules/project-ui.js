@@ -62,6 +62,9 @@ export function openProject(id, trigger = document.activeElement) {
     }
     if (project.images.length) body.append(screenshotGallery(project));
     const links = element('div', 'project-actions');
+    const caseStudy = element('a', 'sm-btn', 'Read full case study');
+    caseStudy.href = `projects/${encodeURIComponent(project.id)}/`;
+    links.append(caseStudy);
     for (const [key, label] of [
         ['repo', 'View source code'],
         ['demo', 'Live demo'],
@@ -113,7 +116,10 @@ function projectCard(project) {
     top.append(details);
     const tags = element('div', 'proj-tags');
     for (const tag of project.tags) tags.append(element('span', '', tag));
-    card.append(top, element('h3', '', project.title), element('p', '', project.description), tags);
+    const study = element('a', 'project-study-link', 'Explore case study');
+    study.href = `projects/${encodeURIComponent(project.id)}/`;
+    study.setAttribute('aria-label', `Explore ${project.title} case study`);
+    card.append(top, element('h3', '', project.title), element('p', '', project.description), tags, study);
     return card;
 }
 

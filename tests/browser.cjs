@@ -1,6 +1,7 @@
 // Run with Playwright installed and CHROME_PATH pointing to a Chrome executable.
 const {chromium} = require('playwright');
 const assert = require('node:assert/strict');
+const BASE_URL = process.env.PORTFOLIO_TEST_URL || 'http://127.0.0.1:8080/';
 (async () => {
     const browser = await chromium.launch({executablePath:process.env.CHROME_PATH, headless:true});
     try {
@@ -10,7 +11,7 @@ const assert = require('node:assert/strict');
                 const errors = [];
                 page.on('pageerror', error => errors.push(error.message));
                 await page.route('https://**/*', route => route.abort());
-                await page.goto(process.env.PORTFOLIO_TEST_URL || 'http://127.0.0.1:8080/');
+                await page.goto(BASE_URL);
                 assert.equal(await page.locator('html').getAttribute('data-theme'),colorScheme);
                 assert.equal(await page.locator('.proj-card').count(),(await import('../modules/projects.js')).projects.length);
                 assert.ok(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth));
@@ -49,7 +50,16 @@ const assert = require('node:assert/strict');
                 await page.keyboard.press('Escape');
                 await page.locator('dialog[open]').waitFor({state:'detached'});
                 assert.deepEqual(errors, []);
-                const response = await page.goto('http://127.0.0.1:8080/missing-test-page');
+                // Deep-linked case study must load correctly for Pages-style directory URLs.
+                const caseURL = new URL('projects/foodfight/', BASE_URL).href;
+                const caseResponse = await page.goto(caseURL);
+                assert.equal(caseResponse.status(), 200);
+                assert.ok(await page.getByRole('heading', {name:'Food Fight.'}).isVisible());
+                assert.ok(await page.locator('.case-cover img').isVisible());
+                assert.ok(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth));
+                await page.locator('#case-theme').click();
+                assert.equal(await page.locator('html').getAttribute('data-theme'), colorScheme === 'light' ? 'dark' : 'light');
+                const response = await page.goto(new URL('missing-test-page', BASE_URL).href);
                 assert.equal(response.status(), 404);
                 assert.equal(await page.locator('h1').textContent(), '404');
                 assert.ok(await page.getByRole('link', {name:'Back to Home'}).isVisible());

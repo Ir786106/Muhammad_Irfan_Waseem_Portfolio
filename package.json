@@ -1,0 +1,16 @@
+{
+  "name": "irfan-portfolio",
+  "version": "2.0.0",
+  "private": true,
+  "description": "Static developer portfolio with generated project case studies",
+  "scripts": {
+    "dev": "node serve.js",
+    "generate": "node tools/generate-case-studies.mjs",
+    "test": "node tests/static.cjs && node tests/case-studies.cjs",
+    "test:browser": "node tests/browser.cjs",
+    "package:site": "node tools/package-site.cjs"
+  },
+  "devDependencies": {
+    "playwright": "1.65.1"
+  }
+}
