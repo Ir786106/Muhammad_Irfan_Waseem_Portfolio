@@ -24,3 +24,5 @@ The browser suite first exposed the local server's plain-text response for unkno
 ## Release status
 
 Static, browser, local server, and Firestore emulator checks pass. The local feature branch is not production deployment evidence. Confirm owner-provided identity/resume details and live service configuration, then review and merge through the repository's normal approval process before publishing.
+
+The feature branch is pushed and PR #1 is open against `main`. At the time of this report, GitHub reported CodeRabbit as skipped and no other PR checks.

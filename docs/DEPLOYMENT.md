@@ -1,6 +1,6 @@
 # Deployment / developer commands
 
-No production deployment has been performed. The source checkout preserves its Git history and work is on `feat/complete-portfolio-2026`; review the branch/PR state before pushing or publishing.
+No production deployment has been performed. The source checkout preserves its Git history; `feat/complete-portfolio-2026` is pushed and [PR #1](https://github.com/Ir786106/Muhammad_Irfan_Waseem_Portfolio/pull/1) is open against `main`. It has not been merged or deployed.
 
 ```bash
 node tools/generate-case-studies.mjs

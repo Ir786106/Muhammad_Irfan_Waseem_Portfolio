@@ -6,6 +6,7 @@
 - Updated baseline, reference, content-evidence, and QA documentation to distinguish inspected evidence from missing reference archives and unverified live services.
 - Verified Food Fight release asset metadata and APK checksum sidecars against the public GitHub releases; binary installs remain untested.
 - Checks: `npm test`, `npm run test:browser`, Firestore emulator rules tests, and Node syntax checks passed. LinkedIn automated request returned HTTP 999; live service and production deployment checks remain pending.
+- Pull request: https://github.com/Ir786106/Muhammad_Irfan_Waseem_Portfolio/pull/1 (open; not merged or deployed).
 
 ## v4.0 — November 22, 2026
 
