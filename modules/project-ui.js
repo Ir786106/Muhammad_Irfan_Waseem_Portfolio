@@ -62,6 +62,9 @@ export function openProject(id, trigger = document.activeElement) {
     }
     if (project.images.length) body.append(screenshotGallery(project));
     const links = element('div', 'project-actions');
+    const caseStudy = element('a', 'sm-btn', 'Read full case study');
+    caseStudy.href = `projects/${encodeURIComponent(project.id)}/`;
+    links.append(caseStudy);
     for (const [key, label] of [
         ['repo', 'View source code'],
         ['demo', 'Live demo'],
@@ -113,16 +116,25 @@ function projectCard(project) {
     top.append(details);
     const tags = element('div', 'proj-tags');
     for (const tag of project.tags) tags.append(element('span', '', tag));
-    card.append(top, element('h3', '', project.title), element('p', '', project.description), tags);
+    const study = element('a', 'project-study-link', 'Explore case study');
+    study.href = `projects/${encodeURIComponent(project.id)}/`;
+    study.setAttribute('aria-label', `Explore ${project.title} case study`);
+    card.append(top, element('h3', '', project.title), element('p', '', project.description), tags, study);
     return card;
 }
 
 function applyProjectFilters() {
+    let visible = 0;
     for (const card of grid.children) {
         const matchesFilter = activeFilter === 'all' || card.dataset.category.split(' ').includes(activeFilter);
         const matchesSearch = !activeSearch || card.dataset.search.includes(activeSearch);
         card.hidden = !(matchesFilter && matchesSearch);
+        if (!card.hidden) visible++;
     }
+    const summary = document.getElementById('project-results');
+    const empty = document.getElementById('project-empty');
+    if (summary) summary.textContent = `${visible} of ${projects.length} projects shown`;
+    if (empty) empty.hidden = visible !== 0;
 }
 
 export function initProjects() {
@@ -149,6 +161,7 @@ export function initProjects() {
             applyProjectFilters();
         });
     }
+    applyProjectFilters();
     dialog.querySelector('[data-close]').addEventListener('click', () => dialog.close());
     dialog.addEventListener('click', event => {
         if (event.target === dialog) dialog.close();

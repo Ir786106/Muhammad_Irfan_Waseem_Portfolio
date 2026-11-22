@@ -152,16 +152,46 @@ if (hamburger && mobileMenu) {
     }, { passive: true });
 }
 
-document.querySelectorAll('.stab').forEach(btn => {
-    btn.addEventListener('click', () => {
-        document.querySelectorAll('.stab').forEach(b => b.classList.remove('active'));
-        document.querySelectorAll('.skills-panel').forEach(p => p.classList.remove('active'));
-
-        btn.classList.add('active');
-        const panel = document.getElementById(`tab-${btn.dataset.tab}`);
-        if (panel) panel.classList.add('active');
+const tabList = document.querySelector('.skills-tabs');
+const tabs = [...document.querySelectorAll('.stab')];
+const panels = [...document.querySelectorAll('.skills-panel')];
+if (tabList && tabs.length) {
+    tabList.setAttribute('role', 'tablist');
+    tabList.setAttribute('aria-label', 'Technology categories');
+    function activateTab(tab, focus=false) {
+        tabs.forEach(button => {
+            const selected = button === tab;
+            button.classList.toggle('active', selected);
+            button.setAttribute('aria-selected', String(selected));
+            button.tabIndex = selected ? 0 : -1;
+        });
+        panels.forEach(panel => {
+            const selected = panel.id === `tab-${tab.dataset.tab}`;
+            panel.classList.toggle('active', selected);
+            panel.hidden = !selected;
+        });
+        if (focus) tab.focus();
+    }
+    tabs.forEach((button, index) => {
+        const panel=document.getElementById(`tab-${button.dataset.tab}`);
+        const id=`technology-tab-${button.dataset.tab}`;
+        button.id=id;
+        button.setAttribute('role','tab');
+        button.setAttribute('aria-controls', `tab-${button.dataset.tab}`);
+        if (panel) { panel.setAttribute('role','tabpanel'); panel.setAttribute('aria-labelledby',id); }
+        button.addEventListener('click',()=>activateTab(button));
+        button.addEventListener('keydown',event=>{
+            const step = event.key === 'ArrowRight' ? 1 : event.key === 'ArrowLeft' ? -1 : 0;
+            let destination = step ? (index + step + tabs.length) % tabs.length : null;
+            if (event.key === 'Home') destination=0;
+            if (event.key === 'End') destination=tabs.length-1;
+            if (destination === null) return;
+            event.preventDefault();
+            activateTab(tabs[destination],true);
+        });
     });
-});
+    activateTab(tabs.find(b=>b.classList.contains('active')) || tabs[0]);
+}
 
 
 initActiveNav();

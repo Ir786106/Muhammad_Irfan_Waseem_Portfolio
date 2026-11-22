@@ -1,0 +1,16 @@
+{
+  "name": "irfan-portfolio",
+  "version": "4.0.0",
+  "private": true,
+  "description": "Accessible editorial developer portfolio with verified project case studies, privacy information and hardened static preview",
+  "scripts": {
+    "dev": "node serve.js",
+    "generate": "node tools/generate-case-studies.mjs",
+    "test": "node tests/static.cjs && node tests/case-studies.cjs && node tests/editorial.cjs && node tests/public-pages.cjs",
+    "test:browser": "node tests/browser.cjs",
+    "package:site": "node tools/package-site.cjs"
+  },
+  "devDependencies": {
+    "playwright": "1.65.1"
+  }
+}

@@ -7,8 +7,8 @@ const root = path.resolve(__dirname, '..');
 const output = path.join(root, 'release');
 const site = path.join(output, 'site');
 const archive = path.join(output, 'portfolio.zip');
-const entryFiles = ['index.html', '404.html', 'style.css', 'script.js', 'robots.txt', 'sitemap.xml'];
-const assetFolders = ['Images', 'modules', 'vendor'];
+const entryFiles = ['index.html', '404.html', 'privacy.html', 'style.css', 'premium.css', 'editorial.css', 'case-studies.css', 'case-studies.js', 'theme-init.js', 'script.js', 'robots.txt', 'sitemap.xml'];
+const assetFolders = ['Images', 'assets', 'modules', 'vendor', 'projects'];
 const sources = [...entryFiles, ...assetFolders];
 const options = {cwd: root, maxBuffer: 32 * 1024 * 1024};
 function git(...args) { return execFileSync('git', args, options); }
