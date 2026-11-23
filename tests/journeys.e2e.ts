@@ -7,6 +7,10 @@ test('gallery filters, empty state, and case study navigation', async ({ page })
   await search.fill('no such application');
   await expect(page.locator('#project-empty')).toBeVisible();
   await search.fill('Food Fight');
+  const technology = page.getByLabel('Technology', { exact: true });
+  await technology.selectOption('Python');
+  await expect(page.locator('#project-empty')).toBeVisible();
+  await technology.selectOption('Flutter');
   await expect(page.locator('#project-count')).toHaveText('1 projects');
   await page.getByRole('heading', { name: 'Food Fight', exact: true }).getByRole('link').click();
   await expect(page).toHaveURL(/\/projects\/food-fight\/$/);

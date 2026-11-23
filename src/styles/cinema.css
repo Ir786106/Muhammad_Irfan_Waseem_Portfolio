@@ -138,3 +138,7 @@
   .editorial-portrait { max-width: 420px; }
   .strength-grid article { grid-template-columns: 1fr; gap: 8px; }
 }
+
+.hero-profile-links { display: flex; flex-wrap: wrap; gap: 1rem; margin-top: .75rem; font-size: .875rem; }
+.hero-profile-links a { text-decoration: underline; text-underline-offset: .2em; }
+#project-technology { display: block; max-width: 100%; padding: .6rem; border: 1px solid var(--line); background: var(--surface); color: var(--text); font: inherit; }

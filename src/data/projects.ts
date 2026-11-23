@@ -29,6 +29,7 @@ export const projects:Project[] = [
       "previewApk": "https://github.com/Ir786106/food-fight-app/releases/download/preview-1.8.2%2B19/FoodFight_v1.8.2_release.apk",
       "previewWindows": "https://github.com/Ir786106/food-fight-app/releases/download/preview-1.8.2%2B19/FoodFight-1.8.2-Windows-x64-Setup.exe",
       "checksum": "https://github.com/Ir786106/food-fight-app/releases/download/v1.8.0/FoodFight_v1.8.0_release.apk.sha256",
+      "previewChecksum": "https://github.com/Ir786106/food-fight-app/releases/download/preview-1.8.2%2B19/FoodFight_v1.8.2_release.apk.sha256",
       "releaseHistory": "https://github.com/Ir786106/food-fight-app/releases",
       "architecture": "https://github.com/Ir786106/food-fight-app/blob/main/docs/images/food-fight-architecture.png"
     },
