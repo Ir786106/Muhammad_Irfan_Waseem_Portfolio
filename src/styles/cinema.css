@@ -142,3 +142,28 @@
 .hero-profile-links { display: flex; flex-wrap: wrap; gap: 1rem; margin-top: .75rem; font-size: .875rem; }
 .hero-profile-links a { text-decoration: underline; text-underline-offset: .2em; }
 #project-technology { display: block; max-width: 100%; padding: .6rem; border: 1px solid var(--line); background: var(--surface); color: var(--text); font: inherit; }
+
+/* The scene sits against a drafting grid with a lit focal area. */
+.cinema-hero {
+  background:
+    linear-gradient(#a8c4eb0d 1px, transparent 1px) 0 0 / 42px 42px,
+    linear-gradient(90deg, #a8c4eb0d 1px, transparent 1px) 0 0 / 42px 42px,
+    radial-gradient(ellipse at 68% 35%, #313451, #161d2c 46%, #0c111b 82%);
+  color: #f8f4ef;
+}
+.cinema-hero::after { border-color: #a8c4eb42; }
+.cinema-hero .system-control { background: #101724; border-color: #91d0d3; }
+.cinema-hero .eyebrow { color: #cef0ef; }
+.cinema-hero h1 span + span { color: #e4e7f5; }
+.cinema-hero .primary { background: #c6eee9; border-color: #c6eee9; color: #15272b; }
+.scene-skip {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  font-size: .78rem;
+  text-decoration: underline;
+  text-underline-offset: .2em;
+}
+@media (min-width: 651px) {
+  .cinema-hero:has(.system-control) .hero-copy { padding-top: max(255px, 29vh); }
+}
