@@ -1,0 +1,38 @@
+---
+const { kind } = Astro.props as { kind: string };
+---
+<svg class="exhibit-art" viewBox="0 0 800 440" aria-hidden="true" preserveAspectRatio="xMidYMid slice">
+  {kind === 'food' ? <>
+    <path fill="#34160f" d="M0 0h800v440H0z"/>
+    <path fill="none" stroke="#a8593a" stroke-width="2" d="M-20 300Q220 50 400 220T820 130M-20 330Q220 80 400 250T820 160M-20 360Q220 110 400 280T820 190"/>
+    <g transform="translate(400 220) rotate(-17)">
+      <ellipse rx="177" ry="132" cy="20" fill="#200d0a"/>
+      <ellipse rx="177" ry="132" fill="#d16034"/>
+      <ellipse rx="143" ry="104" fill="#ec9463"/>
+      <ellipse rx="121" ry="86" fill="#a83724"/>
+      <path d="M-85-7Q0-102 85-7T-85-7Z" fill="#ffc78e"/>
+      <path d="M-83 12H83M-70 32H70" fill="none" stroke="#f27346" stroke-width="13" stroke-linecap="round"/>
+    </g>
+    <g fill="#ffbc91"><circle cx="115" cy="230" r="6"/><circle cx="690" cy="192" r="6"/></g>
+  </> : kind === 'erp' ? <>
+    <path fill="#1a201a" d="M0 0h800v440H0z"/>
+    <g fill="none" stroke="#43564a"><path d="m0 325 400-235 400 235M0 365 400 130 800 365M0 405l400-235 400 235M0 445l400-235 400 235"/></g>
+    {[0,1,2,3].map((step) => <g transform={`translate(${135+step*135} ${294-step*36})`}>
+      <path d="m0 0 73-38 87 40-73 38z" fill="#8e9a6b"/>
+      <path d="m0 0 87 40v42L0 42z" fill="#455943"/>
+      <path d="m87 40 73-38v42L87 82z" fill="#596947"/>
+      <path d="m20-3 59-30 58 29-56 29z" fill="none" stroke="#d4c499"/>
+    </g>)}
+    <path d="M159 227 653 93" stroke="#e4c597" stroke-width="2" stroke-dasharray="5 9"/>
+  </> : <>
+    <path fill="#161d33" d="M0 0h800v440H0z"/>
+    <g fill="none" stroke="#526497" stroke-width="2"><path d="M127 140 402 220 657 120M127 303l275-83 255 85M127 140v163m530-183v185"/></g>
+    <g transform="translate(402 214)">
+      <path fill="#a9b9fa" d="m0-93 133 66L0 44-133-27z"/>
+      <path fill="#535f9e" d="m-133-27 133 71v83l-133-70z"/>
+      <path fill="#717dcb" d="m0 44 133-71v84L0 127z"/>
+      <path d="m-56-31 56-29 59 29-59 30z" fill="none" stroke="#e5eaff" stroke-width="2"/>
+    </g>
+    <g fill="#c8ceff"><circle cx="127" cy="140" r="10"/><circle cx="127" cy="303" r="10"/><circle cx="657" cy="120" r="10"/><circle cx="657" cy="305" r="10"/></g>
+  </>}
+</svg>

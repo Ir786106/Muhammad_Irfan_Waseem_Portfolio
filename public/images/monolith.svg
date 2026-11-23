@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 680">
+  <defs>
+    <linearGradient id="steel" x2="1" y2="1" gradientUnits="objectBoundingBox">
+      <stop stop-color="#f5d9be"/><stop offset=".23" stop-color="#864333"/><stop offset=".54" stop-color="#241816"/><stop offset=".8" stop-color="#e58363"/><stop offset="1" stop-color="#5d2b22"/>
+    </linearGradient>
+    <linearGradient id="shade" x2="1" y2="1" gradientUnits="objectBoundingBox">
+      <stop stop-color="#6e3e33"/><stop offset=".6" stop-color="#1d1517"/><stop offset="1" stop-color="#b65641"/>
+    </linearGradient>
+    <g id="plate">
+      <path fill="url(#shade)" d="M45 101 272 0 506 101v22L274 231 45 123Z"/>
+      <path fill="url(#steel)" stroke="#d99678" d="m45 101 227-101 234 101-232 108Zm69 0 160 75 162-75-164-71Z" fill-rule="evenodd"/>
+      <path fill="none" stroke="#f3b497" opacity=".5" d="m45 101 229 108 232-108"/>
+    </g>
+  </defs>
+  <ellipse cx="340" cy="593" rx="220" ry="42" fill="#21100d" opacity=".65"/>
+  <g transform="translate(65 70) rotate(-12 275 250)">
+    <use href="#plate" y="252"/><use href="#plate" y="203" x="14"/><use href="#plate" y="154" x="22"/>
+    <use href="#plate" y="105" x="16"/><use href="#plate" y="56" x="2"/><use href="#plate" y="7" x="-15"/>
+  </g>
+</svg>

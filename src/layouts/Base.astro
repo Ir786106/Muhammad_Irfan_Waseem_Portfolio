@@ -1,0 +1,20 @@
+---
+import '../styles/global.css';
+import '../styles/cinema.css';
+import '@fontsource/space-grotesk/latin-400.css';
+import '@fontsource/space-grotesk/latin-500.css';
+import '@fontsource/inter/latin-400.css';
+import '@fontsource/inter/latin-500.css';
+import {url} from '../lib/url';
+import {profile} from '../data/profile';
+interface Props {title?:string;description?:string;}
+const {title='Muhammad Irfan Waseem — Flutter & Software Developer',description='Mobile products, connected systems, thoughtful engineering. Explore the work of Muhammad Irfan Waseem, Flutter developer and Computer Science student.'}=Astro.props;
+const canonical=Astro.site && Astro.url.pathname !== url('404/') ? new URL(Astro.url.pathname,Astro.site).href : undefined;
+const links=[['Home',''],['Work','projects/'],['About','about/'],['Skills','#skills'],['Experience','experience/'],['Contact','contact/']];
+---
+<!doctype html><html lang="en" data-theme="dark"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/><meta name="description" content={description}/><title>{title}</title><link rel="icon" href={url('favicon.svg')} type="image/svg+xml"/>{canonical && <link rel="canonical" href={canonical}/>}<meta property="og:title" content={title}/><meta property="og:description" content={description}/><meta property="og:type" content="website"/>{canonical && <meta property="og:url" content={canonical}/>}<meta property="og:image" content={Astro.site ? new URL(url('images/share-card.jpg'),Astro.site).href:url('images/share-card.jpg')}/><meta name="twitter:card" content="summary_large_image"/><meta name="theme-color" content="#080b12"/><meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self' https://formspree.io; form-action https://formspree.io; object-src 'none'; base-uri 'self'"/><script src="../scripts/theme.ts"></script></head><body>
+<a class="skip" href="#main">Skip to content</a><div class="progress" aria-hidden="true"></div>
+<header class="header"><a class="wordmark" href={url()} aria-label="Irfan home">irfan<span>:</span></a><nav class="desktop-nav" aria-label="Main navigation">{links.map(([label,path])=><a href={url(path)} aria-current={Astro.url.pathname===url(path)?'page':undefined}>{label}</a>)}</nav><div class="nav-actions"><button class="theme-button" aria-label="Switch to light theme" title="Switch theme"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M2 12h2m16 0h2M5 5l1.5 1.5m11 11L19 19M5 19l1.5-1.5m11-11L19 5"/></svg></button><a class="nav-contact" href={url('contact/')}>Let’s talk</a><details class="mobile-nav"><summary>Menu</summary><nav aria-label="Mobile navigation">{links.map(([label,path])=><a href={url(path)}>{label}</a>)}</nav></details></div></header>
+<main id="main"><slot/></main>
+<footer class="footer wrap"><a class="wordmark" href={url()}>irfan<span>:</span></a><p>Thoughtfully designed. Carefully engineered.</p><div><a href={profile.github}>GitHub</a><a href={profile.linkedin}>LinkedIn</a><a href={url('resume/')}>Résumé</a><a href={url('blog/')}>Writing</a><a href={url('privacy/')}>Privacy</a></div><small>© 2026 Muhammad Irfan Waseem</small></footer>
+<script src="../scripts/site.ts"></script></body></html>

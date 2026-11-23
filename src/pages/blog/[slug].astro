@@ -1,0 +1,6 @@
+---
+import Base from '../../layouts/Base.astro';import {url} from '../../lib/url';
+export function getStaticPaths(){const modules=import.meta.glob('../../content/blog/*.md',{eager:true});return Object.entries(modules).map(([path,article])=>({params:{slug:path.split('/').pop()!.replace(/\.md$/,'')},props:{article:article as {frontmatter:{title:string;description:string;date?:string;tags?:string[]};Content:unknown;rawContent:()=>string}}}));}
+const {article}=Astro.props;const Content=article.Content as import('astro').MarkdownInstance<Record<string, unknown>>['Content'];
+---
+<Base title={`${article.frontmatter.title} — Muhammad Irfan Waseem`} description={article.frontmatter.description}><header class="page-head wrap"><a class="text-link" href={url('blog/')}>All writing</a><h1>{article.frontmatter.title}</h1><p>{article.frontmatter.description}</p><small>{Math.max(1,Math.ceil(article.rawContent().split(/\s+/).length/220))} minute read{article.frontmatter.date && ` · ${article.frontmatter.date}`}</small></header><article class="wrap prose page-body"><Content/></article></Base>
