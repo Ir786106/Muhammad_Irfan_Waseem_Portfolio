@@ -167,3 +167,41 @@
 @media (min-width: 651px) {
   .cinema-hero:has(.system-control) .hero-copy { padding-top: max(255px, 29vh); }
 }
+
+.personal-hero {
+  display: grid;
+  grid-template-columns: 1.2fr minmax(0, .8fr);
+  gap: clamp(1.5rem, 6vw, 7rem);
+  align-items: center;
+  padding-block: clamp(2.2rem, 6vw, 6rem);
+}
+.personal-intro h1 {
+  margin: 0;
+  font: 700 clamp(2.4rem, 6.3vw, 7rem)/.94 var(--heading);
+  letter-spacing: -.075em;
+}
+.personal-summary { max-width: 38ch; margin-block: 1.2rem; color: var(--muted); }
+.personal-portrait {
+  margin: 0;
+  width: min(100%, 31rem);
+  justify-self: end;
+  border: 1px solid var(--line);
+  padding: clamp(.35rem, 1vw, .85rem);
+  background: var(--surface);
+  box-shadow: 1rem 1rem 0 -1px var(--bg), 1rem 1rem 0 var(--line);
+}
+.personal-portrait img { display: block; width: 100%; height: auto; }
+.personal-about { display: block; }
+.portfolio-explorer {
+  min-height: 19rem;
+  display: flex;
+  align-items: center;
+}
+.portfolio-explorer .system-control { position: relative; inset: auto; }
+.portfolio-explorer .sculpture { width: min(52vw, 33rem); top: 50%; translate: 0 -50%; }
+@media (max-width: 660px) {
+  .personal-hero { grid-template-columns: 1fr; }
+  .personal-portrait { justify-self: start; width: min(56vw, 16rem); }
+  .portfolio-explorer { padding-block: 2rem; }
+  .portfolio-explorer .sculpture { right: -12%; width: 75%; }
+}

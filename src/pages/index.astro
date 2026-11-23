@@ -8,9 +8,24 @@ const systems = [
 ];
 ---
 <Base>
-<section class="hero wrap cinema-hero">
+<section class="wrap personal-hero" aria-labelledby="portfolio-name">
+  <div class="personal-intro">
+    <p class="eyebrow">Flutter &amp; Software Developer</p>
+    <h1 id="portfolio-name">Muhammad<br /> Irfan Waseem</h1>
+    <p class="personal-summary">I build mobile apps and connected software for ordering, delivery and business operations.</p>
+    <div class="actions">
+      <a class="button primary" href="#work">Explore my projects</a>
+      <a class="button quiet" href={url('images/Muhammad_Irfan_Waseem_CV.pdf')} download>Download résumé</a>
+    </div>
+    <div class="hero-profile-links"><a href={url('contact/')}>Let’s connect</a><a href={profile.github}>GitHub</a></div>
+  </div>
+  <figure class="personal-portrait">
+    <img src={url('images/Irfan.webp')} srcset={`${url('images/portrait-small.webp')} 400w, ${url('images/Irfan.webp')} 640w`} sizes="(max-width: 660px) 56vw, 38vw" width="640" height="800" alt="Muhammad Irfan Waseem in a navy suit and burgundy tie" fetchpriority="high" />
+  </figure>
+</section>
+<section class="hero wrap cinema-hero portfolio-explorer" aria-label="Interactive project systems">
   <Sculpture/>
-  <aside class="system-control hero-enter" aria-label="System explorer">
+  <aside class="system-control" aria-label="System explorer">
     <p class="eyebrow">THE AWAKENING</p>
     <fieldset>
       <legend>Explore a software system</legend>
@@ -22,24 +37,10 @@ const systems = [
     </div>)}
     <a class="scene-skip" href="#work">Skip 3D and go to projects</a>
   </aside>
-  <div class="hero-copy">
-    <p class="eyebrow hero-enter">FLUTTER & SOFTWARE DEVELOPER</p>
-    <h1 class="hero-enter"><span>Muhammad</span><span>Irfan Waseem</span></h1>
-  </div>
-  <div class="hero-bottom hero-enter">
-    <p>I build mobile apps and connected software for the way people work.</p>
-    <div class="actions">
-      <a class="button primary" href="#work">Explore projects</a>
-      <a class="button quiet" href={url('contact/')}>Contact me</a>
-    </div>
-    <div class="hero-profile-links"><a href={url('resume/')}>Résumé</a><a href={profile.github}>GitHub</a></div>
-  </div>
 </section>
 <section class="work-section wrap" id="work" tabindex="-1"><div class="section-head"><div><p class="eyebrow">SELECTED WORK</p><h2>Real problems.<br/><span class="muted">Considered solutions.</span></h2></div><a class="text-link" href={url('projects/')}>View all projects <span class="count">{projects.length}</span></a></div><div class="project-grid">{projects.filter(p=>p.featured).map((p,i)=><ProjectCard project={p} large={i===0}/>)}</div></section>
-<section class="manifesto wrap" id="about">
-  <figure class="editorial-portrait">
-    <img src={url('images/Irfan.webp')} srcset={`${url('images/portrait-small.webp')} 400w, ${url('images/Irfan.webp')} 640w`} sizes="(max-width: 650px) min(420px, 90vw), 35vw" width="640" height="800" alt="Muhammad Irfan Waseem" loading="lazy" decoding="async"/>
-  </figure>
+<section class="manifesto wrap personal-about" id="about">
+
   <div class="editorial-bio">
     <p class="eyebrow">ABOUT ME</p>
     <h2>Good software starts with <em>understanding people.</em></h2>
