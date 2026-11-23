@@ -1,0 +1,33 @@
+---
+import Base from '../layouts/Base.astro';
+import { url } from '../lib/url';
+
+const pieces = [
+  { file: 'coffee-poster.webp', title: 'Coffee brand poster', alt: 'Illustrated coffee cup surrounded by roasted beans on a warm brown background', width: 960, height: 1200 },
+  { file: 'monsterxd-wordmark.webp', title: 'MonsterXD wordmark', alt: 'Black MonsterXD wordmark beside a yellow light bulb, pencil and gear', width: 960, height: 960 },
+  { file: 'smoothie-poster.webp', title: 'Banana smoothie poster', alt: 'Yellow product poster with a smoothie cup, banana slices and a sweeping splash', width: 960, height: 960 },
+  { file: 'first-aid-poster.webp', title: 'First aid awareness poster', alt: 'First aid awareness poster with a red cross, an emergency-response photograph and a headline about saving lives', width: 960, height: 960 },
+];
+---
+<Base title="Graphic design — Muhammad Irfan Waseem" description="Selected poster and branding work from Muhammad Irfan Waseem’s earlier portfolio.">
+  <header class="page-head wrap">
+    <p class="eyebrow">GRAPHIC DESIGN</p>
+    <h1>Posters &amp; <em>identity.</em></h1>
+    <p>Selected graphic design work from my earlier portfolio.</p>
+  </header>
+  <section class="wrap page-body design-gallery" aria-label="Graphic design samples">
+    {pieces.map(piece => (
+      <figure>
+        <img src={url(`images/design/${piece.file}`)} width={piece.width} height={piece.height} alt={piece.alt} loading="lazy" decoding="async"/>
+        <figcaption>{piece.title}</figcaption>
+      </figure>
+    ))}
+  </section>
+</Base>
+<style>
+  .design-gallery { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); max-width: 1100px; align-items: start; gap: 1.5rem; }
+  figure { margin: 0; border-top: 1px solid var(--line); padding-top: 1rem; }
+  img { display: block; width: 100%; height: auto; }
+  figcaption { padding-top: .75rem; color: var(--text); }
+  @media (max-width: 520px) { .design-gallery { grid-template-columns: 1fr; } }
+</style>

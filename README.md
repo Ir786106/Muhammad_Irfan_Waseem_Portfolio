@@ -1,23 +1,25 @@
-# Muhammad Irfan Waseem · Flutter Developer
+# Muhammad Irfan Waseem — portfolio-next
 
-Vanilla HTML, CSS and ES modules for a mobile development portfolio with dark and light themes. Run `node serve.js` and open http://localhost:8080. Both Firebase Hosting and GitHub Pages can serve these files.
+Original static-first Astro portfolio. Requires Node 22.12+.
 
-Public contact: muhammadirfan.infosec@gmail.com · [LinkedIn](https://www.linkedin.com/in/muhammad-irfan-waseem-48226b297/). The one-page résumé is available in PDF and Word under Images.
+```sh
+npm ci
+npm run dev
+npm run check
+npm run lint
+npm test
+npm run build
+npm run preview
+```
 
-## Verified project priority
+If restricted Windows user configuration blocks Astro telemetry, set `ASTRO_TELEMETRY_DISABLED=1`. Browser tests: `npx playwright install chromium`, then `npm run test:e2e`.
 
-The showcase prioritizes Food Fight, Ittehad Food Industries and this portfolio repository. Food Fight is linked to verified v1.8.0 stable APK and Windows assets and separate v1.8.2 Build 19 preview assets. Ittehad's public repository is presented as a working rice-industry source repository, not as a separately verified MillX ERP release.
+Set `SITE_URL` to the actual deployment origin and `BASE_PATH` to `/` or `/repository-name/` before production builds. No secrets required. Public Formspree endpoint is in `src/data/profile.ts`; confirm inbox ownership and domain authorization before launch. Content is in `src/data`, routes in `src/pages`, progressive enhancement in `src/scripts`, styling in `src/styles`. Authorized assets and résumé files live in `public/images`. Research snapshots are ignored and never deployed.
 
-Genuine repository artwork is stored under `assets/projects/food-fight/` and `assets/projects/ittehad-food/`. Food Fight's repository states that application screenshots are not currently available; 3–5 privacy-safe application screenshots can later be added to `docs/screenshots/` there. Ittehad's onboarding images are genuine repository assets, not application screenshots.
+See docs for evidence, QA, deployment and remaining owner inputs.
 
-## How to add a project
+## GitHub Pages
 
-Add one object to modules/projects.js with a unique id, title, category, status, description, problem, role, result and tags. Leave unknown links out of links. For a screenshot carousel, add three to five approved WebP files and enter their src, alt, width and height in images. Use repo, demo, store or apk for public destinations. Optional architecture and implementation links can point to a published diagram or a specific source file. Check the filter, project dialog, gallery controls and showcase after adding the entry.
+Pushes to main trigger the Pages workflow. The same workflow supports manual dispatch. It runs the checks, builds for the repository subdirectory and deploys dist. Set the Pages source to GitHub Actions.
 
-The contact form uses Formspree. Reviews require Google sign-in and owner moderation. Three genuine reviews with owner approval and confirmed publication permission reveal the public section. New submissions collect explicit consent and remain private until both moderation flags are set. See [deployment notes](audit/hosting.md) for rules tests and console settings. The original review is in [Phase 0](audit/phase-0.md).
-
-## Preview and package a release
-
-After committing site changes, run `node tools/package-site.cjs` from the checkout. It uses Node and Git to produce `release/site/` for Firebase Hosting and `release/portfolio.zip` for GitHub Pages. Both contain only the committed public entry points, images, modules and vendored libraries. The generated output is ignored by Git.
-
-Run `firebase emulators:start --only hosting --project demo-portfolio` to preview the packaged files. The browser still uses the public Firebase and Formspree configuration, so use the separate Firestore rules tests for moderation checks. After deployment check the security and cache response headers on the live host. The local Hosting emulator used in release verification omitted those response headers.
+[Public portfolio](https://ir786106.github.io/Muhammad_Irfan_Waseem_Portfolio/)

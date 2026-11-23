@@ -1,0 +1,37 @@
+---
+import { url } from '../lib/url';
+
+const { slug } = Astro.props as { slug: string };
+const screenshots: Record<string, { file: string; caption: string; width: number; height: number }[]> = {
+  eduquest: [
+    { file: 'eduquest-subjects.webp', caption: 'Subject picker with mathematics, programming and language practice', width: 1280, height: 800 },
+    { file: 'eduquest-modes.webp', caption: 'Mathematics game modes with quizzes, matching and timed challenges', width: 1280, height: 800 },
+  ],
+  'previous-portfolio': [
+    { file: 'portfolio-projects.webp', caption: 'Featured project cards and category filters', width: 1280, height: 800 },
+    { file: 'portfolio-mobile.webp', caption: 'Mobile home page in the light theme', width: 390, height: 844 },
+  ],
+};
+const images = screenshots[slug];
+---
+{images && <section class="wrap case-screenshots" aria-labelledby="case-screenshots-title">
+  <h2 id="case-screenshots-title">Project screenshots</h2>
+  <div class="screenshots-grid">
+    {images.map(({ file, caption, width, height }) => (
+      <figure>
+        <a href={url(`images/projects/${file}`)} aria-label={`Open full-size screenshot: ${caption}`}>
+          <img src={url(`images/projects/${file}`)} alt={caption} width={width} height={height} loading="lazy" decoding="async"/>
+        </a>
+        <figcaption>{caption}</figcaption>
+      </figure>
+    ))}
+  </div>
+</section>}
+<style>
+  .case-screenshots { padding-block: clamp(2rem, 6vw, 5rem); }
+  .screenshots-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.5rem; }
+  figure { margin: 1rem 0 0; border-top: 1px solid var(--line); padding-top: 1rem; }
+  img { display: block; max-width: 100%; width: auto; height: auto; max-height: 34rem; object-fit: contain; }
+  figcaption { margin-top: .75rem; color: var(--muted); }
+  @media (max-width: 650px) { .screenshots-grid { grid-template-columns: 1fr; } }
+</style>
