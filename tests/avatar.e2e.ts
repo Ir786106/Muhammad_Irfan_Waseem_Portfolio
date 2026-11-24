@@ -26,3 +26,20 @@ test('avatar tracks the cursor and resets for reduced motion', async ({ page }) 
   await expect(page.getByRole('link', { name: 'View original photograph' })).toHaveAttribute('href', /Irfan.webp/);
   await page.screenshot({ path: 'test-results/avatar-mobile.png' });
 });
+
+test('context cursor and coding panel keep real links accessible', async ({ page }) => {
+  await page.setViewportSize({ width: 1440, height: 1000 });
+  await page.goto('/');
+  const projects = page.getByRole('link', { name: 'Explore my projects' });
+  await projects.hover({ position: { x: 12, y: 12 } });
+  const cursor = page.locator('.context-cursor');
+  await expect(cursor).toBeVisible();
+  await expect(cursor).toHaveText('EXPLORE');
+  const summary = page.locator('.avatar-code summary');
+  await summary.focus();
+  await page.keyboard.press('Enter');
+  await expect(page.locator('.avatar-code')).toHaveJSProperty('open', true);
+  await expect(page.locator('.avatar-code').getByRole('link', { name: 'Food Fight' })).toHaveAttribute('href', /projects\/food-fight\//);
+  await page.emulateMedia({ reducedMotion: 'reduce' });
+  await expect(cursor).toBeHidden();
+});
