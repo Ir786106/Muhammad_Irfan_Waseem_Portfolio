@@ -9,7 +9,7 @@ const systems = [
 ---
 <Base>
 <section class="wrap personal-hero" aria-labelledby="portfolio-name">
-  <div class="personal-intro">
+  <div class="personal-intro hero-enter">
     <p class="eyebrow">Flutter &amp; Software Developer</p>
     <h1 id="portfolio-name">Muhammad<br /> Irfan Waseem</h1>
     <p class="personal-summary">I build mobile apps and connected software for ordering, delivery and business operations.</p>
@@ -19,10 +19,11 @@ const systems = [
     </div>
     <div class="hero-profile-links"><a href={url('contact/')}>Let’s connect</a><a href={profile.github}>GitHub</a></div>
   </div>
-  <figure class="personal-portrait">
+  <figure class="personal-portrait hero-enter">
     <img src={url('images/Irfan.webp')} srcset={`${url('images/portrait-small.webp')} 400w, ${url('images/Irfan.webp')} 640w`} sizes="(max-width: 660px) 56vw, 38vw" width="640" height="800" alt="Muhammad Irfan Waseem in a navy suit and burgundy tie" fetchpriority="high" />
   </figure>
 </section>
+<section class="work-section wrap" id="work" tabindex="-1"><div class="section-head"><div><p class="eyebrow">SELECTED WORK</p><h2>Real problems.<br/><span class="muted">Considered solutions.</span></h2></div><a class="text-link" href={url('projects/')}>View all projects <span class="count">{projects.length}</span></a></div><div class="project-grid">{projects.filter(p=>p.featured).map((p,i)=><ProjectCard project={p} large={i===0}/>)}</div></section>
 <section class="hero wrap cinema-hero portfolio-explorer" aria-label="Interactive project systems">
   <Sculpture/>
   <aside class="system-control" aria-label="System explorer">
@@ -35,10 +36,9 @@ const systems = [
       <p>{system.detail}</p>
       {system.id !== 'origin' && <a href={url(`projects/${system.id}/`)}>Read case study</a>}
     </div>)}
-    <a class="scene-skip" href="#work">Skip 3D and go to projects</a>
+    <a class="scene-skip" href="#work">Back to featured projects</a>
   </aside>
 </section>
-<section class="work-section wrap" id="work" tabindex="-1"><div class="section-head"><div><p class="eyebrow">SELECTED WORK</p><h2>Real problems.<br/><span class="muted">Considered solutions.</span></h2></div><a class="text-link" href={url('projects/')}>View all projects <span class="count">{projects.length}</span></a></div><div class="project-grid">{projects.filter(p=>p.featured).map((p,i)=><ProjectCard project={p} large={i===0}/>)}</div></section>
 <section class="manifesto wrap personal-about" id="about">
 
   <div class="editorial-bio">
