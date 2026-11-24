@@ -74,3 +74,17 @@ const systems = [
     <a class="text-link" href={`mailto:${profile.email}`}>Email Irfan</a>
   </div>
 </section></Base>
+
+<script>
+  const motion = matchMedia('(prefers-reduced-motion: no-preference)');
+  if (motion.matches && 'IntersectionObserver' in window) {
+    const observer = new IntersectionObserver(entries => {
+      for (const entry of entries) {
+        if (!entry.isIntersecting) continue;
+        if (motion.matches && !document.hidden) entry.target.classList.add('project-arrived');
+        observer.unobserve(entry.target);
+      }
+    }, { threshold: .15 });
+    document.querySelectorAll('#work .project-card').forEach(card => observer.observe(card));
+  }
+</script>

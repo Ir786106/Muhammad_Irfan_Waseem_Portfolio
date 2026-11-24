@@ -39,7 +39,9 @@ test('context cursor and coding panel keep real links accessible', async ({ page
   await summary.focus();
   await page.keyboard.press('Enter');
   await expect(page.locator('.avatar-code')).toHaveJSProperty('open', true);
+  await expect(page.locator('[data-avatar]')).toHaveAttribute('data-presenting', '');
   await expect(page.locator('.avatar-code').getByRole('link', { name: 'Food Fight' })).toHaveAttribute('href', /projects\/food-fight\//);
   await page.emulateMedia({ reducedMotion: 'reduce' });
   await expect(cursor).toBeHidden();
+  await expect(page.locator('[data-avatar]')).not.toHaveAttribute('data-presenting', '');
 });

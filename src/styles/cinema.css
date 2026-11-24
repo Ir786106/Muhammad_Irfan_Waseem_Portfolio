@@ -218,3 +218,10 @@
 }
 @keyframes avatar-acknowledge { 45% { transform: translateY(4px) rotate(-3deg); } }
 @keyframes avatar-reveal { from { opacity: .35; transform: translateY(5px); } }
+
+@media (prefers-reduced-motion: no-preference) {
+  .work-section .project-arrived { animation: project-arrive .5s ease-out; }
+}
+@keyframes project-arrive {
+  from { transform: translateY(9px); }
+}
