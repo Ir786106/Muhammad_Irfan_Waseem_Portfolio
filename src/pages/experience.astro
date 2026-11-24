@@ -1,4 +1,15 @@
 ---
-import Base from '../layouts/Base.astro';import {experience} from '../data/profile';import {url} from '../lib/url';
+import Base from '../layouts/Base.astro';import {experience, certificates} from '../data/profile';import {url} from '../lib/url';
 ---
-<Base title="Experience & Education — Muhammad Irfan Waseem" description="Education, internships and freelance Flutter development experience of Muhammad Irfan Waseem."><header class="page-head wrap"><p class="eyebrow">LEARNING THROUGH BUILDING</p><h1>Experience<br/><em>& education.</em></h1><p>Freelance development, completed internships and Computer Science study.</p></header><section class="wrap page-body timeline" aria-label="Experience timeline">{experience.map(item=><article><span>{item.date}</span><div><h2>{item.title}</h2><small>{item.org}</small><p>{item.body}</p></div></article>)}<a class="button quiet" href={url('resume/')}>View résumé</a></section></Base>
+<Base title="Experience & Education — Muhammad Irfan Waseem" description="Education, internships and freelance Flutter development experience of Muhammad Irfan Waseem."><header class="page-head wrap"><p class="eyebrow">LEARNING THROUGH BUILDING</p><h1>Experience<br/><em>& education.</em></h1><p>Freelance development, completed internships and Computer Science study.</p></header><section class="wrap page-body timeline" aria-label="Experience timeline">{experience.map(item=><article><span>{item.date}</span><div><h2>{item.title}</h2><small>{item.org}</small><p>{item.body}</p></div></article>)}<a class="button quiet" href={url('resume/')}>View résumé</a></section>
+<section class="wrap page-body timeline" aria-labelledby="certificates-title">
+  <h2 id="certificates-title">Courses and workshop certificates</h2>
+  {certificates.map(certificate => <article>
+    <div>
+      <h3>{certificate.title}</h3>
+      <p>{certificate.issuer} · {certificate.recognition}</p>
+      {certificate.date && <time datetime={certificate.date}>{certificate.dateLabel}</time>}
+    </div>
+  </article>)}
+</section>
+</Base>
