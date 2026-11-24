@@ -1,15 +1,14 @@
 ---
 import {url} from '../lib/url';
 import type {Project} from '../data/projects';
-import ExhibitArt from './ExhibitArt.astro';
 interface Props {project:Project;large?:boolean;}
 const {project:p,large=false}=Astro.props;
 ---
 <article class:list={['project-card',{large}]} data-project data-title={p.title} data-description={p.description} data-tags={p.tags.join('|')} data-category={p.category}>
 <a class:list={['project-art',p.art,{'project-exhibit':p.featured&&!p.image}]} href={url(`projects/${p.id}/`)}>
 <span style="position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%)">{p.title}</span>
-{p.image ? <img src={url(p.image)} alt={p.imageAlt} width="1280" height="800" loading="lazy"/> : p.featured ? <ExhibitArt kind={p.art}/> : <div class="concept-art" aria-hidden="true"><span class="art-word">{p.artWord}</span><div class="art-orbit"></div><div class="art-window"><span class="window-dots">● ● ●</span><div class="window-lines"><i></i><i></i><i></i></div><b>{p.artLabel}</b><div class="mini-bars"><i></i><i></i><i></i><i></i><i></i></div></div></div>}
-<span class="art-label">{p.image ? 'Actual portfolio screenshot' : 'Original concept illustration'}</span><span class="art-link">Explore project</span></a>
+{p.image ? <img src={url(p.image)} alt={p.imageAlt} width="1280" height="800" loading="lazy"/> : <span class="capture-slot">[ADD: {p.title} screenshot]</span>}
+<span class="art-label">{p.image ? 'Actual portfolio screenshot' : 'Screenshot pending'}</span><span class="art-link">Explore project</span></a>
 <div class="project-meta"><span>{p.label}</span><span>{p.status}</span></div><h3><a href={url(`projects/${p.id}/`)}>{p.title}</a></h3><p>{p.description}</p><div class="tags">{p.tags.map(t=><span>{t}</span>)}</div>
 {large && p.links.repo && <a class="project-source text-link" href={p.links.repo}>Source on GitHub</a>}
 </article>

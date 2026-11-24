@@ -1,7 +1,7 @@
 ---
 import PortfolioCursor from '../components/PortfolioCursor.astro';
 import DeveloperAvatar from '../components/DeveloperAvatar.astro';
-import Base from '../layouts/Base.astro';import Sculpture from '../components/Sculpture.astro';import ProjectCard from '../components/ProjectCard.astro';import {projects} from '../data/projects';import {url} from '../lib/url';import {profile} from '../data/profile';
+import Base from '../layouts/Base.astro';import Sculpture from '../components/Sculpture.astro';import ProjectCard from '../components/ProjectCard.astro';import {projects} from '../data/projects';import {url} from '../lib/url';import {profile, availability, testimonials} from '../data/profile';
 const systems = [
   {id:'origin', label:'Origin', detail:'An idea becomes structure. Explore how that structure changes with the work it supports.'},
   {id:'food-fight', label:'Food Fight', detail:'An order moves from the customer to the kitchen and onward to a delivery rider.'},
@@ -9,39 +9,44 @@ const systems = [
   {id:'teamsync', label:'TeamSync', detail:'Workspaces group projects and tasks, with roles governing who can act.'},
 ];
 ---
-<Base>
+<Base schema={{"@context":"https://schema.org","@type":"Person",name:profile.name,jobTitle:"Flutter & Software Developer",sameAs:[profile.github,profile.linkedin]}}>
 <section class="wrap personal-hero" aria-labelledby="portfolio-name">
   <div class="personal-intro hero-enter">
     <p class="eyebrow">Flutter &amp; Software Developer</p>
     <h1 id="portfolio-name">Muhammad<br /> Irfan Waseem</h1>
-    <p class="personal-summary">I build mobile apps and connected software for ordering, delivery and business operations.</p>
+    <p>{availability} · Pakistan</p><p class="personal-summary">I build mobile apps and connected software for ordering, delivery and business operations.</p>
     <div class="actions">
-      <a class="button primary" href="#work">Explore my projects</a>
-      <a class="button quiet" href={url('images/Muhammad_Irfan_Waseem_CV.pdf')} download>Download résumé</a>
+      <a class="button primary" href="#work">View projects</a>
+      <a class="button quiet" href={url('contact/')}>Hire me / Contact</a>
     </div>
-    <div class="hero-profile-links"><a href={url('contact/')}>Let’s connect</a><a href={profile.github}>GitHub</a></div>
+    <p>[ADD: released apps and platforms] · [ADD: verified project outcome]</p><div class="hero-profile-links"><a href={url('resume/')}>Résumé</a><a href={profile.github}>GitHub</a></div>
   </div>
   <DeveloperAvatar/>
   <details class="avatar-code">
-    <summary>Explore how my projects fit together</summary>
+    <summary>From portrait to product</summary>
     <ol>
       <li><strong>Mobile interface</strong> — Food Fight uses Flutter for ordering and delivery workflows.</li>
       <li><strong>Connected services</strong> — Firebase handles identity and role-scoped operations.</li>
       <li><strong>Business data</strong> — Ittehad explores procurement, inventory and distribution.</li>
     </ol>
-    <div class="actions">{projects.filter(project => project.featured).map(project =>
-      <a class="text-link" href={url(`projects/${project.id}/`)}>{project.title}</a>
-    )}</div>
+    <ul class="product-launch">
+      {projects.filter(project => project.featured && systems.some(system => system.id === project.id)).map(project =>
+        <li>
+          <a class="text-link" href={url(`projects/${project.id}/`)}>{project.title}</a>
+          <button type="button" data-launch-system={project.id} aria-label={`Explore ${project.title} system`} hidden>See system</button>
+        </li>
+      )}
+    </ul>
   </details>
   <PortfolioCursor/>
 </section>
 <section class="work-section wrap" id="work" tabindex="-1"><div class="section-head"><div><p class="eyebrow">SELECTED WORK</p><h2>Real problems.<br/><span class="muted">Considered solutions.</span></h2></div><a class="text-link" href={url('projects/')}>View all projects <span class="count">{projects.length}</span></a></div><div class="project-grid">{projects.filter(p=>p.featured).map((p,i)=><ProjectCard project={p} large={i===0}/>)}</div></section>
-<section class="hero wrap cinema-hero portfolio-explorer" aria-label="Interactive project systems">
+<section class="hero wrap cinema-hero portfolio-explorer" id="project-systems" aria-label="Interactive project systems">
   <Sculpture/>
   <aside class="system-control" aria-label="System explorer">
     <p class="eyebrow">THE AWAKENING</p>
     <fieldset>
-      <legend>Explore a software system</legend>
+      <legend>Conceptual models of my software systems</legend>
       {systems.map(system => <label><input type="radio" name="hero-system" value={system.id} checked={system.id==='origin'}/><span>{system.label}</span></label>)}
     </fieldset>
     {systems.map(system => <div class="system-detail" data-system-detail={system.id}>
@@ -66,7 +71,30 @@ const systems = [
 
   </div>
 </section>
-<section class="strengths wrap" id="skills"><div class="section-head"><div><p class="eyebrow">ENGINEERING TOOLKIT</p><h2>Built with purpose.</h2></div><p>The right tools.<br/>For the problem at hand.</p></div><div class="strength-grid"><article><span class="strength-icon">⌘</span><h3>Mobile experiences</h3><p>Role-aware interfaces that connect customers, teams and operations.</p><div class="tags"><span>Flutter</span><span>Dart</span><span>Firebase</span></div></article><article><span class="strength-icon">{ '{ }' }</span><h3>Connected systems</h3><p>From restaurant orders to business ledgers, clear data flows matter.</p><div class="tags"><span>Firestore</span><span>Node.js</span><span>Express</span></div></article><article><span class="strength-icon">◇</span><h3>Web applications</h3><p>Interactive workspaces backed by structured APIs and access controls.</p><div class="tags"><span>React</span><span>TypeScript</span><span>MongoDB</span></div></article></div></section>
+<section class="strengths wrap" id="skills"><h2>Skills</h2><div class="strength-grid">
+  {[
+    ['Mobile', 'Flutter', 'Dart', '[ADD: verify GetX or Bloc experience]'],
+    ['Backend and data', 'Firebase', 'Firestore', 'Supabase', 'Node.js', 'Express', 'MongoDB'],
+    ['Web', 'React', 'TypeScript'],
+    ['Tools', 'Git', 'GitHub', '[ADD: verify Postman and Figma experience]'],
+    ['Security basics', 'Authentication', 'Role-based access', 'Firestore rules'],
+  ].map(([group,...skills]) => <article><h3>{group}</h3><div class="tags">{skills.map(skill => <span>{skill}</span>)}</div></article>)}
+</div></section>
+<section class="wrap page-body prose" aria-labelledby="services-title">
+  <h2 id="services-title">Services</h2>
+  <ul><li>Flutter mobile apps</li><li>Firebase and backend integration</li><li>Role-based admin panels</li><li>MERN web apps</li><li>ERP and business tools</li></ul>
+  <h3>How I work</h3>
+  <ol><li><strong>Discover.</strong> Define users, needs and scope.</li><li><strong>Design.</strong> Map workflows and data.</li><li><strong>Build.</strong> Implement and test in stages.</li><li><strong>Deliver and support.</strong> Document setup and agree on follow-up.</li></ol>
+</section>
+<section class="wrap page-body prose">
+  <h2>Security mindset</h2>
+  <p>I use authentication, role-based permissions and server-side validation to protect app workflows. VeilGuard Security Journal is my cybersecurity writing project. [ADD: VeilGuard publication URL]</p>
+  <a class="text-link" href={url('blog/')}>Visit my writing page</a>
+</section>
+{testimonials.length > 0 && <section class="wrap page-body prose" aria-labelledby="testimonials-title">
+  <h2 id="testimonials-title">What clients say</h2>
+  {testimonials.map(({ quote, name, role }) => <figure><blockquote>{quote}</blockquote><figcaption>{name} · {role}</figcaption></figure>)}
+</section>}
 <section class="contact-banner wrap" aria-labelledby="closing-title">
   <h2 id="closing-title">Let’s make<br/><em>something useful.</em></h2>
   <div class="closing-actions">
@@ -76,6 +104,20 @@ const systems = [
 </section></Base>
 
 <script>
+  const explorer = document.querySelector('#project-systems');
+  if (explorer) {
+    const controls = Array.from(explorer.querySelectorAll<HTMLInputElement>('input[name="hero-system"]'));
+    document.querySelectorAll<HTMLButtonElement>('[data-launch-system]').forEach(button => {
+      const control = controls.find(input => input.value === button.dataset.launchSystem);
+      if (!control) return;
+      button.hidden = false;
+      button.addEventListener('click', () => {
+        if (!control.checked) control.click();
+        control.focus({ preventScroll: true });
+        explorer.scrollIntoView({ block: 'start' });
+      });
+    });
+  }
   const motion = matchMedia('(prefers-reduced-motion: no-preference)');
   if (motion.matches && 'IntersectionObserver' in window) {
     const observer = new IntersectionObserver(entries => {

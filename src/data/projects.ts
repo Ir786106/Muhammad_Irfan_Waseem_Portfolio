@@ -1,4 +1,4 @@
-export interface Project {id:string;title:string;category:string;label:string;status:string;featured:boolean;description:string;problem:string;role:string;result:string;tags:string[];features:string[];links:Record<string,string>;art:string;artWord:string;artLabel:string;image?:string;imageAlt?:string;}
+export interface Project {id:string;title:string;category:string;label:string;status:string;featured:boolean;description:string;problem:string;role:string;result:string;tags:string[];features:string[];links:Record<string,string>;art:string;artWord:string;artLabel:string;image?:string;imageAlt?:string;demoVideo?:string;demoCaptions?:string;}
 export const projects:Project[] = [
   {
     "id": "food-fight",

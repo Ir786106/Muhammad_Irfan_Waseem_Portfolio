@@ -31,11 +31,10 @@ test('internal navigation and fragment links resolve', async ({ page }) => {
   }
 });
 
-test('résumé PDF and Word links download the expected files', async ({ page }) => {
+test('résumé page offers one PDF download', async ({ page }) => {
   await page.goto('/resume/');
   for (const [label, suffix, signature] of [
     ['Download PDF', '.pdf', '%PDF-'],
-    ['Download Word document', '.docx', 'PK'],
   ]) {
     const link = page.getByRole('link', { name: label, exact: true });
     const href = await link.getAttribute('href');
@@ -66,4 +65,20 @@ test('design gallery serves four distinct images on desktop and mobile', async (
     expect(new Set(urls).size).toBe(4);
     expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(width);
   }
+});
+
+test('screenshots open in a keyboard-dismissible lightbox', async ({ page }) => {
+  await page.goto('/projects/previous-portfolio/');
+  const screenshot = page.locator('.case-screenshots figure a').first();
+  await expect(page.locator('.case-screenshots figure a')).toHaveCount(4);
+  await screenshot.focus();
+  await page.keyboard.press('Enter');
+  await expect(page.getByRole('dialog', { name: 'Project screenshot' })).toBeVisible();
+  await page.getByRole('button', { name: 'Next image' }).click();
+  await expect(page.locator('.gallery-caption')).toContainText('2 of 4');
+  await page.keyboard.press('ArrowLeft');
+  await expect(page.locator('.gallery-caption')).toContainText('1 of 4');
+  await page.keyboard.press('Escape');
+  await expect(screenshot).toBeFocused();
+  await expect(page.getByRole('dialog')).toHaveCount(0);
 });

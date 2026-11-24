@@ -30,7 +30,7 @@ test('avatar tracks the cursor and resets for reduced motion', async ({ page }) 
 test('context cursor and coding panel keep real links accessible', async ({ page }) => {
   await page.setViewportSize({ width: 1440, height: 1000 });
   await page.goto('/');
-  const projects = page.getByRole('link', { name: 'Explore my projects' });
+  const projects = page.getByRole('link', { name: 'View projects' });
   await projects.hover({ position: { x: 12, y: 12 } });
   const cursor = page.locator('.context-cursor');
   await expect(cursor).toBeVisible();
@@ -43,5 +43,11 @@ test('context cursor and coding panel keep real links accessible', async ({ page
   await expect(page.locator('.avatar-code').getByRole('link', { name: 'Food Fight' })).toHaveAttribute('href', /projects\/food-fight\//);
   await page.emulateMedia({ reducedMotion: 'reduce' });
   await expect(cursor).toBeHidden();
+  await page.getByRole('button', { name: 'Explore Food Fight system' }).click();
+  const explorer = page.getByRole('region', { name: 'Interactive project systems' });
+  const selected = explorer.getByRole('radio', { name: 'Food Fight' });
+  await expect(selected).toBeChecked();
+  await expect(selected).toBeFocused();
+  await expect(explorer.getByRole('link', { name: 'Read case study' })).toHaveAttribute('href', /projects\/food-fight\//);
   await expect(page.locator('[data-avatar]')).not.toHaveAttribute('data-presenting', '');
 });
