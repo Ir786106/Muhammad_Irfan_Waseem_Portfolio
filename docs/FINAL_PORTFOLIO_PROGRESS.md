@@ -17,3 +17,9 @@ Add verified screenshots and demos as they become available. Review public-facin
 [Recruiter QA baseline](RECRUITER_QA_REPORT.md)
 
 Astro check, lint and the 20-page prefixed production build passed. The internal link and asset validator also passed. Corrected an extra placeholder record introduced when adding the contact screenshot.
+
+## Milestone 3 working checkpoint
+
+Awakening now stages a phone for Food Fight, an industrial sequence for Ittehad, and a task board for TeamSync. They are original geometric exhibits. The origin sculpture recedes as the selected project takes focus. The existing case-study links, static fallback, deferred initialization and offscreen scheduling remain in place. Astro check, lint, prefixed 20-page build and internal asset validation passed. Chrome software WebGL rendered all three selections and verified their case-study links. Local captures are in test-results/exhibit-*.png.
+
+The signature portrait-to-product transition and final publication remain open.
