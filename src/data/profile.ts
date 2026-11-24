@@ -5,3 +5,5 @@ export const experience = [
  {date:'1 April — 30 May 2026',title:'Android App Developer Intern',org:'ARCH Technology · Completed',body:'Flutter and Dart feature development within a team workflow.'},
  {date:'Expected graduation · 2027',title:'Computer Science',org:'COMSATS University Islamabad, Sahiwal Campus',body:'University study alongside hands-on mobile and web development.'}
 ];
+export const availability = 'Open to freelance projects and internships';
+export const testimonials: { quote: string; name: string; role: string }[] = [];

@@ -226,3 +226,4 @@
   from { transform: translateY(9px); }
 }
 .capture-slot { display:grid; place-content:center; height:100%; padding:2rem; text-align:center; background:var(--surface); color:var(--text); }
+ :root:not([data-theme=light]) { --bg: #080b12; }

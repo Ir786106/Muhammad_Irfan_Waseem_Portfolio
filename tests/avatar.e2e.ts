@@ -30,7 +30,7 @@ test('avatar tracks the cursor and resets for reduced motion', async ({ page }) 
 test('context cursor and coding panel keep real links accessible', async ({ page }) => {
   await page.setViewportSize({ width: 1440, height: 1000 });
   await page.goto('/');
-  const projects = page.getByRole('link', { name: 'Explore my projects' });
+  const projects = page.getByRole('link', { name: 'View projects' });
   await projects.hover({ position: { x: 12, y: 12 } });
   const cursor = page.locator('.context-cursor');
   await expect(cursor).toBeVisible();
