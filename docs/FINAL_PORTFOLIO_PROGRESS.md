@@ -2,7 +2,7 @@
 
 ## Current branch
 
-The recruiter upgrade is on feat/recruiter-portfolio in draft [PR #6](https://github.com/Ir786106/Muhammad_Irfan_Waseem_Portfolio/pull/6). The portfolio remains on GitHub Pages. This draft has not been published.
+The recruiter upgrade is on feat/recruiter-portfolio and was merged through [PR #6](https://github.com/Ir786106/Muhammad_Irfan_Waseem_Portfolio/pull/6). The portfolio remains on GitHub Pages. GitHub Pages deployed commit 9eeee9eca5c958c30ba267eaecbb2b492e50fb1a.
 
 ## In progress
 
@@ -31,3 +31,7 @@ The Experience page lists four Lahore Nexa IT course and workshop certificates t
 ## Final release validation
 
 All 13 Chrome tests passed after updating the no-JavaScript explorer test to use the current accessible region. The case-study capture slots remain labeled pending authentic media.
+
+## Publication verified
+
+[GitHub Actions](https://github.com/Ir786106/Muhammad_Irfan_Waseem_Portfolio/actions/runs/45435846260) built and deployed the release. Live Chrome at 390px verified the portrait-to-product handoff, Food Fight case study, Experience certificates, résumé link and Developer Portfolio gallery. Outstanding owner-supplied media remain in the checklist.
