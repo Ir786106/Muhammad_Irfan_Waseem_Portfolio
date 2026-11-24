@@ -11,5 +11,24 @@ function filter(){let count=0;document.querySelectorAll<HTMLElement>('[data-proj
 search?.addEventListener('input',filter);document.querySelectorAll<HTMLButtonElement>('[data-filter]').forEach(button=>button.addEventListener('click',()=>{category=button.dataset.filter||'all';document.querySelectorAll('[data-filter]').forEach(b=>b.setAttribute('aria-pressed',String(b===button)));filter();}));
 const form=document.querySelector<HTMLFormElement>('#contact-form');form?.addEventListener('submit',async e=>{e.preventDefault();if(!form.reportValidity())return;const status=document.querySelector<HTMLElement>('#form-status');const button=form.querySelector<HTMLButtonElement>('button[type=submit]');const data=new FormData(form);if(data.get('_gotcha'))return;if(button)button.disabled=true;if(status)status.textContent='Sending your message…';try{const response=await fetch(form.action,{method:'POST',body:data,headers:{Accept:'application/json'},signal:AbortSignal.timeout(15000)});if(!response.ok)throw new Error('Submission failed');if(status)status.textContent='Your message was accepted. Thank you for getting in touch.';form.reset();}catch{if(status)status.textContent='Your message could not be sent. Please try again or use the email link.';}finally{if(button)button.disabled=false;}});
 const progress=document.querySelector<HTMLElement>('.progress');addEventListener('scroll',()=>{if(progress)progress.style.transform=`scaleX(${scrollY/Math.max(1,document.documentElement.scrollHeight-innerHeight)})`;},{passive:true});
-if(!reduced.matches){import('gsap').then(({gsap})=>{gsap.from('.hero-enter',{y:20,duration:.65,stagger:.08,ease:'power2.out',clearProps:'transform'});}).catch(()=>{});}
-const sculpture=document.querySelector<HTMLElement>('#sculpture');if(sculpture&&!reduced.matches&&matchMedia('(min-width: 900px) and (pointer:fine)').matches){setTimeout(()=>import('./three').then(m=>m.mountScene(sculpture)).catch(()=>{}),700);}
+const cinematicMotion = matchMedia('(min-width: 900px) and (pointer: fine)');
+if (!reduced.matches && cinematicMotion.matches) {
+  const heroElements = document.querySelectorAll('.hero-enter');
+  if (heroElements.length) {
+    import('gsap').then(({ gsap }) => {
+      if (!reduced.matches) gsap.from(heroElements, { y: 20, duration: .65, stagger: .08, ease: 'power2.out', clearProps: 'transform' });
+    }).catch(() => {});
+  }
+
+  const sculpture = document.querySelector<HTMLElement>('#sculpture');
+  if (sculpture) {
+    const observer = new IntersectionObserver(([entry]) => {
+      if (!entry.isIntersecting) return;
+      observer.disconnect();
+      if (!reduced.matches && cinematicMotion.matches) {
+        import('./three').then(({ mountScene }) => mountScene(sculpture)).catch(() => {});
+      }
+    }, { rootMargin: '200px' });
+    observer.observe(sculpture);
+  }
+}

@@ -1,0 +1,70 @@
+<span class="context-cursor" aria-hidden="true" hidden></span>
+<style is:global>
+  .context-cursor {
+    position: fixed;
+    inset: 0 auto auto 0;
+    z-index: 110;
+    pointer-events: none;
+    padding: .22rem .55rem;
+    border: 1px solid #9bdedc;
+    background: #121b28;
+    color: #e2fbfa;
+    font: 600 .63rem/1.4 Inter, sans-serif;
+    letter-spacing: .09em;
+  }
+  @media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+    .personal-intro .actions a, .work-section .project-art {
+      translate: var(--pointer-x, 0px) var(--pointer-y, 0px);
+      rotate: var(--pointer-roll, 0deg);
+      transition: translate .2s ease-out, rotate .2s ease-out;
+    }
+  }
+</style>
+<script>
+  const cursor = document.querySelector<HTMLElement>('.context-cursor');
+  const motion = matchMedia('(hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference)');
+  const interactive = '.personal-intro .actions a, .work-section .project-art, .hero-profile-links a, .avatar-code summary';
+  if (cursor) {
+    let target: HTMLElement | null = null;
+    let frame = 0;
+    let x = 0;
+    let y = 0;
+    const reset = () => {
+      cursor.hidden = true;
+      target?.style.removeProperty('--pointer-x');
+      target?.style.removeProperty('--pointer-y');
+      target?.style.removeProperty('--pointer-roll');
+      target = null;
+    };
+    document.addEventListener('pointermove', event => {
+      if (!motion.matches || event.pointerType !== 'mouse') return;
+      const next = event.target instanceof Element ? event.target.closest<HTMLElement>(interactive) : null;
+      if (next !== target) {
+        reset();
+        target = next;
+      }
+      if (!target) return;
+      x = event.clientX;
+      y = event.clientY;
+      if (frame) return;
+      frame = requestAnimationFrame(() => {
+        frame = 0;
+        if (!target || !motion.matches || document.hidden) return;
+        const bounds = target.getBoundingClientRect();
+        const dx = Math.max(-1, Math.min(1, (x - bounds.left) / bounds.width * 2 - 1));
+        const dy = Math.max(-1, Math.min(1, (y - bounds.top) / bounds.height * 2 - 1));
+        const project = target.matches('.project-art');
+        target.style.setProperty('--pointer-x', dx * 4 + 'px');
+        target.style.setProperty('--pointer-y', dy * 3 + 'px');
+        if (project) target.style.setProperty('--pointer-roll', dx * 1.2 + 'deg');
+        cursor.textContent = project ? 'VIEW' : target.matches('[href*="contact"]') ? 'CONTACT' : target.matches('summary, [href="#work"]') ? 'EXPLORE' : 'OPEN';
+        cursor.style.transform = 'translate(' + (x + 14) + 'px,' + (y + 18) + 'px)';
+        cursor.hidden = x > innerWidth - 94 || y > innerHeight - 46;
+      });
+    }, { passive: true });
+    document.documentElement.addEventListener('pointerleave', reset);
+    document.addEventListener('visibilitychange', reset);
+    window.addEventListener('scroll', reset, { passive: true });
+    motion.addEventListener('change', reset);
+  }
+</script>
