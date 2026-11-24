@@ -32,6 +32,8 @@ jobs:
           if [ "${REPOSITORY,,}" = "${OWNER,,}.github.io" ]; then export BASE_PATH="/"; fi
           npm run build
           node scripts/check-pages.mjs
+      - name: Publish V4 homepage and assets
+        run: cp -a site/. dist/
       - uses: actions/upload-pages-artifact@v3
         with:
           path: dist

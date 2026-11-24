@@ -1,0 +1,319 @@
+export const projectFallback = [
+  {
+    "id": "food-fight",
+    "title": "Food Fight",
+    "category": "mobile",
+    "status": "Published release · v1.8.0 stable",
+    "featured": true,
+    "problem": "Restaurant orders pass between customers, kitchen staff and delivery riders.",
+    "role": "Built the Flutter ordering and fulfillment workflows with Firebase.",
+    "result": "The verified v1.8.0 stable APK and Windows installer are available. Preview v1.8.2 Build 19 is also published separately.",
+    "description": "Flutter food ordering and delivery app with customer, admin and fulfillment workflows.",
+    "tags": [
+      "Flutter",
+      "Firebase",
+      "Google Maps"
+    ],
+    "features": [
+      "Customer ordering and menu browsing",
+      "Admin restaurant and order management",
+      "Delivery and fulfillment workflows"
+    ],
+    "links": {
+      "repo": "https://github.com/Ir786106/food-fight-app",
+      "stable": "https://github.com/Ir786106/food-fight-app/releases/tag/v1.8.0",
+      "preview": "https://github.com/Ir786106/food-fight-app/releases/tag/preview-1.8.2%2B19",
+      "apk": "https://github.com/Ir786106/food-fight-app/releases/download/v1.8.0/FoodFight_v1.8.0_release.apk",
+      "windows": "https://github.com/Ir786106/food-fight-app/releases/download/v1.8.0/FoodFight-1.8.0-Windows-x64-Setup.exe",
+      "previewApk": "https://github.com/Ir786106/food-fight-app/releases/download/preview-1.8.2%2B19/FoodFight_v1.8.2_release.apk",
+      "previewWindows": "https://github.com/Ir786106/food-fight-app/releases/download/preview-1.8.2%2B19/FoodFight-1.8.2-Windows-x64-Setup.exe",
+      "checksum": "https://github.com/Ir786106/food-fight-app/releases/download/v1.8.0/FoodFight_v1.8.0_release.apk.sha256",
+      "releaseHistory": "https://github.com/Ir786106/food-fight-app/releases",
+      "architecture": "https://github.com/Ir786106/food-fight-app/blob/main/docs/images/food-fight-architecture.png"
+    },
+    "label": "SOFTWARE & SYSTEMS",
+    "art": "food",
+    "artWord": "FOOD FIGHT",
+    "artLabel": "Ordering, connected.",
+    "imageAlt": "Earlier portfolio homepage"
+  },
+  {
+    "id": "mandi-pro-erp",
+    "title": "Mandi Pro ERP",
+    "category": "mobile erp",
+    "status": "Working source repository",
+    "featured": true,
+    "problem": "Grain-market businesses need digital records for stock, trade and finance.",
+    "role": "Built a cross-platform Flutter ERP interface backed by Firebase.",
+    "result": "The public repository includes stock, purchase, sales, party ledger, role and reporting workflows.",
+    "description": "Flutter and Firebase ERP for grain inventory, purchases, sales and ledgers.",
+    "tags": [
+      "Flutter",
+      "Firebase",
+      "ERP"
+    ],
+    "features": [
+      "Inventory and stock management",
+      "Purchase and sales entries",
+      "Customer, supplier and cash ledgers"
+    ],
+    "links": {
+      "repo": "https://github.com/Ir786106/mandi-pro-erp"
+    },
+    "label": "ERP & OPERATIONS",
+    "art": "grain",
+    "artWord": "MANDI PRO ERP",
+    "artLabel": "Connected by design",
+    "imageAlt": "Earlier portfolio homepage"
+  },
+  {
+    "id": "teamsync",
+    "title": "TeamSync SaaS",
+    "category": "web",
+    "status": "Working prototype",
+    "featured": true,
+    "problem": "Teams need workspace isolation, assigned tasks and project visibility.",
+    "role": "Developed the MERN and TypeScript project structure and product workflows.",
+    "result": "The repository provides authentication, workspaces, projects, tasks, roles and filtering.",
+    "description": "A TypeScript multi-tenant MERN platform for workspaces and project tracking.",
+    "tags": [
+      "TypeScript",
+      "MERN",
+      "Mongoose"
+    ],
+    "features": [
+      "Google and email authentication",
+      "Multi-workspace and role management",
+      "Projects, tasks and analytics"
+    ],
+    "links": {
+      "repo": "https://github.com/Ir786106/teamsync-saas"
+    },
+    "label": "SOFTWARE & SYSTEMS",
+    "art": "team",
+    "artWord": "TEAMSYNC SAAS",
+    "artLabel": "A shared sense of progress.",
+    "imageAlt": "Earlier portfolio homepage"
+  },
+  {
+    "id": "hire-ready",
+    "title": "HireReady PK / AI Interview Pro",
+    "category": "web ai",
+    "status": "Phase 1 in development",
+    "featured": false,
+    "problem": "Pakistani candidates need guided practice for technical and behavioral interviews.",
+    "role": "Built the monorepo foundation for assessments and AI-assisted interview preparation.",
+    "result": "The public repository currently documents the Phase 1 foundation; planned video and ML stages remain roadmap items.",
+    "description": "AI-assisted interview preparation with quizzes, aptitude tests and interview stages.",
+    "tags": [
+      "TypeScript",
+      "Gemini AI",
+      "Tailwind CSS"
+    ],
+    "features": [
+      "Authentication and company data",
+      "MCQ quiz and aptitude stages",
+      "AI-generated questions with fallback bank"
+    ],
+    "links": {
+      "repo": "https://github.com/Ir786106/ai-interview-pro"
+    },
+    "label": "SOFTWARE & SYSTEMS",
+    "art": "grain",
+    "artWord": "HIREREADY PK / AI INTERVIEW PRO",
+    "artLabel": "Connected by design",
+    "imageAlt": "Earlier portfolio homepage"
+  },
+  {
+    "id": "ittehad-food-industries",
+    "title": "MillX ERP — Smart ERP & Supply Chain Management System",
+    "category": "mobile erp",
+    "status": "Academic final-year project",
+    "featured": true,
+    "problem": "Rice-industry operations need linked procurement, processing, inventory and sales records.",
+    "role": "Developed a Flutter supply-chain interface with Firebase and role-based modules.",
+    "result": "The public source documents the operating workflows. Commercial deployment and adoption are unverified.",
+    "description": "Rice-industry ERP covering paddy procurement, inventory, processing, orders and logistics. The source repository uses the earlier Ittehad Food Industries name.",
+    "tags": [
+      "Flutter",
+      "Firebase",
+      "Supply Chain"
+    ],
+    "features": [
+      "Paddy procurement and supplier records",
+      "Factory processing and rice inventory",
+      "Role-based logistics and sales reporting"
+    ],
+    "links": {
+      "repo": "https://github.com/Ir786106/itthad_food_industries"
+    },
+    "label": "ERP & OPERATIONS",
+    "art": "erp",
+    "artWord": "ITTEHAD FOOD INDUSTRIES",
+    "artLabel": "A clearer supply chain.",
+    "imageAlt": "Earlier portfolio homepage"
+  },
+  {
+    "id": "saqib",
+    "title": "Saqib Shop",
+    "category": "mobile erp",
+    "status": "Working source repository",
+    "featured": false,
+    "problem": "Small retailers need digital cash records, inventory and sales workflows.",
+    "role": "Built a Flutter POS and digital ledger with Firebase synchronization.",
+    "result": "The public repository describes digital khata, party records, sales and reporting modules.",
+    "description": "Digital ledger and POS mini-ERP for inventory, parties and daily cash flow.",
+    "tags": [
+      "Flutter",
+      "Firebase",
+      "POS"
+    ],
+    "features": [
+      "Digital customer and supplier ledger",
+      "Point-of-sale and invoice workflow",
+      "Stock, sales and cash-flow reporting"
+    ],
+    "links": {
+      "repo": "https://github.com/Ir786106/saqib_shop"
+    },
+    "label": "ERP & OPERATIONS",
+    "art": "grain",
+    "artWord": "SAQIB SHOP",
+    "artLabel": "Connected by design",
+    "imageAlt": "Earlier portfolio homepage"
+  },
+  {
+    "id": "previous-portfolio",
+    "title": "Developer Portfolio",
+    "category": "web",
+    "status": "Published website",
+    "featured": false,
+    "problem": "Recruiters need an accessible overview of mobile work.",
+    "role": "Built the earlier portfolio with HTML, CSS and JavaScript.",
+    "result": "The earlier portfolio provides project browsing, résumé downloads and contact links.",
+    "description": "A vanilla JavaScript portfolio for my mobile development work.",
+    "tags": [
+      "HTML",
+      "CSS",
+      "JavaScript"
+    ],
+    "links": {
+      "repo": "https://github.com/Ir786106/Muhammad_Irfan_Waseem_Portfolio"
+    },
+    "label": "SOFTWARE & SYSTEMS",
+    "features": [],
+    "art": "grain",
+    "artWord": "DEVELOPER PORTFOLIO",
+    "artLabel": "Connected by design",
+    "image": "assets/img/portfolio-home.webp",
+    "imageAlt": "Earlier portfolio homepage",
+    "gallery": [
+      {
+        "image": "assets/img/portfolio-home.webp",
+        "imageAlt": "Developer Portfolio · home screen"
+      },
+      {
+        "image": "assets/img/portfolio-mobile.webp",
+        "imageAlt": "Developer Portfolio · mobile screen"
+      },
+      {
+        "image": "assets/img/portfolio-projects.webp",
+        "imageAlt": "Developer Portfolio · projects screen"
+      }
+    ]
+  },
+  {
+    "id": "eduquest",
+    "title": "EduQuest Quiz Game",
+    "category": "web",
+    "status": "Playable demo",
+    "featured": false,
+    "problem": "Learners need different ways to practise the same subject.",
+    "role": "Built the browser interface for selecting a subject and game mode.",
+    "result": "Visitors can explore the subject picker and start a mathematics game as a guest.",
+    "description": "A browser learning game with subject paths, multiple-choice quizzes and timed challenges.",
+    "tags": [
+      "JavaScript",
+      "HTML",
+      "CSS"
+    ],
+    "links": {
+      "repo": "https://github.com/Ir786106/Quiz-game",
+      "demo": "https://ir786106.github.io/Quiz-game/quiz-game/index.html"
+    },
+    "label": "SOFTWARE & SYSTEMS",
+    "features": [],
+    "art": "grain",
+    "artWord": "EDUQUEST QUIZ GAME",
+    "artLabel": "Connected by design",
+    "image": "assets/img/eduquest-home.webp",
+    "imageAlt": "EduQuest guest home screen",
+    "gallery": [
+      {
+        "image": "assets/img/eduquest-home.webp",
+        "imageAlt": "EduQuest Quiz Game · home screen"
+      },
+      {
+        "image": "assets/img/eduquest-modes.webp",
+        "imageAlt": "EduQuest Quiz Game · modes screen"
+      },
+      {
+        "image": "assets/img/eduquest-subjects.webp",
+        "imageAlt": "EduQuest Quiz Game · subjects screen"
+      }
+    ]
+  },
+  {
+    "id": "python-logic-building",
+    "title": "Python Logic Building",
+    "category": "education open-source",
+    "status": "Practice collection",
+    "featured": false,
+    "problem": "Algorithm exercises need small, inspectable examples.",
+    "role": "Wrote Python scripts to practise search and business logic.",
+    "result": "The repository collects working examples for further study.",
+    "description": "Python examples covering algorithms and business logic.",
+    "tags": [
+      "Python",
+      "Algorithms"
+    ],
+    "links": {
+      "repo": "https://github.com/Ir786106/python-logic-building"
+    },
+    "label": "SOFTWARE & SYSTEMS",
+    "features": [],
+    "art": "grain",
+    "artWord": "PYTHON LOGIC BUILDING",
+    "artLabel": "Connected by design",
+    "imageAlt": "Earlier portfolio homepage"
+  },
+  {
+    "id": "learn-dart",
+    "title": "Learn Dart Step by Step",
+    "category": "education open-source",
+    "status": "Learning repository",
+    "featured": false,
+    "problem": "Dart concepts are easier to learn through small, inspectable examples.",
+    "role": "Created practice code and short lessons while progressing through Dart.",
+    "result": "The repository collects basic-to-advanced Dart exercises and notes.",
+    "description": "A structured collection of Dart practice code and learning notes.",
+    "tags": [
+      "Dart",
+      "Programming",
+      "Learning"
+    ],
+    "features": [
+      "Basic Dart examples",
+      "Progressive practice code",
+      "Dart learning notes"
+    ],
+    "links": {
+      "repo": "https://github.com/Ir786106/learn-dart-step-by-step"
+    },
+    "label": "SOFTWARE & SYSTEMS",
+    "art": "grain",
+    "artWord": "LEARN DART STEP BY STEP",
+    "artLabel": "Connected by design",
+    "imageAlt": "Earlier portfolio homepage"
+  }
+];

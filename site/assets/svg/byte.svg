@@ -1,0 +1,13 @@
+<svg class="robot" viewBox="0 0 440 400" role="img" aria-label="Byte, a lavender robot in a purple hoodie, coding at a laptop" xmlns="http://www.w3.org/2000/svg">
+<g stroke="#211735" stroke-width="4.5" stroke-linejoin="round" stroke-linecap="round">
+<ellipse cx="225" cy="346" rx="164" ry="16" fill="#d3c2ea" stroke="none"/>
+<g class="float"><path d="M186 205 Q138 215 130 293 L285 307 Q301 240 253 211Z" fill="#7547f5"/><path d="M175 214 Q206 254 252 214 Q219 200 175 214Z" fill="#ac91ff"/><path d="M201 233l-4 20m27-20 1 18" fill="none"/>
+<g transform="rotate(-7 214 150)"><path d="M215 100V65" fill="none"/><circle cx="215" cy="54" r="13" fill="#ff967f"/><circle cx="211" cy="50" r="4" fill="#fff" stroke="none"/>
+<rect x="111" y="136" width="27" height="44" rx="12" fill="#ad89f0"/><rect x="288" y="136" width="25" height="43" rx="11" fill="#ad89f0"/>
+<rect x="124" y="89" width="177" height="131" rx="42" fill="#ac8bdf"/><rect x="124" y="84" width="171" height="126" rx="40" fill="#eee3ff"/><path d="M141 111q6-14 26-16" fill="none" stroke="#fff" stroke-width="6"/>
+<rect x="141" y="116" width="141" height="72" rx="28" fill="#282039"/><g class="eyes" fill="#83f2d8" stroke="none"><ellipse cx="181" cy="150" rx="9" ry="16"/><ellipse cx="242" cy="150" rx="9" ry="16"/></g><path d="M203 163q8 8 15-1" stroke="#83f2d8" stroke-width="3" fill="none"/><path d="M151 196h13m4 0h4" stroke="#aa8eca" stroke-width="3"/></g>
+<path class="arm" d="M153 236q-21 0-30 28-5 23 20 24l37-15-8-24-16 6Z" fill="#865af7"/>
+<g class="desk"><path d="m57 298 249-12 86 28-243 21Z" fill="#f8c1a7"/><path d="m57 298 92 37 243-21v10l-242 23-93-39Z" fill="#db988b"/>
+<path d="m173 293 31-94q2-7 9-7l132 7q7 0 4 8l-30 97Z" fill="#a996d0"/><path d="m181 292 29-91 132 6-28 89Z" fill="#c9b8e5" stroke="none"/><path d="m173 293-41 6 130 17 57-12Z" fill="#eee4fb"/><path d="m256 240-10 8 8 5m20-12 8 6-12 7m-6-18-7 21" stroke="#624694" stroke-width="4" fill="none"/></g>
+<g class="phone" style="display:none"><rect x="245" y="219" width="58" height="91" rx="9" fill="#251d36"/><rect x="251" y="228" width="46" height="65" rx="4" fill="#8ae8cd"/><path d="m260 255 8 8 16-20" fill="none"/></g></g>
+<g fill="#ff936f"><path d="m82 135 5 14 14 5-14 5-5 14-5-14-14-5 14-5Z"/></g><path d="m343 106 4 10 10 4-10 4-4 10-4-10-10-4 10-4Z" fill="#8be4ce"/></g></svg>
