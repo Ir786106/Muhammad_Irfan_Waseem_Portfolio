@@ -1,4 +1,5 @@
 ---
+import DeveloperAvatar from '../components/DeveloperAvatar.astro';
 import Base from '../layouts/Base.astro';import Sculpture from '../components/Sculpture.astro';import ProjectCard from '../components/ProjectCard.astro';import {projects} from '../data/projects';import {url} from '../lib/url';import {profile} from '../data/profile';
 const systems = [
   {id:'origin', label:'Origin', detail:'An idea becomes structure. Explore how that structure changes with the work it supports.'},
@@ -19,9 +20,7 @@ const systems = [
     </div>
     <div class="hero-profile-links"><a href={url('contact/')}>Let’s connect</a><a href={profile.github}>GitHub</a></div>
   </div>
-  <figure class="personal-portrait hero-enter">
-    <img src={url('images/Irfan.webp')} srcset={`${url('images/portrait-small.webp')} 400w, ${url('images/Irfan.webp')} 640w`} sizes="(max-width: 660px) 56vw, 38vw" width="640" height="800" alt="Muhammad Irfan Waseem in a navy suit and burgundy tie" fetchpriority="high" />
-  </figure>
+  <DeveloperAvatar/>
 </section>
 <section class="work-section wrap" id="work" tabindex="-1"><div class="section-head"><div><p class="eyebrow">SELECTED WORK</p><h2>Real problems.<br/><span class="muted">Considered solutions.</span></h2></div><a class="text-link" href={url('projects/')}>View all projects <span class="count">{projects.length}</span></a></div><div class="project-grid">{projects.filter(p=>p.featured).map((p,i)=><ProjectCard project={p} large={i===0}/>)}</div></section>
 <section class="hero wrap cinema-hero portfolio-explorer" aria-label="Interactive project systems">
