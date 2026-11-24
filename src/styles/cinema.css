@@ -227,3 +227,8 @@
 }
 .capture-slot { display:grid; place-content:center; height:100%; padding:2rem; text-align:center; background:var(--surface); color:var(--text); }
  :root:not([data-theme=light]) { --bg: #080b12; }
+
+.product-launch { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 13rem), 1fr)); gap: .75rem; list-style: none; padding: 0; }
+.product-launch li { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: .75rem; padding: .75rem; border: 1px solid var(--line); }
+.product-launch button { min-height: 44px; padding-inline: .75rem; border: 1px solid var(--line); color: var(--text); background: var(--surface); }
+.product-launch button:hover { border-color: var(--accent); }

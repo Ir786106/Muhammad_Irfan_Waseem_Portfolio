@@ -77,7 +77,7 @@ for (let column = 0; column < 3; column++) {
     block(workspace, [x, .48 - task * .42, .1], [.57, .25, .08], column === 2 ? 'cyan' : 'violet');
   }
 }
-Object.values(exhibits).forEach(exhibit => props.add(exhibit));
+Object.values(exhibits).forEach(exhibit => { exhibit.visible = false; props.add(exhibit); });
 
 const modes = {
   origin: {spread:.44, stagger:0, twist:.13, tint:0xff6740},
@@ -94,7 +94,9 @@ function readMode() {
   mode = modes[value as keyof typeof modes] ?? modes.origin;
   tint.setHex(mode.tint);
   Object.entries(exhibits).forEach(([id, exhibit]) => {
-    exhibit.visible = id === value;
+    const selected = id === value;
+    if (selected && !exhibit.visible) exhibit.scale.setScalar(.72);
+    exhibit.visible = selected;
   });
 }
 readMode();
@@ -121,6 +123,9 @@ function render(time: number) {
   const exhibitActive = props.children.some(exhibit => exhibit.visible);
   group.scale.lerp(plateScale.setScalar(exhibitActive ? .44 : 1), .08);
   group.position.z += ((exhibitActive ? -1.25 : 0) - group.position.z) * .08;
+  for (const exhibit of props.children) {
+    if (exhibit.visible) exhibit.scale.lerp(plateScale.setScalar(1), .09);
+  }
   props.rotation.x += ((-.08 + y) - props.rotation.x) * .07;
   props.rotation.y += ((.22 + x) - props.rotation.y) * .07;
   group.children.forEach((plate, index) => {

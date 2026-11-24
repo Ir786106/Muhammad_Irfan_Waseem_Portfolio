@@ -23,25 +23,30 @@ const systems = [
   </div>
   <DeveloperAvatar/>
   <details class="avatar-code">
-    <summary>Explore how my projects fit together</summary>
+    <summary>From portrait to product</summary>
     <ol>
       <li><strong>Mobile interface</strong> — Food Fight uses Flutter for ordering and delivery workflows.</li>
       <li><strong>Connected services</strong> — Firebase handles identity and role-scoped operations.</li>
       <li><strong>Business data</strong> — Ittehad explores procurement, inventory and distribution.</li>
     </ol>
-    <div class="actions">{projects.filter(project => project.featured).map(project =>
-      <a class="text-link" href={url(`projects/${project.id}/`)}>{project.title}</a>
-    )}</div>
+    <ul class="product-launch">
+      {projects.filter(project => project.featured && systems.some(system => system.id === project.id)).map(project =>
+        <li>
+          <a class="text-link" href={url(`projects/${project.id}/`)}>{project.title}</a>
+          <button type="button" data-launch-system={project.id} aria-label={`Explore ${project.title} system`} hidden>See system</button>
+        </li>
+      )}
+    </ul>
   </details>
   <PortfolioCursor/>
 </section>
 <section class="work-section wrap" id="work" tabindex="-1"><div class="section-head"><div><p class="eyebrow">SELECTED WORK</p><h2>Real problems.<br/><span class="muted">Considered solutions.</span></h2></div><a class="text-link" href={url('projects/')}>View all projects <span class="count">{projects.length}</span></a></div><div class="project-grid">{projects.filter(p=>p.featured).map((p,i)=><ProjectCard project={p} large={i===0}/>)}</div></section>
-<section class="hero wrap cinema-hero portfolio-explorer" aria-label="Interactive project systems">
+<section class="hero wrap cinema-hero portfolio-explorer" id="project-systems" aria-label="Interactive project systems">
   <Sculpture/>
   <aside class="system-control" aria-label="System explorer">
     <p class="eyebrow">THE AWAKENING</p>
     <fieldset>
-      <legend>Explore a software system</legend>
+      <legend>Conceptual models of my software systems</legend>
       {systems.map(system => <label><input type="radio" name="hero-system" value={system.id} checked={system.id==='origin'}/><span>{system.label}</span></label>)}
     </fieldset>
     {systems.map(system => <div class="system-detail" data-system-detail={system.id}>
@@ -99,6 +104,20 @@ const systems = [
 </section></Base>
 
 <script>
+  const explorer = document.querySelector('#project-systems');
+  if (explorer) {
+    const controls = Array.from(explorer.querySelectorAll<HTMLInputElement>('input[name="hero-system"]'));
+    document.querySelectorAll<HTMLButtonElement>('[data-launch-system]').forEach(button => {
+      const control = controls.find(input => input.value === button.dataset.launchSystem);
+      if (!control) return;
+      button.hidden = false;
+      button.addEventListener('click', () => {
+        if (!control.checked) control.click();
+        control.focus({ preventScroll: true });
+        explorer.scrollIntoView({ block: 'start' });
+      });
+    });
+  }
   const motion = matchMedia('(prefers-reduced-motion: no-preference)');
   if (motion.matches && 'IntersectionObserver' in window) {
     const observer = new IntersectionObserver(entries => {
