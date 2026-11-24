@@ -57,12 +57,13 @@ const systems = [
   </aside>
 </section>
 <section class="manifesto wrap personal-about" id="about">
+  <img class="about-office-portrait" src={url('images/irfan-about.webp')} alt="Muhammad Irfan Waseem seated in an office chair wearing a charcoal blazer, black shirt and silver wristwatch" width="1086" height="1448" loading="lazy" decoding="async" />
 
   <div class="editorial-bio">
     <p class="eyebrow">ABOUT ME</p>
-    <h2>Good software starts with <em>understanding people.</em></h2>
+    <h2>Beyond the Code — <em>The Developer Behind the Work</em></h2>
     <div class="manifesto-bottom">
-      <p>I’m a Computer Science student and Flutter developer. My work connects everyday actions like placing an order, managing stock and tracking a delivery with the systems behind the screen.</p>
+      <p>I’m Muhammad Irfan Waseem, a software developer and Computer Science student at COMSATS University Islamabad, Sahiwal Campus. I use Flutter, Dart, Firebase and modern web technologies to build practical, user-focused software. Through Food Fight and MillX ERP, I explore how thoughtful architecture and design can simplify business operations.</p>
       <div class="closing-actions">
         <a class="text-link" href={url('about/')}>More about me</a>
         <a class="text-link" href={url('design/')}>See my graphic design work</a>
@@ -130,3 +131,9 @@ const systems = [
     document.querySelectorAll('#work .project-card').forEach(card => observer.observe(card));
   }
 </script>
+
+<style>
+  #about.personal-about { display: grid; grid-template-columns: minmax(0, .8fr) minmax(0, 1.2fr); gap: clamp(1.5rem, 5vw, 5rem); align-items: center; }
+  .about-office-portrait { display: block; width: 100%; height: auto; border-radius: 1rem; }
+  @media (max-width: 760px) { #about.personal-about { grid-template-columns: 1fr; } .about-office-portrait { max-width: 30rem; } }
+</style>
