@@ -68,11 +68,16 @@ test('design gallery serves four distinct images on desktop and mobile', async (
 });
 
 test('screenshots open in a keyboard-dismissible lightbox', async ({ page }) => {
-  await page.goto('/projects/eduquest/');
+  await page.goto('/projects/previous-portfolio/');
   const screenshot = page.locator('.case-screenshots figure a').first();
+  await expect(page.locator('.case-screenshots figure a')).toHaveCount(4);
   await screenshot.focus();
   await page.keyboard.press('Enter');
   await expect(page.getByRole('dialog', { name: 'Project screenshot' })).toBeVisible();
+  await page.getByRole('button', { name: 'Next image' }).click();
+  await expect(page.locator('.gallery-caption')).toContainText('2 of 4');
+  await page.keyboard.press('ArrowLeft');
+  await expect(page.locator('.gallery-caption')).toContainText('1 of 4');
   await page.keyboard.press('Escape');
   await expect(screenshot).toBeFocused();
   await expect(page.getByRole('dialog')).toHaveCount(0);

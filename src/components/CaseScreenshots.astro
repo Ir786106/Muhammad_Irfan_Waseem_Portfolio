@@ -20,8 +20,6 @@ const captures: Record<string, string[]> = {
   'mandi-pro-erp': ['Dashboard', 'Transaction', 'Ledger', 'Report'],
   'hire-ready': ['Interview setup', 'Question', 'Completed session', 'Feedback'],
   saqib: ['Product list', 'Product detail', 'Cart', 'Order flow'],
-  'previous-portfolio': [
-    { file: 'portfolio-contact.webp', caption: 'Portfolio contact page with direct email and inquiry form fields', width: 1280, height: 800 },'Project detail or contact'],
   eduquest: ['Active quiz or results'],
   'python-logic-building': ['Repository overview', 'Exercise prompt', 'Solution', 'Terminal output'],
   'learn-dart': ['Repository overview', 'Lesson', 'Runnable example', 'Program output'],
@@ -43,7 +41,17 @@ if (slug === 'previous-portfolio') images.unshift({file:'portfolio-home.webp',ca
     ))}
     {captures[slug]?.map(caption => <p class="notice">[ADD: {caption} screenshot]</p>)}
   </div>
-  <dialog aria-label="Project screenshot"><button type="button" autofocus>Close image</button><img alt="" /></dialog>
+  {images.length > 0 && <dialog aria-label="Project screenshot">
+    <div class="gallery-controls">
+      <button type="button" data-action="close" autofocus>Close image</button>
+      {images.length > 1 && <>
+        <button type="button" data-action="previous">Previous image</button>
+        <button type="button" data-action="next">Next image</button>
+      </>}
+    </div>
+    <img alt="" />
+    <p class="gallery-caption" aria-live="polite"></p>
+  </dialog>}
 </section>
 <style>
   .case-screenshots { padding-block: clamp(2rem, 6vw, 5rem); }
@@ -58,19 +66,41 @@ if (slug === 'previous-portfolio') images.unshift({file:'portfolio-home.webp',ca
   const gallery = document.querySelector('.case-screenshots');
   const dialog = gallery?.querySelector('dialog');
   const image = dialog?.querySelector('img');
-  if (dialog && image && typeof dialog.showModal === 'function') {
-    dialog.querySelector('button')?.addEventListener('click', () => dialog.close());
-    gallery?.querySelectorAll<HTMLAnchorElement>('figure a').forEach(link => link.addEventListener('click', event => {
-      if (event.ctrlKey || event.metaKey || event.shiftKey || event.altKey) return;
-      event.preventDefault();
+  const caption = dialog?.querySelector('.gallery-caption');
+  const links = Array.from(gallery?.querySelectorAll<HTMLAnchorElement>('figure a') ?? []);
+
+  if (dialog && image && caption && typeof dialog.showModal === 'function') {
+    let current = 0;
+    let opener: HTMLAnchorElement;
+    const show = (index: number) => {
+      current = (index + links.length) % links.length;
+      const link = links[current];
       image.src = link.href;
       image.alt = link.querySelector('img')?.alt ?? '';
+      caption.textContent = (current + 1) + ' of ' + links.length + ' · ' + image.alt;
+    };
+    dialog.querySelector('[data-action="close"]')?.addEventListener('click', () => dialog.close());
+    dialog.querySelector('[data-action="previous"]')?.addEventListener('click', () => show(current - 1));
+    dialog.querySelector('[data-action="next"]')?.addEventListener('click', () => show(current + 1));
+    dialog.addEventListener('keydown', event => {
+      if (links.length < 2 || (event.key !== 'ArrowLeft' && event.key !== 'ArrowRight')) return;
+      event.preventDefault();
+      show(current + (event.key === 'ArrowLeft' ? -1 : 1));
+    });
+    dialog.addEventListener('close', () => opener?.focus());
+    links.forEach((link, index) => link.addEventListener('click', event => {
+      if (event.ctrlKey || event.metaKey || event.shiftKey || event.altKey) return;
+      event.preventDefault();
+      opener = link;
+      show(index);
       dialog.showModal();
     }));
   }
 </script>
 <style>
   dialog { max-width: 92vw; max-height: 90vh; background: var(--surface); color: var(--text); border: 1px solid var(--line); }
+  .gallery-controls { display: flex; flex-wrap: wrap; gap: .5rem; }
+  .gallery-caption { margin-bottom: 0; }
   dialog img { max-height: 72vh; margin-top: .75rem; }
   dialog::backdrop { background: #080b12dd; }
 </style>
