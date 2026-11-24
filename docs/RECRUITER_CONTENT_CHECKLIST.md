@@ -10,7 +10,7 @@ Capture the implemented screens below using sample data. WebP is preferred. For 
 | Mandi Pro ERP | Dashboard, transaction entry, ledger, report |
 | HireReady PK | Interview setup, question, completed session, feedback |
 | Saqib Shop | Product list, product detail, cart, order flow |
-| Developer Portfolio | Project detail or contact workflow |
+| Developer Portfolio | Four captures available, including the contact page |
 | EduQuest | Active quiz or results |
 | Python Logic Building | Repository overview, exercise prompt, solution, terminal output |
 | Learn Dart Step by Step | Repository overview, lesson, runnable example, program output |
