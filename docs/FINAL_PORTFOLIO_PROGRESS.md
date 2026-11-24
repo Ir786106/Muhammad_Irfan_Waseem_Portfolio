@@ -27,3 +27,7 @@ The From Portrait to Product panel now hands off to the corresponding Awakening 
 ## Milestone 4 content checkpoint
 
 The Experience page lists four Lahore Nexa IT course and workshop certificates transcribed from the tracked certificate images. The cybersecurity certificate shows no date, so the page omits it. The entries describe participation. Astro check, lint and the prefixed 20-page build passed. The artifact validator passed and the built Experience page contains all four entries. Project media and publication remain open.
+
+## Final release validation
+
+All 13 Chrome tests passed after updating the no-JavaScript explorer test to use the current accessible region. The case-study capture slots remain labeled pending authentic media.

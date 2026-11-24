@@ -5,7 +5,7 @@ test('system explorer switches projects and returns to Origin without JavaScript
   const context = await browser.newContext({ javaScriptEnabled: false });
   const page = await context.newPage();
   await page.goto(baseURL!);
-  await page.getByRole('group', { name: 'Explore a software system' }).getByText('Food Fight', { exact: true }).click();
+  await page.getByRole('region', { name: 'Interactive project systems' }).getByText('Food Fight', { exact: true }).click();
   await expect(page.getByRole('link', { name: 'Read case study' })).toHaveAttribute('href', '/projects/food-fight/');
   await page.getByText('Origin', { exact: true }).click();
   await expect(page.getByRole('link', { name: 'Read case study' })).toHaveCount(0);
