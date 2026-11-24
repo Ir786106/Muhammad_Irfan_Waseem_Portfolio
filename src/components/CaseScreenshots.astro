@@ -12,9 +12,23 @@ const screenshots: Record<string, { file: string; caption: string; width: number
     { file: 'portfolio-mobile.webp', caption: 'Mobile home page in the light theme', width: 390, height: 844 },
   ],
 };
-const images = screenshots[slug];
+const captures: Record<string, string[]> = {
+  'food-fight': ['Menu', 'Checkout', 'Tracking', 'Branch queue', 'Rider delivery'],
+  teamsync: ['Workspace', 'Projects', 'Board', 'Task detail', 'Member roles'],
+  'ittehad-food-industries': ['Procurement', 'Processing batch', 'Inventory', 'Dispatch'],
+  'mandi-pro-erp': ['Dashboard', 'Transaction', 'Ledger', 'Report'],
+  'hire-ready': ['Interview setup', 'Question', 'Completed session', 'Feedback'],
+  saqib: ['Product list', 'Product detail', 'Cart', 'Order flow'],
+  'previous-portfolio': ['Project detail or contact'],
+  eduquest: ['Active quiz or results'],
+  'python-logic-building': ['Repository overview', 'Exercise prompt', 'Solution', 'Terminal output'],
+  'learn-dart': ['Repository overview', 'Lesson', 'Runnable example', 'Program output'],
+};
+const images = screenshots[slug] ?? [];
+if (slug === 'eduquest') images.unshift({file:'eduquest-home.webp',caption:'EduQuest home screen',width:1280,height:800});
+if (slug === 'previous-portfolio') images.unshift({file:'portfolio-home.webp',caption:'Developer portfolio home page',width:1280,height:800});
 ---
-{images && <section class="wrap case-screenshots" aria-labelledby="case-screenshots-title">
+<section class="wrap case-screenshots" aria-labelledby="case-screenshots-title">
   <h2 id="case-screenshots-title">Project screenshots</h2>
   <div class="screenshots-grid">
     {images.map(({ file, caption, width, height }) => (
@@ -25,8 +39,10 @@ const images = screenshots[slug];
         <figcaption>{caption}</figcaption>
       </figure>
     ))}
+    {captures[slug]?.map(caption => <p class="notice">[ADD: {caption} screenshot]</p>)}
   </div>
-</section>}
+  <dialog aria-label="Project screenshot"><button type="button" autofocus>Close image</button><img alt="" /></dialog>
+</section>
 <style>
   .case-screenshots { padding-block: clamp(2rem, 6vw, 5rem); }
   .screenshots-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.5rem; }
@@ -34,4 +50,25 @@ const images = screenshots[slug];
   img { display: block; max-width: 100%; width: auto; height: auto; max-height: 34rem; object-fit: contain; }
   figcaption { margin-top: .75rem; color: var(--muted); }
   @media (max-width: 650px) { .screenshots-grid { grid-template-columns: 1fr; } }
+</style>
+
+<script>
+  const gallery = document.querySelector('.case-screenshots');
+  const dialog = gallery?.querySelector('dialog');
+  const image = dialog?.querySelector('img');
+  if (dialog && image && typeof dialog.showModal === 'function') {
+    dialog.querySelector('button')?.addEventListener('click', () => dialog.close());
+    gallery?.querySelectorAll<HTMLAnchorElement>('figure a').forEach(link => link.addEventListener('click', event => {
+      if (event.ctrlKey || event.metaKey || event.shiftKey || event.altKey) return;
+      event.preventDefault();
+      image.src = link.href;
+      image.alt = link.querySelector('img')?.alt ?? '';
+      dialog.showModal();
+    }));
+  }
+</script>
+<style>
+  dialog { max-width: 92vw; max-height: 90vh; background: var(--surface); color: var(--text); border: 1px solid var(--line); }
+  dialog img { max-height: 72vh; margin-top: .75rem; }
+  dialog::backdrop { background: #080b12dd; }
 </style>
